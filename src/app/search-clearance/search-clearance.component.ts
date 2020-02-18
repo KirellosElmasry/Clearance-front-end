@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchClearanceComponent implements OnInit {
 
+  eId :string;
   constructor() { }
 
   ngOnInit() {
   }
 
+  searchPerson(){
+    console.log(this.eId);
+  }
 }

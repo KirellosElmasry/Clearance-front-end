@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule }   from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Routes, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,6 +14,13 @@ import { ChangeablePersonalDataComponent } from './changeable-personal-data/chan
 import { EngagementComponent } from './engagement/engagement.component';
 import { MarriageComponent } from './marriage/marriage.component';
 import { ChildrensComponent } from './childrens/childrens.component';
+
+
+const appRoutes: Routes = [
+  {path: 'login', component: LoginComponent},
+  {path: 'homePage', component: HomePageComponent},
+  {path: 'searchClearance', component: SearchClearanceComponent}
+];
 
 @NgModule({
   declarations: [
@@ -28,7 +37,10 @@ import { ChildrensComponent } from './childrens/childrens.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    RouterModule.forRoot(appRoutes),
+    MatProgressSpinnerModule,
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

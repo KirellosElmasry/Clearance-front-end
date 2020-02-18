@@ -1,1 +1,19 @@
-<p>search-clearance works!</p>
+<div>
+    <form (ngSubmit)="searchPerson()" #f="ngForm">
+        <p>Search for Clearance</p>
+        <div>
+            <label for="emirateId">Emirate ID</label>
+            <input type="text" [(ngModel)]='eId' name="emirateId" required #eid="ngModel">
+        </div>
+        <div class="error" *ngIf="eid.errors?.required">
+            Emirate ID is required.
+        </div>
+        <button class="btn" type="submit" [disabled]="!f.valid">Search</button>
+
+        <div>
+            <button class="btn"  >Create Other Clearance </button> <br>
+            <button class="btn"  >View Clearance</button><br>
+            <button class="btn"  >New Clearance</button>
+        </div>
+    </form>
+</div>

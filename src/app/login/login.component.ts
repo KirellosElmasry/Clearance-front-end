@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  userName: string;
+  password: string;
+  role: string;
+  showSpinner : boolean = false;
+
+  constructor(private router:Router) { }
 
   ngOnInit() {
+  }
+
+  onLogin(){
+    console.log(this.userName + " "+this.password);
+    //call login service then redirect to home page
+
+    this.router.navigate(['homePage']);
+
+    
   }
 
 }

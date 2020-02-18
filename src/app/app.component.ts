@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'clearance-frontend-project';
+  title = 'clearance-Web App';
+
+  constructor(router:Router) {
+    router.navigate(['login']);
+  }
 }

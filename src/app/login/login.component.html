@@ -1,1 +1,44 @@
-<p>login works!</p>
+<div class="body">
+    <h2>Login</h2>
+    <form (ngSubmit)="onLogin()" #f="ngForm">
+        <div class="container">
+            <table>
+                <tr>
+                    <td>
+                        <label for="uname"><b>User Name</b></label>
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]='userName' placeholder="Enter Username" name="uname" required
+                            #uname="ngModel">
+                            
+                        <div class="error" *ngIf="uname.errors?.required">
+                            User Name is required.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="psw"><b>Password</b></label>
+                    </td>
+                    <td>
+                        <input type="password" [(ngModel)]='password' placeholder="Enter Password" name="psw" required
+                            #psw="ngModel">
+                        <div class="error" *ngIf="psw.errors?.required">
+                            password is required.
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <button class="btn-login" type="submit" [disabled]="!f.valid">Login</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    <div *ngIf="showSpinner">
+        <mat-spinner></mat-spinner>
+    </div>
+</div>
