@@ -1,1 +1,95 @@
-<p>fixed-personal-data works!</p>
+<div>
+    <form>
+        <table>
+            <tr>
+                <td>Emerates ID </td>
+                <td class="middle"><input name="eid" type="text" id="eid" required class="label"
+                        [(ngModel)]='personData.emirateId' #eid="ngModel"> </td>
+                <td> رقم الهويه</td>
+                <div class="error" *ngIf="eid.errors?.required">
+                    EID is required.
+                </div>
+            </tr>
+
+            <tr>
+                <td>name</td>
+                <td class="middle"><input type="text" name="name" required class="label" [(ngModel)]='personData.name'
+                        #name="ngModel"></td>
+                <td>الاسم الثلاثي</td>
+                <div class="error" *ngIf="name.errors?.required">
+                    Required field.
+                </div>
+            </tr>
+
+            <tr>
+                <td>birth Date </td>
+                <td class="middle">
+
+                    <input name="birthDate" [(ngModel)]="personData.birthDate" matInput [matDatepicker]="myPicker1"
+                        required #birthDate="ngModel">
+                    <mat-datepicker-toggle matSuffix [for]="myPicker1"></mat-datepicker-toggle>
+                    <mat-datepicker #myPicker1></mat-datepicker>
+
+                </td>
+                <td> تاريخ الميلاد </td>
+                <div class="error" *ngIf="birthDate.errors?.required">
+                    Required field.
+                </div>
+            </tr>
+            <tr>
+                <td>place Of Birth </td>
+                <td class="middle"> <input name="placeOfBirth" type="text" class="label"
+                        [(ngModel)]='personData.placeOfBirth' required #placeOfBirth="ngModel"> </td>
+                <td> مكان الميلاد </td>
+                <div class="error" *ngIf="placeOfBirth.errors?.required">
+                    Required field.
+                </div>
+            </tr>
+            <tr>
+                <td>baptism Date </td>
+                <td class="middle">
+
+                    <input name="baptismDate" [(ngModel)]="personData.baptismDate" matInput [matDatepicker]="myPicker2"
+                        required #baptismDate="ngModel">
+                    <mat-datepicker-toggle matSuffix [for]="myPicker2"></mat-datepicker-toggle>
+                    <mat-datepicker #myPicker2></mat-datepicker>
+
+                </td>
+                <td> تاريخ العماد </td>
+                <div class="error" *ngIf="baptismDate.errors?.required">
+                    Required field.
+                </div>
+            </tr>
+            <tr>
+                <td>place Of Baptism </td>
+                <td class="middle">
+                    <input name="placeOfBaptism" type="text" class="label" [(ngModel)]='personData.placeOfBaptism'
+                        required #placeOfBaptism="ngModel">
+                </td>
+                <td> مكان العماد</td>
+                <div class="error" *ngIf="placeOfBaptism.errors?.required">
+                    Required field.
+                </div>
+            </tr>
+            <tr>
+                <td>education Qualification </td>
+                <td class="middle"> <input name="edQualification" type="text" class="label"
+                        [(ngModel)]='personData.edQualification' required #edQualification="ngModel"> </td>
+                <td> المؤهل </td>
+                <div class="error" *ngIf="edQualification.errors?.required">
+                    Required field.
+                </div>
+            </tr>
+            <tr>
+                <td>Attache Image </td>
+                <td><input type="file" (change)="onFileChanged($event)"></td>
+                <button type="button" (click)="onUpload()">Upload</button>
+            </tr>
+            <tr>
+                <td><button type="button" (click)="next()">next</button></td>
+                <td><button type="button" (click)="back()">back</button></td>
+                
+            </tr>
+        </table>
+    </form>
+</div>

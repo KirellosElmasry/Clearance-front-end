@@ -1,1 +1,56 @@
-<p>changeable-personal-data works!</p>
+<form action="">
+    <table>
+        <tr>
+            <td>address </td>
+            <td class="middle"><input name="address" type="text" class="label" [(ngModel)]='personData.address' required
+                    #address="ngModel"> </td>
+            <td> العنوان</td>
+            <div class="error" *ngIf="address.errors?.required">
+                Required field.
+            </div>
+        </tr>
+        <tr>
+            <td>job Title </td>
+            <td class="middle"> <input name="jobTitle" type="text" class="label" [(ngModel)]='personData.jobTitle'
+                    required #jobTitle="ngModel"> </td>
+            <td> العمل</td>
+            <div class="error" *ngIf="jobTitle.errors?.required">
+                Required field.
+            </div>
+        </tr>
+        <tr>
+            <td>job Address </td>
+            <td class="middle"> <input name="jobAddress" type="text" class="label" [(ngModel)]='personData.jobAddress'
+                    required #jobAddress="ngModel"> </td>
+            <td> عنوان العمل</td>
+            <div class="error" *ngIf="jobAddress.errors?.required">
+                Required field.
+            </div>
+        </tr>
+        <tr>
+            <td>military Status </td>
+            <td class="middle">
+                 <mat-select name="militaryStatus" [(ngModel)]='personData.militaryStatus'>
+                     <mat-option *ngFor="let status of militaryStatus" [value]="status.value">
+                        {{status.viewValueEN}} - {{status.viewValueAR}}
+                     </mat-option>
+                 </mat-select>
+            </td>
+            <td> الموقف من التجنيد</td>
+        </tr>
+        <tr>
+            <td>From Church </td>
+            <td class="middle"> <input name="relatedChurch" type="text" class="label"
+                    [(ngModel)]='personData.relatedChurch' required #relatedChurch="ngModel"> </td>
+            <td> الكنيسه التابع لها</td>
+            <div class="error" *ngIf="relatedChurch.errors?.required">
+                Required field.
+            </div>
+        </tr>
+        <tr>
+            <td><button type="button" (click)="next()">next</button></td>
+            <td><button type="button" (click)="back()">back</button></td>
+            
+        </tr>
+    </table>
+</form>

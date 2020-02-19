@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Routes, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,12 +15,19 @@ import { ChangeablePersonalDataComponent } from './changeable-personal-data/chan
 import { EngagementComponent } from './engagement/engagement.component';
 import { MarriageComponent } from './marriage/marriage.component';
 import { ChildrensComponent } from './childrens/childrens.component';
-
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 
 const appRoutes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'homePage', component: HomePageComponent},
-  {path: 'searchClearance', component: SearchClearanceComponent}
+  { path: 'login', component: LoginComponent },
+  { path: 'homePage', component: HomePageComponent },
+  { path: 'fixedPersonalData', component: FixedPersonalDataComponent },
+  { path: 'changeablePersonalData', component: ChangeablePersonalDataComponent },
+  { path: 'marriage', component: MarriageComponent },
+  { path: 'childrens', component: ChildrensComponent },
+  { path: 'engagement', component: EngagementComponent },
+  { path: 'searchClearance', component: SearchClearanceComponent }
 ];
 
 @NgModule({
@@ -39,10 +47,14 @@ const appRoutes: Routes = [
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),
     MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     BrowserAnimationsModule,
-    FormsModule
+    MatSelectModule,
+    FormsModule,
+    MatRadioModule
   ],
-  providers: [],
+  providers: [MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

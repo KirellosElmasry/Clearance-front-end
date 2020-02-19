@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { changeablePersonData } from '../utility/changeablePersonalData';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-changeable-personal-data',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChangeablePersonalDataComponent implements OnInit {
 
-  constructor() { }
+  personData = new changeablePersonData();
+  constructor(private router:Router) { }
 
   ngOnInit() {
   }
+  next(){
+    this.router.navigate(['engagement']);
 
+  }
+
+  back(){
+    this.router.navigate(['fixedPersonalData']);
+  }
 }
