@@ -1,7 +1,8 @@
+<h3>Personal Data 2</h3>
 <form action="">
     <table>
         <tr>
-            <td>address </td>
+            <td>Address </td>
             <td class="middle"><input name="address" type="text" class="label" [(ngModel)]='personData.address' required
                     #address="ngModel"> </td>
             <td> العنوان</td>
@@ -10,7 +11,7 @@
             </div>
         </tr>
         <tr>
-            <td>job Title </td>
+            <td>Job Title </td>
             <td class="middle"> <input name="jobTitle" type="text" class="label" [(ngModel)]='personData.jobTitle'
                     required #jobTitle="ngModel"> </td>
             <td> العمل</td>
@@ -19,7 +20,7 @@
             </div>
         </tr>
         <tr>
-            <td>job Address </td>
+            <td>Job Address </td>
             <td class="middle"> <input name="jobAddress" type="text" class="label" [(ngModel)]='personData.jobAddress'
                     required #jobAddress="ngModel"> </td>
             <td> عنوان العمل</td>
@@ -28,7 +29,7 @@
             </div>
         </tr>
         <tr>
-            <td>military Status </td>
+            <td>Military Status </td>
             <td class="middle">
                  <mat-select name="militaryStatus" [(ngModel)]='personData.militaryStatus'>
                      <mat-option *ngFor="let status of militaryStatus" [value]="status.value">
@@ -47,10 +48,9 @@
                 Required field.
             </div>
         </tr>
-        <tr>
-            <td><button type="button" (click)="next()">next</button></td>
-            <td><button type="button" (click)="back()">back</button></td>
-            
+        <tr>            
+            <td><button type="button" (click)="back()">Back</button></td>
+            <td><button type="button" (click)="next()">Next</button></td>
         </tr>
     </table>
 </form>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-engagement',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EngagementComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
   }
+  next(){
+    this.router.navigate(['marriage']);
 
+  }
+
+  back(){
+    this.router.navigate(['changeablePersonalData']);
+  }
 }
