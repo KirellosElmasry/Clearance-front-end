@@ -1,4 +1,4 @@
-export class changeablePersonData
+export class personData
 {
     referenceNumber: string;
     church: string;
@@ -12,6 +12,7 @@ export class changeablePersonData
     baptismDate: Date;
     placeOfBaptism: string;
     edQualification: string;
+    educationDate: Date;
     address: string;
     jobTitle: string;
     jobAddress: string;

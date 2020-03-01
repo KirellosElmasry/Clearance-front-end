@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HttpClientModule } from '@angular/common/http';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Routes, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -52,6 +53,8 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatSelectModule,
     FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     MatRadioModule
   ],
   providers: [MatDatepickerModule],

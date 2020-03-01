@@ -3,7 +3,7 @@
         <p>Search for Clearance</p>
         <div>
             <label for="emirateId">Emirate ID</label>
-            <input type="text" [(ngModel)]='eId' name="emirateId" required #eid="ngModel">
+            <input type="text" [(ngModel)]='personalData.emirateId' name="emirateId" required #eid="ngModel">
         </div>
         <div class="error" *ngIf="eid.errors?.required">
             Emirate ID is required.
@@ -11,9 +11,10 @@
         <button class="btn" type="submit" [disabled]="!f.valid">Search</button>
     </form>
     <div>
-        <button class="btn" (click)="createOtherClearance()">Create Other Clearance </button> <br>
-        <button class="btn" (click)="viewClearance()">View Clearance</button><br>
-        <button class="btn" (click)="newClearance()">New Clearance</button>
+        <label>{{result.message}}</label><br>
+        <button class="btn" *ngIf="showcreateOtherClearance" (click)="createOtherClearance()">Create Other Clearance</button><br>
+        <button class="btn"*ngIf="showViewClearance" (click)="viewClearance()">View Clearance</button><br>
+        <button class="btn" *ngIf="showNewClearance" (click)="newClearance()">New Clearance</button>
     </div>
 
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { changeablePersonData } from '../utility/changeablePersonalData';
+import { personData } from '../utility/personalData';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ChangeablePersonalDataComponent implements OnInit {
 
-  personData = new changeablePersonData();
+  personData = new personData();
   constructor(private router:Router) { }
 
   ngOnInit() {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { changeablePersonData } from '../utility/changeablePersonalData';
+import { personData } from '../utility/personalData';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,11 +9,13 @@ import { Router } from '@angular/router';
 })
 export class FixedPersonalDataComponent implements OnInit {
  
-  personData = new changeablePersonData();
+  personData : personData;
   selectedFile: File;
   constructor(private router:Router) { }
 
   ngOnInit() {
+    this.personData = history.state.data;
+    console.log("eid " + this.personData.emirateId);
   }
 
   onFileChanged(event) {

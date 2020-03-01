@@ -4,7 +4,8 @@
         <table>
             <tr>
                 <td><label >Emerates ID</label> </td>
-                <td class="middle"><input name="eid" type="text" id="eid" required class="label"
+                <td class="middle">
+                    <input name="eid" type="text" id="eid" required class="label" [readonly]="true"
                         [(ngModel)]='personData.emirateId' #eid="ngModel"> </td>
                 <td> <label >رقم الهويه</label></td>
                 <div class="error" *ngIf="eid.errors?.required">
@@ -78,6 +79,19 @@
                         [(ngModel)]='personData.edQualification' required #edQualification="ngModel"> </td>
                 <td><label > المؤهل </label></td>
                 <div class="error" *ngIf="edQualification.errors?.required">
+                    Required field.
+                </div>
+            </tr>
+            <tr>
+                <td><label >Graduation Date </label></td>
+                <td class="middle">
+                    <input name="graduateDate" [(ngModel)]="personData.graduateDate" matInput [matDatepicker]="myPicker3"
+                    required #graduateDate="ngModel">
+                <mat-datepicker-toggle matSuffix [for]="myPicker3"></mat-datepicker-toggle>
+                <mat-datepicker #myPicker3></mat-datepicker>
+                </td>
+                <td><label > تاريخ التخرج </label></td>
+                <div class="error" *ngIf="graduateDate.errors?.required">
                     Required field.
                 </div>
             </tr>
