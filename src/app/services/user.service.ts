@@ -16,4 +16,10 @@ export class UserService {
     return this.httpClient.post(this.endpoint + "getSearchByEid", eid,
       { responseType: 'json' });
   }
+
+  public addFixedPersonalData(formData):
+  Observable<any> {
+  return this.httpClient.post(this.endpoint + "addPersonalData", formData,
+    { responseType: 'json' });
+}
 }

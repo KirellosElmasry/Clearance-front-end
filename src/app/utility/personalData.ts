@@ -51,4 +51,5 @@ export class personData
     marriedBefore: string;
     marriageType: string;
     status: string;
+    graduateDate: Date;
 }

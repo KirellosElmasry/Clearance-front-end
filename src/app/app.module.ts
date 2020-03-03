@@ -19,6 +19,7 @@ import { ChildrensComponent } from './childrens/childrens.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+import { MatToolbarModule,MatIconModule,MatCardModule,MatButtonModule,MatProgressBarModule } from '@angular/material';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -55,7 +56,16 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatRadioModule
+    MatRadioModule,
+    BrowserModule,  
+    AppRoutingModule,  
+    HttpClientModule,  
+    BrowserAnimationsModule,  
+    MatToolbarModule,  
+    MatIconModule,  
+    MatButtonModule,  
+    MatCardModule,  
+    MatProgressBarModule 
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent]

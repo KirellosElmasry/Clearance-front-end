@@ -13,8 +13,12 @@ export class ChangeablePersonalDataComponent implements OnInit {
   constructor(private router:Router) { }
 
   ngOnInit() {
+    this.personData = history.state.data;
+    console.log("eid " + this.personData.emirateId);
   }
+
   next(){
+
     this.router.navigate(['engagement']);
 
   }

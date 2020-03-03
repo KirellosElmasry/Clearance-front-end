@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { personData } from '../utility/personalData';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-fixed-personal-data',
@@ -11,7 +12,7 @@ export class FixedPersonalDataComponent implements OnInit {
  
   personData : personData;
   selectedFile: File;
-  constructor(private router:Router) { }
+  constructor(private router:Router, private userService:UserService) { }
 
   ngOnInit() {
     this.personData = history.state.data;
@@ -23,20 +24,32 @@ export class FixedPersonalDataComponent implements OnInit {
     
     if (this.selectedFile) {
       console.log("File name : " + this.selectedFile.name);
-
-      // this.restService.uploadFile(this.selectedFile, this.personData.referenceNumber).subscribe(res => {
-      //   console.log("result " + res);
-      // }, (err) => {
-      //   console.log("error " + err);
-      // });
     }
-  }
-  onUpload(){
-
   }
 
   next(){
-    this.router.navigate(['changeablePersonalData']);
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+    formData.append('emirateId', this.personData.emirateId);
+    formData.append('birthDate', this.personData.birthDate.toLocaleDateString());
+    
+    formData.append('birthLocation', this.personData.placeOfBirth);
+    formData.append('baptismPlace', this.personData.placeOfBaptism);
+    formData.append('baptism', this.personData.baptismDate.toLocaleDateString());
+    
+    formData.append('education', this.personData.edQualification);
+    formData.append('educationDate', this.personData.graduateDate.toLocaleDateString());
+
+    this.userService.addFixedPersonalData(formData).subscribe(
+      data => {
+       
+        console.log("result " + data.code);
+       if(data.code == "200")
+          this.router.navigate(['changeablePersonalData'], { state: { data: this.personData } });
+      }, (err) => {
+        console.log("error " + err.message);
+        
+      });
 
   }
 
