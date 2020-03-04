@@ -2,40 +2,26 @@
     <h2>Login</h2>
     <form (ngSubmit)="onLogin()" #f="ngForm">
         <div class="container">
-            <table>
-                <tr>
-                    <td>
-                        <label for="uname">User Name</label>
-                    </td>
-                    <td>
-                        <input type="text" [(ngModel)]='userName' placeholder="Enter Username" name="uname" required
-                            #uname="ngModel">
-                            
-                        <div class="error" *ngIf="uname.errors?.required">
-                            User Name is required.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="psw">Password</label>
-                    </td>
-                    <td>
-                        <input type="password" [(ngModel)]='password' placeholder="Enter Password" name="psw" required
-                            #psw="ngModel">
-                        <div class="error" *ngIf="psw.errors?.required">
-                            password is required.
-                        </div>
-                    </td>
-                </tr>
+            <div class="row">
+                <mat-label for="uname">User Name </mat-label>
+                <input matInput type="text" [(ngModel)]='userName' placeholder="Enter Username" name="uname" required
+                    #uname="ngModel">
 
-                <tr>
-                    <td></td>
-                    <td>
-                        <button mat-button class="btn-login" type="submit" [disabled]="!f.valid">Login</button>
-                    </td>
-                </tr>
-            </table>
+                <div class="error" *ngIf="uname.errors?.required">
+                    User Name is required.
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <mat-label for="psw">Password </mat-label>
+                <input matInput type="password" [(ngModel)]='password' placeholder="Enter Password" name="psw" required
+                    #psw="ngModel">
+                <div class="error" *ngIf="psw.errors?.required">
+                    password is required.
+                </div>
+            </div>
+            <br>
+            <button mat-button class="btn-login" type="submit" [disabled]="!f.valid">Login</button>
         </div>
     </form>
     <div *ngIf="showSpinner">

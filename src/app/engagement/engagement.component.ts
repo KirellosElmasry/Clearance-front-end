@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl } from "@angular/forms";
+import { personData } from '../utility/personalData';
 
 @Component({
   selector: 'app-engagement',
@@ -9,28 +10,33 @@ import { FormBuilder, FormArray, FormGroup, FormControl } from "@angular/forms";
 })
 export class EngagementComponent implements OnInit {
 
-
+  personData = new personData();
+  
   constructor(private router: Router, private fb: FormBuilder) { }
 
-   engageForm =  new FormGroup({
-    engageDataArr: new FormControl('')
- 
+  engagementForm = this.fb.group({
+
+    engageDataArr: this.fb.array([
+      this.fb.control('')
+    ])
   });
 
   ngOnInit() {
-   
+    //this.personData = history.state.data;
+   // console.log("fatherOfConfession " + this.personData.fatherOfConfession);
   }
  
-  get engageArr() {
-    return this.engageForm.get('engageDataArr') as FormArray;
+  get engageDataArr() {
+    return this.engagementForm.get('engageDataArr') as FormArray;
   }
 
   addNewRow() {
-    this.engageArr.push(new FormControl(''));
+    this.engageDataArr.push(this.fb.control(''));
   }
 
   next() {
-    this.router.navigate(['marriage']);
+    console.warn(this.engagementForm.value);
+    //this.router.navigate(['marriage']);
   }
 
   back() {

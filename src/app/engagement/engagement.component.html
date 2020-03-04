@@ -1,18 +1,24 @@
 <h3>Engagement Data </h3>
 
 <label for=""> Engaged Before : </label>
-<mat-radio-group>
+<mat-radio-group [(ngModel)]='personData.engagedBefore'>
     <mat-radio-button class="example-margin" value="y">Yes</mat-radio-button>
     <mat-radio-button class="example-margin" value="n">No</mat-radio-button>
 </mat-radio-group>
-<form [formGroup]="engageForm">
-    <button mat-button (click)="addNewRow()">Add New Row</button>
-    <div formArrayName="engageDataArr" *ngFor="let data of engageDataArr.controls; let i=index">
-        <label>Engage Date {{i+1}}</label>
-        <input type="text" [formControlName]="i">
+
+<form [formGroup]="engagementForm">
+
+
+    <div formArrayName="engageDataArr">
+        <button mat-button (click)="addNewRow()">Add New Row</button>
+  
+        <div *ngFor="let alias of engageDataArr.controls; let i=index">
+            <label>Engage Date {{i+1}}</label>
+            <input type="text" [formControlName]="i">
+        </div>
     </div>
-    <button mat-button type="button" (click)="back()">Back</button><br>
+    <br>
+
+    <button mat-button type="button" (click)="back()">Back</button>
     <button mat-button type="button" (click)="next()">Next</button>
-
-
 </form>

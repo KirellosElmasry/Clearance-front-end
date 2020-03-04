@@ -39,7 +39,8 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('userId', this.result.userId);
 
           //this.router.navigate(['homePage']);
-          this.router.navigate(['changeablePersonalData']);
+          this.router.navigate(['engagement']);
+          //this.router.navigate(['test']);
         }else{
           alert("wrong username or password!");
         }

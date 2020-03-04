@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { MatToolbarModule,MatIconModule,MatCardModule,MatButtonModule,MatProgressBarModule } from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { TestComponent } from './test/test.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
   { path: 'marriage', component: MarriageComponent },
   { path: 'childrens', component: ChildrensComponent },
   { path: 'engagement', component: EngagementComponent },
+  { path: 'test', component: TestComponent },
   { path: 'searchClearance', component: SearchClearanceComponent }
 ];
 
@@ -43,7 +45,8 @@ const appRoutes: Routes = [
     ChangeablePersonalDataComponent,
     EngagementComponent,
     MarriageComponent,
-    ChildrensComponent
+    ChildrensComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
