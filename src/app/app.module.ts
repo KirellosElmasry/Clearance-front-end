@@ -20,6 +20,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { MatToolbarModule,MatIconModule,MatCardModule,MatButtonModule,MatProgressBarModule } from '@angular/material';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -65,7 +66,7 @@ const appRoutes: Routes = [
     MatIconModule,  
     MatButtonModule,  
     MatCardModule,  
-    MatProgressBarModule 
+    MatProgressBarModule, MatFormFieldModule
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent]

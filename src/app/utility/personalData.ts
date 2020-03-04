@@ -52,4 +52,10 @@ export class personData
     marriageType: string;
     status: string;
     graduateDate: Date;
+    recognitionRegularityRate:string;
+    intakeRate:string;
+    fatherOfConfession:string;
+    gender:string;
+    churchId:number;
+    userId:number;
 }

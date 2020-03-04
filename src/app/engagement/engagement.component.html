@@ -6,13 +6,13 @@
     <mat-radio-button class="example-margin" value="n">No</mat-radio-button>
 </mat-radio-group>
 <form [formGroup]="engageForm">
-    <button (click)="addNewRow()">Add New Row</button>
+    <button mat-button (click)="addNewRow()">Add New Row</button>
     <div formArrayName="engageDataArr" *ngFor="let data of engageDataArr.controls; let i=index">
         <label>Engage Date {{i+1}}</label>
         <input type="text" [formControlName]="i">
     </div>
-    <button type="button" (click)="back()">Back</button><br>
-    <button type="button" (click)="next()">Next</button>
+    <button mat-button type="button" (click)="back()">Back</button><br>
+    <button mat-button type="button" (click)="next()">Next</button>
 
 
 </form>

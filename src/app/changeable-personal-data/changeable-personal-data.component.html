@@ -1,9 +1,9 @@
 <h3>Personal Data 2</h3>
-<form  (ngSubmit)="next()" #f="ngForm">
+<form (ngSubmit)="next()" #f="ngForm">
     <table>
         <tr>
             <td>Address </td>
-            <td class="middle"><input name="address" type="text" class="label" [(ngModel)]='personData.address' required
+            <td class="middle"><input matInput name="address" type="text" [(ngModel)]='personData.address' required
                     #address="ngModel"> </td>
             <td> العنوان</td>
             <div class="error" *ngIf="address.errors?.required">
@@ -12,8 +12,8 @@
         </tr>
         <tr>
             <td>Job Title </td>
-            <td class="middle"> <input name="jobTitle" type="text" class="label" [(ngModel)]='personData.jobTitle'
-                    required #jobTitle="ngModel"> </td>
+            <td class="middle"> <input matInput name="jobTitle" type="text" class="label"
+                    [(ngModel)]='personData.jobTitle' required #jobTitle="ngModel"> </td>
             <td> العمل</td>
             <div class="error" *ngIf="jobTitle.errors?.required">
                 Required field.
@@ -21,8 +21,8 @@
         </tr>
         <tr>
             <td>Job Address </td>
-            <td class="middle"> <input name="jobAddress" type="text" class="label" [(ngModel)]='personData.jobAddress'
-                    required #jobAddress="ngModel"> </td>
+            <td class="middle"> <input matInput name="jobAddress" type="text" class="label"
+                    [(ngModel)]='personData.jobAddress' required #jobAddress="ngModel"> </td>
             <td> عنوان العمل</td>
             <div class="error" *ngIf="jobAddress.errors?.required">
                 Required field.
@@ -31,26 +31,66 @@
         <tr>
             <td>Military Status </td>
             <td class="middle">
-                 <mat-select name="militaryStatus" [(ngModel)]='personData.militaryStatus'>
-                     <mat-option *ngFor="let status of militaryStatus" [value]="status.value">
+                <mat-select name="militaryStatus" [(ngModel)]='personData.militaryStatus'>
+                    <mat-option *ngFor="let status of militaryStatus" [value]="status.value">
                         {{status.viewValueEN}} - {{status.viewValueAR}}
-                     </mat-option>
-                 </mat-select>
+                    </mat-option>
+                </mat-select>
             </td>
             <td> الموقف من التجنيد</td>
         </tr>
         <tr>
             <td>From Church </td>
-            <td class="middle"> <input name="relatedChurch" type="text" class="label"
+            <td class="middle"> <input matInput name="relatedChurch" type="text" class="label"
                     [(ngModel)]='personData.relatedChurch' required #relatedChurch="ngModel"> </td>
             <td> الكنيسه التابع لها</td>
             <div class="error" *ngIf="relatedChurch.errors?.required">
                 Required field.
             </div>
         </tr>
-        <tr>            
+        <tr>
+            <td>confession Rate </td>
+            <td class="middle">
+                <mat-select name="confessionRate" [(ngModel)]='personData.recognitionRegularityRate'>
+                    <mat-option *ngFor="let status of confessionRate" [value]="status.value">
+                        {{status.viewValueEN}} - {{status.viewValueAR}}
+                    </mat-option>
+                </mat-select>
+            <td>معدل الاعتراف</td>
+        </tr>
+        <tr>
+            <td>Intake Rate </td>
+            <td class="middle">
+                <mat-select name="intake" [(ngModel)]='personData.intakeRate'>
+                    <mat-option *ngFor="let status of confessionRate" [value]="status.value">
+                        {{status.viewValueEN}} - {{status.viewValueAR}}
+                    </mat-option>
+                </mat-select>
+            <td>معدل التناول</td>
+        </tr>
+        <tr>
+            <td>Father of confession </td>
+            <td class="middle">
+
+                <input matInput name="fatherOfConfession" type="text" class="label"
+                    [(ngModel)]='personData.fatherOfConfession' required #fatherOfConfession="ngModel"> </td>
+
+            <td>اب الاعتراف</td>
+        </tr>
+        <tr>
+            <td>Gender </td>
+            <td class="middle">
+                <mat-select name="gender" [(ngModel)]='personData.gender'>
+                    <mat-option *ngFor="let status of genders" [value]="status.value">
+                        {{status.viewValueEN}} - {{status.viewValueAR}}
+                    </mat-option>
+                </mat-select>
+            <td>الجنس</td>
+        </tr>
+        <tr>
             <td><button mat-button type="button" (click)="back()">Back</button></td>
-            <td><button mat-button type="submit"  [disabled]="!f.valid" >Next</button></td>
+            <td><button mat-button type="submit" [disabled]="!f.valid">Next</button></td>
         </tr>
     </table>
+
 </form>
