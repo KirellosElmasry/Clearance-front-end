@@ -1,24 +1,58 @@
 <h3>Engagement Data </h3>
+<div class="container p-3">
+    <div class="row">
+        <div class="col-12">
+            
+            <label for=""> Engaged Before : </label>
+            <mat-radio-group [(ngModel)]='personData.engagedBefore'>
+                <mat-radio-button class="example-margin" value="y">Yes</mat-radio-button>
+                <mat-radio-button class="example-margin" value="n">No</mat-radio-button>
+            </mat-radio-group>
 
-<label for=""> Engaged Before : </label>
-<mat-radio-group [(ngModel)]='personData.engagedBefore'>
-    <mat-radio-button class="example-margin" value="y">Yes</mat-radio-button>
-    <mat-radio-button class="example-margin" value="n">No</mat-radio-button>
-</mat-radio-group>
+            <form [formGroup]="form" (submit)="submit()" *ngIf="personData.engagedBefore == 'y'">
+                <div class="card">
+                    <button class="btn btn-primary m-1" type="button" (click)="addRow()"> Add Row</button>
+                    <div class="card-header">Engagement Details</div>
+                    <div class="card-body" formArrayName="contacts">
+                        <div class="row">
+                            <div class="col-6" *ngFor="let contact of contactFormGroup.controls; let i = index;">
+                                <div [formGroupName]="i" class="row">
+                                    <div class="form-group col-6">
+                                        <label>Engage Date</label>
 
-<form [formGroup]="engagementForm">
+                                        <input formControlName="engageDate" matInput required
+                                            [matDatepicker]="myPicker3">
+                                        <mat-datepicker-toggle matSuffix [for]="myPicker3"></mat-datepicker-toggle>
+                                        <mat-datepicker #myPicker3></mat-datepicker>
 
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Engage Place</label>
+                                        <input class="form-control" formControlName="engagePlace" type="text" required>
 
-    <div formArrayName="engageDataArr">
-        <button mat-button (click)="addNewRow()">Add New Row</button>
-  
-        <div *ngFor="let alias of engageDataArr.controls; let i=index">
-            <label>Engage Date {{i+1}}</label>
-            <input type="text" [formControlName]="i">
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <label>Priest Name</label>
+                                        <input class="form-control" formControlName="PriestName" type="text" required>
+
+                                    </div>
+                                    <div class="form-group col-12 text-right">
+                                        <button class="btn btn-danger" type="button" (click)="removeRow(i)"> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-12">
+                            <button mat-button type="button" (click)="back()">Back</button>
+                            <button class="btn btn-success m-1" [disabled]="!form.valid" type="submit">Next </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <br>
-
-    <button mat-button type="button" (click)="back()">Back</button>
-    <button mat-button type="button" (click)="next()">Next</button>
-</form>
+</div>

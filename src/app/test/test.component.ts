@@ -1,46 +1,72 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormArray } from '@angular/forms';
-
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { personData } from '../utility/personalData';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.css']
+   selector: 'app-test',
+   templateUrl: './test.component.html',
+   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
-
-
-  profileForm = this.fb.group({
-    firstName: [''],
-    lastName: [''],
-    address: this.fb.group({
-      street: [''],
-      city: [''],
-      state: [''],
-      zip: ['']
-    }),
-    aliases: this.fb.array([
-      this.fb.control('')
-    ])
-  });
-
-  constructor(private fb: FormBuilder) {
-
-  }
-
-  ngOnInit() {
-  }
   
-  get aliases() {
-    return this.profileForm.get('aliases') as FormArray;
-  }
+   personData = new personData();
   
-  addAlias() {
-    this.aliases.push(this.fb.control(''));
-  }
+   public form: FormGroup;
+   public contactList: FormArray;
 
-  next() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.profileForm.value);
-  }
+   // returns all form groups under contacts
+   get contactFormGroup() {
+      return this.form.get('contacts') as FormArray;
+   }
+
+   constructor(private router: Router, private fb: FormBuilder) { }
+
+   ngOnInit() {
+      this.form = this.fb.group({
+         contacts: this.fb.array([this.createContact()])
+      });
+
+//this.personData = history.state.data;
+     // console.log("fatherOfConfession " + this.personData.fatherOfConfession);
+
+      // set contactlist to this field
+      this.contactList = this.form.get('contacts') as FormArray;
+   }
+
+   // contact formgroup
+   createContact(): FormGroup {
+      return this.fb.group({
+         engageDate: [null, Validators.compose([Validators.required])], 
+         engagePlace: [null, Validators.compose([Validators.required])], 
+         PriestName: [null, Validators.compose([Validators.required])]
+      });
+   }
+
+   // add a contact form group
+   addRow() {
+      this.contactList.push(this.createContact());
+   }
+
+   // remove contact from group
+   removeRow(index) {
+      // this.contactList = this.form.get('contacts') as FormArray;
+      this.contactList.removeAt(index);
+   }
+
+   // get the formgroup under contacts form array
+   getContactsFormGroup(index): FormGroup {
+      // this.contactList = this.form.get('contacts') as FormArray;
+      const formGroup = this.contactList.controls[index] as FormGroup;
+      return formGroup;
+   }
+
+   // method triggered when form is submitted
+   submit() {
+      console.log(this.form.value);
+   }
+
+   back() {
+      this.router.navigate(['changeablePersonalData']);
+    }
 }

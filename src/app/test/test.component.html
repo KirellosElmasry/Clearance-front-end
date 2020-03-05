@@ -1,54 +1,57 @@
-<p>test works!</p>
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+<div class="container p-3">
+    <div class="row">
+        <div class="col-12">
+            
+            <label for=""> Engaged Before : </label>
+            <mat-radio-group [(ngModel)]='personData.engagedBefore'>
+                <mat-radio-button class="example-margin" value="y">Yes</mat-radio-button>
+                <mat-radio-button class="example-margin" value="n">No</mat-radio-button>
+            </mat-radio-group>
 
-    <label>
-        First Name:
-        <input type="text" formControlName="firstName">
-    </label>
+            <form [formGroup]="form" (submit)="submit()" *ngIf="personData.engagedBefore == 'y'">
+                <div class="card">
+                    <button class="btn btn-primary m-1" type="button" (click)="addRow()"> Add Row</button>
+                    <div class="card-header">Engagement Details</div>
+                    <div class="card-body" formArrayName="contacts">
+                        <div class="row">
+                            <div class="col-6" *ngFor="let contact of contactFormGroup.controls; let i = index;">
+                                <div [formGroupName]="i" class="row">
+                                    <div class="form-group col-6">
+                                        <label>Engage Date</label>
 
-    <label>
-        Last Name:
-        <input type="text" formControlName="lastName">
-    </label>
+                                        <input formControlName="engageDate" matInput required
+                                            [matDatepicker]="myPicker3">
+                                        <mat-datepicker-toggle matSuffix [for]="myPicker3"></mat-datepicker-toggle>
+                                        <mat-datepicker #myPicker3></mat-datepicker>
 
-    <div formGroupName="address">
-        <h3>Address</h3>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>Engage Place</label>
+                                        <input class="form-control" formControlName="engagePlace" type="text" required>
 
-        <label>
-            Street:
-            <input type="text" formControlName="street">
-        </label>
+                                    </div>
 
-        <label>
-            City:
-            <input type="text" formControlName="city">
-        </label>
+                                    <div class="form-group col-12">
+                                        <label>Priest Name</label>
+                                        <input class="form-control" formControlName="PriestName" type="text" required>
 
-        <label>
-            State:
-            <input type="text" formControlName="state">
-        </label>
-
-        <label>
-            Zip Code:
-            <input type="text" formControlName="zip">
-        </label>
-    </div>
-    <div formArrayName="aliases">
-        <h3>Aliases</h3> 
-        <button (click)="addAlias()">Add Alias</button>
-
-        <div *ngFor="let alias of aliases.controls; let i=index">
-            <!-- The repeated alias template -->
-            <label>
-                Alias:
-                <input type="text" [formControlName]="i">
-            </label>
+                                    </div>
+                                    <div class="form-group col-12 text-right">
+                                        <button class="btn btn-danger" type="button" (click)="removeRow(i)"> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-12">
+                            <button mat-button type="button" (click)="back()">Back</button>
+                            <button class="btn btn-success m-1" [disabled]="!form.valid" type="submit">Next </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <button type="submit" [disabled]="!profileForm.valid">Submit</button>
-</form>
-
-<p>
-    Form Status: {{ profileForm.status }}
-</p>
+</div>

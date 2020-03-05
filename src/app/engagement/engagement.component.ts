@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormArray, FormGroup, FormControl } from "@angular/forms";
+import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
 import { personData } from '../utility/personalData';
 
 @Component({
@@ -12,34 +12,61 @@ export class EngagementComponent implements OnInit {
 
   personData = new personData();
   
-  constructor(private router: Router, private fb: FormBuilder) { }
+   public form: FormGroup;
+   public contactList: FormArray;
 
-  engagementForm = this.fb.group({
+   // returns all form groups under contacts
+   get contactFormGroup() {
+      return this.form.get('contacts') as FormArray;
+   }
 
-    engageDataArr: this.fb.array([
-      this.fb.control('')
-    ])
-  });
+   constructor(private router: Router, private fb: FormBuilder) { }
 
-  ngOnInit() {
-    //this.personData = history.state.data;
-   // console.log("fatherOfConfession " + this.personData.fatherOfConfession);
-  }
- 
-  get engageDataArr() {
-    return this.engagementForm.get('engageDataArr') as FormArray;
-  }
+   ngOnInit() {
+      this.form = this.fb.group({
+         contacts: this.fb.array([this.createContact()])
+      });
 
-  addNewRow() {
-    this.engageDataArr.push(this.fb.control(''));
-  }
+//this.personData = history.state.data;
+     // console.log("fatherOfConfession " + this.personData.fatherOfConfession);
 
-  next() {
-    console.warn(this.engagementForm.value);
-    //this.router.navigate(['marriage']);
-  }
+      // set contactlist to this field
+      this.contactList = this.form.get('contacts') as FormArray;
+   }
 
-  back() {
-    this.router.navigate(['changeablePersonalData']);
-  }
+   // contact formgroup
+   createContact(): FormGroup {
+      return this.fb.group({
+         engageDate: [null, Validators.compose([Validators.required])], 
+         engagePlace: [null, Validators.compose([Validators.required])], 
+         PriestName: [null, Validators.compose([Validators.required])]
+      });
+   }
+
+   // add a contact form group
+   addRow() {
+      this.contactList.push(this.createContact());
+   }
+
+   // remove contact from group
+   removeRow(index) {
+      // this.contactList = this.form.get('contacts') as FormArray;
+      this.contactList.removeAt(index);
+   }
+
+   // get the formgroup under contacts form array
+   getContactsFormGroup(index): FormGroup {
+      // this.contactList = this.form.get('contacts') as FormArray;
+      const formGroup = this.contactList.controls[index] as FormGroup;
+      return formGroup;
+   }
+
+   // method triggered when form is submitted
+   submit() {
+      console.log(this.form.value);
+   }
+
+   back() {
+      this.router.navigate(['changeablePersonalData']);
+    }
 }
