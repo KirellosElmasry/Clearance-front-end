@@ -2,44 +2,52 @@
 <div class="container p-3">
     <div class="row">
         <div class="col-12">
-            
-            <label for=""> Engaged Before : </label>
-            <mat-radio-group [(ngModel)]='personData.engagedBefore'>
-                <mat-radio-button class="example-margin" value="y">Yes</mat-radio-button>
-                <mat-radio-button class="example-margin" value="n">No</mat-radio-button>
-            </mat-radio-group>
 
-            <form [formGroup]="form" (submit)="submit()" *ngIf="personData.engagedBefore == 'y'">
+
+
+            <form [formGroup]="form" (submit)="submit()">
                 <div class="card">
-                    <button class="btn btn-primary m-1" type="button" (click)="addRow()"> Add Row</button>
-                    <div class="card-header">Engagement Details</div>
-                    <div class="card-body" formArrayName="contacts">
-                        <div class="row">
-                            <div class="col-6" *ngFor="let contact of contactFormGroup.controls; let i = index;">
-                                <div [formGroupName]="i" class="row">
-                                    <div class="form-group col-6">
-                                        <label>Engage Date</label>
+                    <label for=""> Engaged Before : </label>
+                    <mat-radio-group [(ngModel)]='personData.engagedBefore'  [ngModelOptions]="{standalone: true}">
+                        <mat-radio-button class="example-margin" *ngFor="let op of statusOptions" [checked]="op.checked"
+                            [value]="op.value">{{ op.name}}</mat-radio-button>
+                    </mat-radio-group> 
+                    <!-- <div class="error" *ngIf="personData.engagedBefore.errors?.required">
+                        Required field.
+                    </div> -->
+                    <div *ngIf="personData.engagedBefore == 'y'">
+                        <button mat-button type="button" (click)="addRow()"> Add Row</button>
+                        <div class="card-header">Engagement Details</div>
+                        <div class="card-body" formArrayName="contacts">
+                            <div class="row">
+                                <div class="col-6" *ngFor="let contact of contactFormGroup.controls; let i = index;">
+                                    <div [formGroupName]="i" class="row">
+                                        <div class="form-group col-6">
+                                            <label>Engage Date</label>
 
-                                        <input formControlName="engageDate" matInput required
-                                            [matDatepicker]="myPicker3">
-                                        <mat-datepicker-toggle matSuffix [for]="myPicker3"></mat-datepicker-toggle>
-                                        <mat-datepicker #myPicker3></mat-datepicker>
+                                            <input formControlName="engageDate" matInput required
+                                                [matDatepicker]="myPicker3">
+                                            <mat-datepicker-toggle matSuffix [for]="myPicker3"></mat-datepicker-toggle>
+                                            <mat-datepicker #myPicker3></mat-datepicker>
 
-                                    </div>
-                                    <div class="form-group col-6">
-                                        <label>Engage Place</label>
-                                        <input class="form-control" formControlName="engagePlace" type="text" required>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label>Engage Place</label>
+                                            <input class="form-control" formControlName="engagePlace" type="text"
+                                                required>
 
-                                    </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group col-12">
+                                            <label>Priest Name</label>
+                                            <input class="form-control" formControlName="PriestName" type="text"
+                                                required>
 
-                                    <div class="form-group col-12">
-                                        <label>Priest Name</label>
-                                        <input class="form-control" formControlName="PriestName" type="text" required>
-
-                                    </div>
-                                    <div class="form-group col-12 text-right">
-                                        <button class="btn btn-danger" type="button" (click)="removeRow(i)"> Remove
-                                        </button>
+                                        </div>
+                                        <div class="form-group col-12 text-right">
+                                            <button mat-button type="button" (click)="removeRow(i)"> Remove
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +56,9 @@
                     <div class="card-body">
                         <div class="col-12">
                             <button mat-button type="button" (click)="back()">Back</button>
-                            <button class="btn btn-success m-1" [disabled]="!form.valid" type="submit">Next </button>
+                            <button mat-button class="btn btn-success m-1"
+                                [disabled]="!form.valid && personData.engagedBefore == 'y'" type="submit">Next
+                            </button>
                         </div>
                     </div>
                 </div>

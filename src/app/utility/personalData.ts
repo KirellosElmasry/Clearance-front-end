@@ -59,4 +59,5 @@ export class personData
     churchId:number;
     userId:number;
     engageDate: Date;
+    
 }

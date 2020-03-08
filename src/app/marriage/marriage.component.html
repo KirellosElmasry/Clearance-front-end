@@ -6,7 +6,7 @@
                 <label for="">Marriage Before : </label>
             </td>
             <td>
-                <mat-radio-group >
+                <mat-radio-group  [(ngModel)]='personData.marriedBefore'>
                     <mat-radio-button class="example-margin" value="y">Yes</mat-radio-button>
                     <mat-radio-button class="example-margin" value="n">No</mat-radio-button>
                 </mat-radio-group>
@@ -14,8 +14,8 @@
             <td><button>add row</button></td>
         </tr>
         <tr>
-            <td><button type="button" (click)="back()">Back</button></td>
-            <td><button type="button" (click)="next()">Next</button></td>
+            <td><button mat-button type="button" (click)="back()">Back</button></td>
+            <td><button mat-button type="button" (click)="next()">Next</button></td>
         </tr>
     </table>
 </form>

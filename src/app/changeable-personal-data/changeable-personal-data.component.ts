@@ -47,6 +47,6 @@ export class ChangeablePersonalDataComponent implements OnInit {
   }
 
   back(){
-    this.router.navigate(['fixedPersonalData']);
+    this.router.navigate(['fixedPersonalData'], { state: { data: this.personData } });
   }
 }

@@ -52,8 +52,4 @@ export class FixedPersonalDataComponent implements OnInit {
       });
 
   }
-
-  back(){
-    this.router.navigate(['searchClearance']);
-  }
 }

@@ -18,8 +18,15 @@ export class UserService {
   }
 
   public addFixedPersonalData(formData):
-  Observable<any> {
-  return this.httpClient.post(this.endpoint + "addPersonalData", formData,
-    { responseType: 'json' });
-}
+    Observable<any> {
+    return this.httpClient.post(this.endpoint + "addPersonalData", formData,
+      { responseType: 'json' });
+  }
+
+  public addPreviousEngagment(formData):
+    Observable<any> {
+    return this.httpClient.post(this.endpoint + "addPreviousEngagment", formData,
+      { responseType: 'json' });
+  }
+
 }

@@ -29,6 +29,16 @@
             </div>
         </tr>
         <tr>
+            <td>Gender </td>
+            <td class="middle">
+                <mat-select name="gender" [(ngModel)]='personData.gender'>
+                    <mat-option *ngFor="let status of genders" [value]="status.value">
+                        {{status.viewValueEN}} - {{status.viewValueAR}}
+                    </mat-option>
+                </mat-select>
+            <td>الجنس</td>
+        </tr>
+        <tr *ngIf="personData.gender == 'male'">
             <td>Military Status </td>
             <td class="middle">
                 <mat-select name="militaryStatus" [(ngModel)]='personData.militaryStatus'>
@@ -77,16 +87,7 @@
 
             <td>اب الاعتراف</td>
         </tr>
-        <tr>
-            <td>Gender </td>
-            <td class="middle">
-                <mat-select name="gender" [(ngModel)]='personData.gender'>
-                    <mat-option *ngFor="let status of genders" [value]="status.value">
-                        {{status.viewValueEN}} - {{status.viewValueAR}}
-                    </mat-option>
-                </mat-select>
-            <td>الجنس</td>
-        </tr>
+       
         <tr>
             <td><button mat-button type="button" (click)="back()">Back</button></td>
             <td><button mat-button type="submit" [disabled]="!f.valid">Next</button></td>
