@@ -15,17 +15,24 @@ export class EngagementComponent implements OnInit {
 
   public form: FormGroup;
   public contactList: FormArray;
+  selectedFile1: File;
+  selectedFile2: File;
+  showSaveBtn : boolean []=[];
+  showAddRowBtn : boolean []=[];
 
   statusOptions = [
-    { value: 'y', name: 'Yes', checked: false},
-    { value: 'n', name: 'No', checked: true}
+    { value: 'y', name: 'Yes', checked: false },
+    { value: 'n', name: 'No', checked: true }
   ];
+
   constructor(private router: Router, private fb: FormBuilder, private userService: UserService) {
     this.personData.engagedBefore = 'n';
-   }
+    this.showSaveBtn [0]= false;
+    this.showAddRowBtn[0]=true;
+  }
 
   ngOnInit() {
-  
+
     this.form = this.fb.group({
       contacts: this.fb.array([this.createContact()])
     });
@@ -47,20 +54,23 @@ export class EngagementComponent implements OnInit {
     return this.fb.group({
       engageDate: [null, Validators.compose([Validators.required])],
       engagePlace: [null, Validators.compose([Validators.required])],
-      PriestName: [null, Validators.compose([Validators.required])]
+      PriestName: [null, Validators.compose([Validators.required])],
+      anulAttach: [null, Validators.compose([Validators.required])],
+      engAttach: [null, Validators.compose([Validators.required])]
     });
   }
 
   // add a contact form group
-  addRow() {
+  addRow(i) {
     this.contactList.push(this.createContact());
+    this.showAddRowBtn[i]=false;
   }
 
   // remove contact from group
-  removeRow(index) {
-    // this.contactList = this.form.get('contacts') as FormArray;
-    this.contactList.removeAt(index);
-  }
+  // removeRow(index) {
+  //   // this.contactList = this.form.get('contacts') as FormArray;
+  //   this.contactList.removeAt(index);
+  // }
 
   // get the formgroup under contacts form array
   getContactsFormGroup(index): FormGroup {
@@ -69,39 +79,65 @@ export class EngagementComponent implements OnInit {
     return formGroup;
   }
 
-  // method triggered when form is submitted
-  submit() {
-    console.log(this.getContactsFormGroup(0).controls['engageDate'].value);
-    console.log(this.getContactsFormGroup(0).controls['engagePlace'].value);
-    console.log(this.getContactsFormGroup(0).controls['PriestName'].value);
+  save(i) {
+    console.log(this.getContactsFormGroup(i).controls['engageDate'].value);
+    console.log(this.getContactsFormGroup(i).controls['engagePlace'].value);
+    console.log(this.getContactsFormGroup(i).controls['PriestName'].value);
+
+    console.log(this.getContactsFormGroup(i).controls['engAttach'].value);
+    console.log(this.getContactsFormGroup(i).controls['anulAttach'].value);
 
     const formData = new FormData();
-   // formData.append('file', this.selectedFile);
-    // formData.append('engagmentDate', this.getContactsFormGroup(0).controls['engageDate'].value);
-    // formData.append('engagmentPlace', this.personData.birthDate.toLocaleDateString());
     
-    // formData.append('priestFather', this.personData.placeOfBirth);
-    // formData.append('status', this.personData.placeOfBaptism);
-    // formData.append('userId', this.personData.baptismDate.toLocaleDateString());
-    
-    // formData.append('engAttach', this.personData.edQualification);
-    // formData.append('anulAttach', this.personData.graduateDate.toLocaleDateString());
-    // formData.append('refNo', this.personData.graduateDate.toLocaleDateString());
+    formData.append('engagmentDate', this.getContactsFormGroup(i).controls['engageDate'].value);
+    formData.append('engagmentPlace', this.getContactsFormGroup(i).controls['engagePlace'].value);
 
-    // this.userService.addPreviousEngagment(formData)
-    //   .subscribe(
-    //     data => {
-    //       if (data.code == "200") {
-    //         this.router.navigate(['marriage']);
-    //       } else {
-    //         alert("Error Happened " + data.message);
-    //       }
-    //     }, (err) => {
-    //       console.log("error " + err.message);
-    //       alert(" Error " + err.message);
-    //     });
+    formData.append('priestFather', this.getContactsFormGroup(i).controls['PriestName'].value);
+    formData.append('status', "disengagement");
+    formData.append('userId', sessionStorage.getItem("userId"));
+
+    formData.append('engAttach', this.getContactsFormGroup(i).controls['engAttach'].value);
+    formData.append('anulAttach', this.getContactsFormGroup(i).controls['anulAttach'].value);
+    formData.append('refNo', this.personData.referenceNumber);
+
+    this.userService.addPreviousEngagment(formData)
+      .subscribe(
+        data => {
+          if (data.code == "200") {
+            alert(" success " );   
+            this.showSaveBtn[i] = true;
+            this.showAddRowBtn[i]= true;
+            console.log("!this.showSaveBtn[i] "+!this.showSaveBtn[i] +" !this.showAddRowBtn[i] "+ !this.showAddRowBtn[i]);
+          } else {
+            alert("Error Happened " + data.message);
+          }
+        }, (err) => {
+          console.log("error " + err.message);
+          alert(" Error " + err.message);
+        });
+  }
+
+  onFileChanged1(event){
+    this.selectedFile1 = event.target.files[0];
+
+    if (this.selectedFile1) {
+      console.log("File name : " + this.selectedFile1.name);
+    }
+  }
+
+  onFileChanged2(event){
+    this.selectedFile2 = event.target.files[0];
+
+    if (this.selectedFile2) {
+      console.log("File name : " + this.selectedFile2.name);
+    }
+  }
+
+  // method triggered when form is submitted
+  submit() {
+
     this.router.navigate(['marriage'], { state: { data: this.personData } });
-  
+
   }
 
   back() {

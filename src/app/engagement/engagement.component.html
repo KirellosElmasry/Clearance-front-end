@@ -2,9 +2,6 @@
 <div class="container p-3">
     <div class="row">
         <div class="col-12">
-
-
-
             <form [formGroup]="form" (submit)="submit()">
                 <div class="card">
                     <label for=""> Engaged Before : </label>
@@ -12,11 +9,7 @@
                         <mat-radio-button class="example-margin" *ngFor="let op of statusOptions" [checked]="op.checked"
                             [value]="op.value">{{ op.name}}</mat-radio-button>
                     </mat-radio-group> 
-                    <!-- <div class="error" *ngIf="personData.engagedBefore.errors?.required">
-                        Required field.
-                    </div> -->
-                    <div *ngIf="personData.engagedBefore == 'y'">
-                        <button mat-button type="button" (click)="addRow()"> Add Row</button>
+                    <div *ngIf="personData.engagedBefore == 'y'">                        
                         <div class="card-header">Engagement Details</div>
                         <div class="card-body" formArrayName="contacts">
                             <div class="row">
@@ -40,13 +33,21 @@
                                         <br>
                                         <div class="form-group col-12">
                                             <label>Priest Name</label>
-                                            <input class="form-control" formControlName="PriestName" type="text"
-                                                required>
-
+                                            <input class="form-control" formControlName="PriestName" type="text" required>
+                                        </div><br>
+                                        <div class="form-group col-6">
+                                            <label>Attach engagement 1</label>
+                                            <input type="file" (change)="onFileChanged1($event)" formControlName="engAttach" required>
+                                        </div>
+                                        <br>
+                                        <div class="form-group col-6">
+                                            <label>Attach engagement 2</label>
+                                            <input type="file" (change)="onFileChanged2($event)" formControlName="anulAttach" required>
                                         </div>
                                         <div class="form-group col-12 text-right">
-                                            <button mat-button type="button" (click)="removeRow(i)"> Remove
-                                            </button>
+                                            <!-- <button mat-button type="button" (click)="removeRow(i)"> Remove</button> -->
+                                            <button mat-button type="button" (click)="addRow(i)" [disabled]="!showSaveBtn[i] || !showAddRowBtn[i]" > Add Row</button>
+                                            <button mat-button type="button" (click)="save(i)" [disabled]="!form.valid || showSaveBtn[i]">Save</button>
                                         </div>
                                     </div>
                                 </div>

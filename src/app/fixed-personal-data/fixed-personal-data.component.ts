@@ -9,10 +9,10 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./fixed-personal-data.component.css']
 })
 export class FixedPersonalDataComponent implements OnInit {
- 
-  personData : personData;
+
+  personData: personData;
   selectedFile: File;
-  constructor(private router:Router, private userService:UserService) { }
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
     this.personData = history.state.data;
@@ -21,34 +21,38 @@ export class FixedPersonalDataComponent implements OnInit {
 
   onFileChanged(event) {
     this.selectedFile = event.target.files[0];
-    
+
     if (this.selectedFile) {
       console.log("File name : " + this.selectedFile.name);
     }
   }
 
-  next(){
+  next() {
     const formData = new FormData();
     formData.append('file', this.selectedFile);
     formData.append('emirateId', this.personData.emirateId);
     formData.append('birthDate', this.personData.birthDate.toLocaleDateString());
-    
+
     formData.append('birthLocation', this.personData.placeOfBirth);
     formData.append('baptismPlace', this.personData.placeOfBaptism);
     formData.append('baptism', this.personData.baptismDate.toLocaleDateString());
-    
+
     formData.append('education', this.personData.edQualification);
     formData.append('educationDate', this.personData.graduateDate.toLocaleDateString());
 
     this.userService.addFixedPersonalData(formData).subscribe(
       data => {
-       
+
         console.log("result " + data.code);
-       if(data.code == "200")
+        if (data.code == "200") {
+          this.personData.referenceNumber = data.refNo;
           this.router.navigate(['changeablePersonalData'], { state: { data: this.personData } });
+        }else{
+          console.log("error "+ data.message );
+        }
       }, (err) => {
         console.log("error " + err.message);
-        
+
       });
 
   }
