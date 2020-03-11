@@ -29,4 +29,16 @@ export class UserService {
       { responseType: 'json' });
   }
 
+  public updateEngagmentClearance(json):
+    Observable<any> {
+    return this.httpClient.post(this.endpoint + "updateEngagmentClearance", json,
+      { responseType: 'json' });
+  }
+
+  public updateMarrageClearance(json):
+  Observable<any> {
+  return this.httpClient.post(this.endpoint + "updateMarrageClearance", json,
+    { responseType: 'json' });
+}
+
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
 import { personData } from '../utility/personalData';
 import { UserService } from '../services/user.service';
+import { dto } from '../utility/dto';
 
 @Component({
   selector: 'app-engagement',
@@ -17,8 +18,8 @@ export class EngagementComponent implements OnInit {
   public contactList: FormArray;
   selectedFile1: File;
   selectedFile2: File;
-  showSaveBtn : boolean []=[];
-  showAddRowBtn : boolean []=[];
+  showSaveBtn: boolean[] = [];
+  showAddRowBtn: boolean[] = [];
 
   statusOptions = [
     { value: 'y', name: 'Yes', checked: false },
@@ -27,8 +28,8 @@ export class EngagementComponent implements OnInit {
 
   constructor(private router: Router, private fb: FormBuilder, private userService: UserService) {
     this.personData.engagedBefore = 'n';
-    this.showSaveBtn [0]= false;
-    this.showAddRowBtn[0]=true;
+    this.showSaveBtn[0] = false;
+    this.showAddRowBtn[0] = true;
   }
 
   ngOnInit() {
@@ -63,7 +64,7 @@ export class EngagementComponent implements OnInit {
   // add a contact form group
   addRow(i) {
     this.contactList.push(this.createContact());
-    this.showAddRowBtn[i]=false;
+    this.showAddRowBtn[i] = false;
   }
 
   // remove contact from group
@@ -88,7 +89,7 @@ export class EngagementComponent implements OnInit {
     console.log(this.getContactsFormGroup(i).controls['anulAttach'].value);
 
     const formData = new FormData();
-    
+
     formData.append('engagmentDate', this.getContactsFormGroup(i).controls['engageDate'].value);
     formData.append('engagmentPlace', this.getContactsFormGroup(i).controls['engagePlace'].value);
 
@@ -104,10 +105,9 @@ export class EngagementComponent implements OnInit {
       .subscribe(
         data => {
           if (data.code == "200") {
-            alert(" success " );   
+            alert(" success ");
             this.showSaveBtn[i] = true;
-            this.showAddRowBtn[i]= true;
-            console.log("!this.showSaveBtn[i] "+!this.showSaveBtn[i] +" !this.showAddRowBtn[i] "+ !this.showAddRowBtn[i]);
+            this.showAddRowBtn[i] = true;
           } else {
             alert("Error Happened " + data.message);
           }
@@ -117,7 +117,7 @@ export class EngagementComponent implements OnInit {
         });
   }
 
-  onFileChanged1(event){
+  onFileChanged1(event) {
     this.selectedFile1 = event.target.files[0];
 
     if (this.selectedFile1) {
@@ -125,7 +125,7 @@ export class EngagementComponent implements OnInit {
     }
   }
 
-  onFileChanged2(event){
+  onFileChanged2(event) {
     this.selectedFile2 = event.target.files[0];
 
     if (this.selectedFile2) {
@@ -133,7 +133,28 @@ export class EngagementComponent implements OnInit {
     }
   }
 
-  // method triggered when form is submitted
+  radioChange(event) {
+    //call update engagement api
+    let jsonObj = new dto();
+
+    jsonObj.userId = sessionStorage.getItem("userId");
+    jsonObj.refNo = this.personData.referenceNumber;
+    jsonObj.isPreviousEngagement = event.value;
+
+    this.userService.updateEngagmentClearance(jsonObj)
+      .subscribe(
+        data => {
+          if (data.code == "200") {
+            // alert(" success " );   
+
+          } else {
+            alert("Error Happened " + data.message);
+          }
+        }, (err) => {
+          console.log("error " + err.message);
+        });
+  }
+
   submit() {
 
     this.router.navigate(['marriage'], { state: { data: this.personData } });
@@ -143,4 +164,5 @@ export class EngagementComponent implements OnInit {
   back() {
     this.router.navigate(['changeablePersonalData'], { state: { data: this.personData } });
   }
+
 }

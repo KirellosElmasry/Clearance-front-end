@@ -46,7 +46,7 @@ export class personData
     childsNum: string;
     childAge: string;
     childsBiptesm: string;
-    
+    hasChildren:string;
     hasSecondClearance: string;
     marriedBefore: string;
     marriageType: string;
@@ -59,5 +59,6 @@ export class personData
     churchId:number;
     userId:number;
     engageDate: Date;
+    mariageStatus:string;
     
 }

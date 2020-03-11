@@ -3,4 +3,7 @@ export class dto{
     code: number;
     message:string;
     userId: string;   
+    isPreviousEngagement:string;
+    isPreviousMarrage:string;
+    refNo:string;
 }

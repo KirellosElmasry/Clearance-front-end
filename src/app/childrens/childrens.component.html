@@ -1,21 +1,63 @@
-<h3>Childrens Data </h3>
-<form action="">
-    <table>
-        <tr>
-            <td>
-                <label for="">Have Childrens : </label>
-            </td>
-            <td>
-                <mat-radio-group >
-                    <mat-radio-button class="example-margin" value="y">Yes</mat-radio-button>
-                    <mat-radio-button class="example-margin" value="n">No</mat-radio-button>
-                </mat-radio-group>
-            </td>
-            <td><button>add row</button></td>
-        </tr>
-        <tr>
-            <td><button type="button" (click)="back()">Back</button></td>
-            <td><button type="button" (click)="finish()">Finish</button></td>
-        </tr>
-    </table>
-</form>
+<h3>Children Data </h3>
+<div class="container p-3">
+    <div class="row">
+        <div class="col-12">
+            <form [formGroup]="form" (submit)="submit()">
+                <div class="card">
+                    <label for=""> Has Children : </label>
+                    <mat-radio-group [(ngModel)]='personData.hasChildren' [ngModelOptions]="{standalone: true}">
+                        <mat-radio-button class="example-margin" *ngFor="let op of statusOptions" [checked]="op.checked"
+                            [value]="op.value" (change)="radioChange($event)">{{ op.name}}</mat-radio-button>
+                    </mat-radio-group>
+                    <div *ngIf="personData.hasChildren == 'y'">
+                        <div class="card-header">Children Details</div>
+                        <div class="card-body" formArrayName="contacts">
+                            <div class="row">
+                                <div class="col-6" *ngFor="let contact of contactFormGroup.controls; let i = index;">
+                                    <div [formGroupName]="i" class="row">
+                                        <div class="form-group col-6">
+                                            <label>Child Name</label>
+                                            <input class="form-control" formControlName="childName" type="text"
+                                                required>
+
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label>Birth Date</label>
+
+                                            <input formControlName="birthDate" matInput required
+                                                [matDatepicker]="myPicker3">
+                                            <mat-datepicker-toggle matSuffix [for]="myPicker3"></mat-datepicker-toggle>
+                                            <mat-datepicker #myPicker3></mat-datepicker>
+
+                                        </div>
+                                        <br>
+                                        <div class="form-group col-12">
+                                            <label>Paptism</label>
+                                            <input class="form-control" formControlName="paptism" type="text"
+                                                required>
+                                        </div><br>                                       
+                                        <div class="form-group col-12 text-right">
+                                            <!-- <button mat-button type="button" (click)="removeRow(i)"> Remove</button> -->
+                                            <button mat-button type="button" (click)="addRow(i)"
+                                                [disabled]="!showSaveBtn[i] || !showAddRowBtn[i]"> Add Row</button>
+                                            <button mat-button type="button" (click)="save(i)"
+                                                [disabled]="!form.valid || showSaveBtn[i]">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-12">
+                            <button mat-button type="button" (click)="back()">Back</button>
+                            <button mat-button class="btn btn-success m-1"
+                                [disabled]="personData.engagedBefore == 'y' && !form.valid" type="submit">Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
