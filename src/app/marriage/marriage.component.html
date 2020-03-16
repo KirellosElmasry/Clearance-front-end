@@ -10,7 +10,7 @@
                             [value]="op.value" (change)="radioChange($event)">{{ op.name}}</mat-radio-button>
                     </mat-radio-group>
                     <div *ngIf="personData.marriedBefore == 'y'">
-                        <div class="card-header">Mariage Details</div>
+                       
                         <div class="card-body" formArrayName="contacts">
                             <div class="row">
                                 <div class="col-6" *ngFor="let contact of contactFormGroup.controls; let i = index;">
@@ -19,7 +19,7 @@
                                             <label>Mariage Date</label>
 
                                             <input formControlName="marriageDate" matInput required
-                                                [matDatepicker]="myPicker3">
+                                                [matDatepicker]="myPicker3" >
                                             <mat-datepicker-toggle matSuffix [for]="myPicker3"></mat-datepicker-toggle>
                                             <mat-datepicker #myPicker3></mat-datepicker>
 

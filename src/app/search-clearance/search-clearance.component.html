@@ -11,7 +11,7 @@
         <button mat-button class="btn" type="submit" [disabled]="!f.valid">Search</button>
     </form>
     <div>
-        <label>{{result.message}}</label><br>
+        <mat-label>{{result.message}}</mat-label><br>
         <button mat-button class="btn" *ngIf="showcreateOtherClearance" (click)="createOtherClearance()">Create Other Clearance</button><br>
         <button mat-button class="btn" *ngIf="showViewClearance" (click)="viewClearance()">View Clearance</button><br>
         <button mat-button class="btn" *ngIf="showNewClearance" (click)="newClearance()">New Clearance</button>

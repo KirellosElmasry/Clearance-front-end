@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { personData } from '../utility/personalData';
 import { Router } from '@angular/router';
+import { Church } from '../utility/church';
+import { UserService } from '../services/user.service';
+
 export interface Status {
   value: string;
   viewValueEN: string;
   viewValueAR: string;
 }
+
 @Component({
   selector: 'app-changeable-personal-data',
   templateUrl: './changeable-personal-data.component.html',
@@ -33,9 +37,26 @@ export class ChangeablePersonalDataComponent implements OnInit {
     { value: '3', viewValueEN: 'Inappropriate', viewValueAR: 'غير لائق' }
   ];
 
-  constructor(private router:Router) { }
+  churchList: Church[];
+
+  constructor(private router:Router, private userService: UserService) { 
+
+  }
 
   ngOnInit() {
+    this.userService.getAllChurch().subscribe(
+      data => {
+        if (data.code == "200") {
+       this.churchList = data.allChurch;
+          
+        } else {
+          alert("Error Happened " + data.message);
+        }
+      }, (err) => {
+        console.log("error " + err.message);
+        alert(" Error " + err.message);
+      });
+
     this.personData = history.state.data;
     console.log("placeOfBaptism " + this.personData.placeOfBaptism);
   }

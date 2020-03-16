@@ -22,6 +22,7 @@ import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/rad
 import { MatToolbarModule,MatIconModule,MatCardModule,MatButtonModule,MatProgressBarModule } from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { TestComponent } from './test/test.component';
+import { SocialStatusComponent } from './social-status/social-status.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
   { path: 'childrens', component: ChildrensComponent },
   { path: 'engagement', component: EngagementComponent },
   { path: 'test', component: TestComponent },
-  { path: 'searchClearance', component: SearchClearanceComponent }
+  { path: 'searchClearance', component: SearchClearanceComponent },
+  { path: 'socialStatus', component: SocialStatusComponent }
 ];
 
 @NgModule({
@@ -46,7 +48,8 @@ const appRoutes: Routes = [
     EngagementComponent,
     MarriageComponent,
     ChildrensComponent,
-    TestComponent
+    TestComponent,
+    SocialStatusComponent
   ],
   imports: [
     BrowserModule,

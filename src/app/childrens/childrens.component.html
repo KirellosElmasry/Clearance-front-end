@@ -9,8 +9,7 @@
                         <mat-radio-button class="example-margin" *ngFor="let op of statusOptions" [checked]="op.checked"
                             [value]="op.value" (change)="radioChange($event)">{{ op.name}}</mat-radio-button>
                     </mat-radio-group>
-                    <div *ngIf="personData.hasChildren == 'y'">
-                        <div class="card-header">Children Details</div>
+                    <div *ngIf="personData.hasChildren == 'y'">                       
                         <div class="card-body" formArrayName="contacts">
                             <div class="row">
                                 <div class="col-6" *ngFor="let contact of contactFormGroup.controls; let i = index;">
@@ -22,12 +21,10 @@
 
                                         </div>
                                         <div class="form-group col-6">
-                                            <label>Birth Date</label>
+                                            <label>Child Age</label>
 
-                                            <input formControlName="birthDate" matInput required
-                                                [matDatepicker]="myPicker3">
-                                            <mat-datepicker-toggle matSuffix [for]="myPicker3"></mat-datepicker-toggle>
-                                            <mat-datepicker #myPicker3></mat-datepicker>
+                                            <input class="form-control" formControlName="childAge" type="number"
+                                            required>
 
                                         </div>
                                         <br>

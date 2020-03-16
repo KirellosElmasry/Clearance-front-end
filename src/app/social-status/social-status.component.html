@@ -1,0 +1,25 @@
+<form action="">
+    <div margin class="card">
+        <mat-label margin>Social Status</mat-label>
+        <mat-select margin name="intake" [(ngModel)]='personData.socialStatus'>
+            <mat-option *ngFor="let status of socialStatus" [value]="status.viewValueEN">
+                {{status.viewValueEN}} - {{status.viewValueAR}}
+            </mat-option>
+        </mat-select>
+    </div>
+
+    <div margin card>
+        <mat-label>Source of permit Marriage</mat-label>
+        <input matInput name="sourceOfPermitMarriage" type="text" class="label"
+            [(ngModel)]='personData.sourceOfPermitMarriage' required>
+    </div>
+
+    <div margin card>
+        <mat-label for="dateOfPermitMarriage">Date of permit Marriage</mat-label>
+        <input name="dateOfPermitMarriage" [(ngModel)]="personData.dateOfPermitMarriage" matInput [matDatepicker]="myPicker1" required
+            #dateOfPermitMarriage="ngModel">
+        <mat-datepicker-toggle matSuffix [for]="myPicker1"></mat-datepicker-toggle>
+        <mat-datepicker #myPicker1></mat-datepicker>
+    </div>
+    <mat-button (click)="updateClearanceFinal()">Finish</mat-button>
+</form>

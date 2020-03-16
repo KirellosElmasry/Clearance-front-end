@@ -60,5 +60,7 @@ export class personData
     userId:number;
     engageDate: Date;
     mariageStatus:string;
-    
+    socialStatus:string;
+    sourceOfPermitMarriage:string;   
+    dateOfPermitMarriage:Date;
 }

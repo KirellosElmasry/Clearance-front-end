@@ -53,7 +53,7 @@ export class ChildrensComponent implements OnInit {
   // contact formgroup
   createContact(): FormGroup {
     return this.fb.group({
-      birthDate: [null, Validators.compose([Validators.required])],
+      childAge: [null, Validators.compose([Validators.required])],
       childName: [null, Validators.compose([Validators.required])],
       paptism: [null, Validators.compose([Validators.required])]
      
@@ -81,18 +81,18 @@ export class ChildrensComponent implements OnInit {
 
   save(i) {
     console.log(this.getContactsFormGroup(i).controls['childName'].value);
-    console.log(this.getContactsFormGroup(i).controls['birthDate'].value);
+    console.log(this.getContactsFormGroup(i).controls['childAge'].value);
     console.log(this.getContactsFormGroup(i).controls['paptism'].value);
 
-    const formData = new FormData();
+    const json = new dto();
 
-    formData.append('paptism', this.getContactsFormGroup(i).controls['paptism'].value);
-    formData.append('birthDate', this.getContactsFormGroup(i).controls['birthDate'].value);
-    formData.append('childName', this.getContactsFormGroup(i).controls['childName'].value);
-    formData.append('userId', sessionStorage.getItem("userId"));
-    formData.append('refNo', this.personData.referenceNumber);
+    json.refNo = this.personData.referenceNumber;
+    json.userId = sessionStorage.getItem("userId");
+    json.childName = this.getContactsFormGroup(i).controls['childName'].value;
+    json.childAge = this.getContactsFormGroup(i).controls['childAge'].value;
+    json.baptism = this.getContactsFormGroup(i).controls['paptism'].value;
 
-    this.userService.addPreviousEngagment(formData)
+    this.userService.addPreviousChild(json)
       .subscribe(
         data => {
           if (data.code == "200") {
@@ -114,13 +114,13 @@ export class ChildrensComponent implements OnInit {
 
     jsonObj.userId = sessionStorage.getItem("userId");
     jsonObj.refNo = this.personData.referenceNumber;
-    jsonObj.isPreviousEngagement = event.value;
+    jsonObj.isPreviousChild = event.value;
 
-    this.userService.updateEngagmentClearance(jsonObj)
+    this.userService.updateChildClearance(jsonObj)
       .subscribe(
         data => {
           if (data.code == "200") {
-            // alert(" success " );   
+            console.log("status " + data.status);
 
           } else {
             alert("Error Happened " + data.message);
@@ -131,7 +131,7 @@ export class ChildrensComponent implements OnInit {
   }
 
   submit(){
-    this.router.navigate(['homePage']);
+    this.router.navigate(['socialStatus']);
 
   }
 

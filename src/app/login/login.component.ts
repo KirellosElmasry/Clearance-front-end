@@ -38,9 +38,20 @@ export class LoginComponent implements OnInit {
           
           sessionStorage.setItem('userId', this.result.userId);
 
+          // { path: 'login', component: LoginComponent },
+          // { path: 'homePage', component: HomePageComponent },
+          // { path: 'fixedPersonalData', component: FixedPersonalDataComponent },
+          // { path: 'changeablePersonalData', component: ChangeablePersonalDataComponent },
+          // { path: 'marriage', component: MarriageComponent },
+          // { path: 'childrens', component: ChildrensComponent },
+          // { path: 'engagement', component: EngagementComponent },
+          // { path: 'test', component: TestComponent },
+          // { path: 'searchClearance', component:
+          //{ path: 'socialStatus', component: SocialStatusComponent }
+          
           //this.router.navigate(['homePage']);
-          this.router.navigate(['engagement']);
-          //this.router.navigate(['test']);
+          this.router.navigate(['socialStatus']);
+
         }else{
           alert("wrong username or password!");
         }

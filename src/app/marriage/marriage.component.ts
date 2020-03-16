@@ -91,19 +91,19 @@ export class MarriageComponent implements OnInit {
     console.log(this.getContactsFormGroup(i).controls['status'].value);
     console.log(this.getContactsFormGroup(i).controls['kindOfMarriage'].value);
 
-    const formData = new FormData();
+    const json = new dto();
 
-    formData.append('marriageDate', this.getContactsFormGroup(i).controls['marriageDate'].value);
-    formData.append('marriagePlace', this.getContactsFormGroup(i).controls['marriagePlace'].value);
+    json.marriageDate = this.getContactsFormGroup(i).controls['marriageDate'].value;
+    json.marriagePlace = this.getContactsFormGroup(i).controls['marriagePlace'].value;
 
-    formData.append('priestFather', this.getContactsFormGroup(i).controls['priestFather'].value);
-    formData.append('status',this.getContactsFormGroup(i).controls['status'].value);
-    formData.append('userId', sessionStorage.getItem("userId"));
+    json.priestFather = this.getContactsFormGroup(i).controls['priestFather'].value;
+    json.status = this.getContactsFormGroup(i).controls['status'].value;
+    json.userId = sessionStorage.getItem("userId");
 
-    formData.append('kindOfMarriage', this.getContactsFormGroup(i).controls['kindOfMarriage'].value);
-    formData.append('refNo', this.personData.referenceNumber);
+    json.kindOfMarriage = this.getContactsFormGroup(i).controls['kindOfMarriage'].value;
+    json.refNo = this.personData.referenceNumber;
 
-    this.userService.addPreviousEngagment(formData)
+    this.userService.addPreviousMarrage(json)
       .subscribe(
         data => {
           if (data.code == "200") {

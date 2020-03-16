@@ -13,7 +13,7 @@ export class UserService {
 
   public getUserByEid(eid: string):
     Observable<any> {
-    return this.httpClient.post(this.endpoint + "getSearchByEid", eid,
+    return this.httpClient.get(this.endpoint + "getSearchByEid?eid=" + eid,
       { responseType: 'json' });
   }
 
@@ -36,9 +36,37 @@ export class UserService {
   }
 
   public updateMarrageClearance(json):
+    Observable<any> {
+    return this.httpClient.post(this.endpoint + "updateMarrageClearance", json,
+      { responseType: 'json' });
+  }
+
+  public addPreviousMarrage(json):
+    Observable<any> {
+    return this.httpClient.post(this.endpoint + "addPreviousMarrage", json,
+      { responseType: 'json' });
+  }
+
+  public addPreviousChild(json):
+    Observable<any> {
+    return this.httpClient.post(this.endpoint + "addPreviousChild", json,
+      { responseType: 'json' });
+  }
+
+  public updateChildClearance(json):
+    Observable<any> {
+    return this.httpClient.post(this.endpoint + "updateChildClearance", json,
+      { responseType: 'json' });
+  }
+  public getAllChurch():
+    Observable<any> {
+    return this.httpClient.get(this.endpoint + "getAllChurch",
+      { responseType: 'json' });
+  }
+
+  public updateClearanceFinal(json):
   Observable<any> {
-  return this.httpClient.post(this.endpoint + "updateMarrageClearance", json,
+  return this.httpClient.post(this.endpoint + "updateClearanceFinal", json,
     { responseType: 'json' });
 }
-
 }
