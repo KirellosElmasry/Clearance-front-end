@@ -72,8 +72,8 @@
             <td>Intake Rate </td>
             <td class="middle">
                 <mat-select name="intake" [(ngModel)]='personData.intakeRate'>
-                    <mat-option *ngFor="let status of confessionRate" [value]="status.value">
-                        {{status.viewValueEN}} - {{status.viewValueAR}}
+                    <mat-option *ngFor="let state of confessionRate" [value]="state.value">
+                        {{state.viewValueEN}} - {{state.viewValueAR}}
                     </mat-option>
                 </mat-select>
             <td>معدل التناول</td>
@@ -90,7 +90,7 @@
         <tr>
             <td>Church </td>
             <td class="middle">
-                <mat-select name="intake" [(ngModel)]='personData.churchId'>
+                <mat-select name="church" [(ngModel)]='personData.churchId'>
                     <mat-option *ngFor="let church of churchList" [value]="church.churchId">
                         {{church.churchNameEn}} - {{church.churchNameAr}}
                     </mat-option>

@@ -27,9 +27,7 @@ export class EngagementComponent implements OnInit {
   ];
 
   constructor(private router: Router, private fb: FormBuilder, private userService: UserService) {
-    this.personData.engagedBefore = 'n';
-    this.showSaveBtn[0] = false;
-    this.showAddRowBtn[0] = true;
+
   }
 
   ngOnInit() {
@@ -38,8 +36,12 @@ export class EngagementComponent implements OnInit {
       contacts: this.fb.array([this.createContact()])
     });
 
-    //this.personData = history.state.data;
-    // console.log("fatherOfConfession " + this.personData.fatherOfConfession);
+    this.personData = history.state.data;
+    console.log("fatherOfConfession " + this.personData.fatherOfConfession);
+
+    this.personData.engagedBefore = 'n';
+    this.showSaveBtn[0] = false;
+    this.showAddRowBtn[0] = true;
 
     // set contactlist to this field
     this.contactList = this.form.get('contacts') as FormArray;

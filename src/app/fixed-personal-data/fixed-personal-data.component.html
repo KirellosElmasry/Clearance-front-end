@@ -27,10 +27,9 @@
                 <td><label>Birth Date</label> </td>
                 <td class="middle">
 
-                    <input name="birthDate" [(ngModel)]="personData.birthDate" matInput [matDatepicker]="myPicker1"
+                    <input type="date" name="birthDate" [(ngModel)]="personData.birthDate" matInput
                         required #birthDate="ngModel">
-                    <mat-datepicker-toggle matSuffix [for]="myPicker1"></mat-datepicker-toggle>
-                    <mat-datepicker #myPicker1></mat-datepicker>
+
 
                 </td>
                 <td> <label>تاريخ الميلاد</label> </td>
@@ -51,10 +50,8 @@
                 <td><label>Baptism Date</label> </td>
                 <td class="middle">
 
-                    <input name="baptismDate" [(ngModel)]="personData.baptismDate" matInput [matDatepicker]="myPicker2"
+                    <input type="date" name="baptismDate" [(ngModel)]="personData.baptismDate" matInput
                         required #baptismDate="ngModel">
-                    <mat-datepicker-toggle matSuffix [for]="myPicker2"></mat-datepicker-toggle>
-                    <mat-datepicker #myPicker2></mat-datepicker>
 
                 </td>
                 <td><label>تاريخ العماد</label> </td>
@@ -85,10 +82,8 @@
             <tr>
                 <td><label>Graduation Date </label></td>
                 <td class="middle">
-                    <input name="graduateDate" [(ngModel)]="personData.graduateDate" matInput
-                        [matDatepicker]="myPicker3" required #graduateDate="ngModel">
-                    <mat-datepicker-toggle matSuffix [for]="myPicker3"></mat-datepicker-toggle>
-                    <mat-datepicker #myPicker3></mat-datepicker>
+                    <input type="date" name="graduateDate" [(ngModel)]="personData.graduateDate" matInput
+                       required #graduateDate="ngModel">
                 </td>
                 <td><label> تاريخ التخرج </label></td>
                 <div class="error" *ngIf="graduateDate.errors?.required">

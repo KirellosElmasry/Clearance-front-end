@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { personData } from '../utility/personalData';
 import { UserService } from '../services/user.service';
 import { dto } from '../utility/dto';
+import { Router } from '@angular/router';
 
 export interface Status {
   viewValueEN: string;
@@ -23,9 +24,10 @@ export class SocialStatusComponent implements OnInit {
 
   personData = new personData();
 
-  constructor(private userService:UserService) { }
+  constructor(private userService:UserService, private router:Router) { }
 
   ngOnInit() {
+    this.personData = history.state.data;
   }
 
   updateClearanceFinal(){
@@ -51,5 +53,10 @@ export class SocialStatusComponent implements OnInit {
         }, (err) => {
           console.log("error " + err.message);
         });
+  }
+
+  
+  back(){
+    this.router.navigate(['childrens'], { state: { data: this.personData } });
   }
 }

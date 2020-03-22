@@ -40,7 +40,7 @@ export class ChangeablePersonalDataComponent implements OnInit {
   churchList: Church[];
 
   constructor(private router:Router, private userService: UserService) { 
-
+    
   }
 
   ngOnInit() {

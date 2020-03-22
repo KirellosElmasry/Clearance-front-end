@@ -49,8 +49,8 @@ export class LoginComponent implements OnInit {
           // { path: 'searchClearance', component:
           //{ path: 'socialStatus', component: SocialStatusComponent }
           
-          //this.router.navigate(['homePage']);
-          this.router.navigate(['socialStatus']);
+          this.router.navigate(['homePage']);
+          //this.router.navigate(['socialStatus']);
 
         }else{
           alert("wrong username or password!");

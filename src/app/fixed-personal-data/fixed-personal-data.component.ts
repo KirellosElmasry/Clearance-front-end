@@ -31,14 +31,14 @@ export class FixedPersonalDataComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.selectedFile);
     formData.append('emirateId', this.personData.emirateId);
-    formData.append('birthDate', this.personData.birthDate.toLocaleDateString());
+    formData.append('birthDate', this.personData.birthDate.toString());
 
     formData.append('birthLocation', this.personData.placeOfBirth);
     formData.append('baptismPlace', this.personData.placeOfBaptism);
-    formData.append('baptism', this.personData.baptismDate.toLocaleDateString());
+    formData.append('baptism', this.personData.baptismDate.toString());
 
     formData.append('education', this.personData.edQualification);
-    formData.append('educationDate', this.personData.graduateDate.toLocaleDateString());
+    formData.append('educationDate', this.personData.graduateDate.toString());
 
     this.userService.addFixedPersonalData(formData).subscribe(
       data => {

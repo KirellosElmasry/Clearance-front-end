@@ -16,10 +16,10 @@
 
     <div margin card>
         <mat-label for="dateOfPermitMarriage">Date of permit Marriage</mat-label>
-        <input name="dateOfPermitMarriage" [(ngModel)]="personData.dateOfPermitMarriage" matInput [matDatepicker]="myPicker1" required
+        <input type="date" name="dateOfPermitMarriage" [(ngModel)]="personData.dateOfPermitMarriage"  required
             #dateOfPermitMarriage="ngModel">
-        <mat-datepicker-toggle matSuffix [for]="myPicker1"></mat-datepicker-toggle>
-        <mat-datepicker #myPicker1></mat-datepicker>
+
     </div>
-    <mat-button (click)="updateClearanceFinal()">Finish</mat-button>
+    <button mat-button type="button" (click)="back()">Back</button>
+    <button mat-button (click)="updateClearanceFinal()">Finish</button>
 </form>
