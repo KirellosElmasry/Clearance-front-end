@@ -1,103 +1,163 @@
-<div>
-    <h3>Personal Data 1</h3>
-    <form  (ngSubmit)="next()" #f="ngForm">
-        <table>
-            <tr>
-                <td><label>Emerates ID</label> </td>
-                <td class="middle">
-                    <input name="eid" type="text" id="eid" required class="label" [readonly]="true"
-                        [(ngModel)]='personData.emirateId' #eid="ngModel"> </td>
-                <td> <label>رقم الهويه</label></td>
-                <div class="error" *ngIf="eid.errors?.required">
-                    EID is required.
-                </div>
-            </tr>
+<h3>Personal Data 1</h3>
+<mat-card>
+  <form (ngSubmit)="next()" #f="ngForm">
+    <mat-list>
+      <mat-list-item>
+        <mat-form-field>
+          <mat-label>Emerates ID - رقم الهويه</mat-label>
+          <input
+            matInput
+            name="eid"
+            type="text"
+            id="eid"
+            required
+            class="label"
+            [readonly]="true"
+            [(ngModel)]="personData.emirateId"
+            #eid="ngModel"
+          />
+        </mat-form-field>
 
-            <tr>
-                <td><label>Name</label></td>
-                <td class="middle"><input type="text" name="name" required class="label" [(ngModel)]='personData.name'
-                        #name="ngModel"></td>
-                <td><label>الاسم الثلاثي</label></td>
-                <div class="error" *ngIf="name.errors?.required">
-                    Required field.
-                </div>
-            </tr>
+        <div class="error" *ngIf="eid.errors?.required">
+          EID is required.
+        </div>
+      </mat-list-item>
 
-            <tr>
-                <td><label>Birth Date</label> </td>
-                <td class="middle">
+      <mat-list-item>
+        <mat-form-field>
+          <mat-label>Name - الاسم الثلاثي</mat-label>
 
-                    <input type="date" name="birthDate" [(ngModel)]="personData.birthDate" matInput
-                        required #birthDate="ngModel">
+          <input
+            matInput
+            type="text"
+            name="name"
+            required
+            class="label"
+            [(ngModel)]="personData.name"
+            #name="ngModel"
+          />
+        </mat-form-field>
 
+        <div class="error" *ngIf="name.errors?.required">
+          Required field.
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-form-field>
+          <mat-label>Birth Date - تاريخ الميلاد</mat-label>
 
-                </td>
-                <td> <label>تاريخ الميلاد</label> </td>
-                <div class="error" *ngIf="birthDate.errors?.required">
-                    Required field.
-                </div>
-            </tr>
-            <tr>
-                <td><label>Place Of Birth </label></td>
-                <td class="middle"> <input name="placeOfBirth" type="text" class="label"
-                        [(ngModel)]='personData.placeOfBirth' required #placeOfBirth="ngModel"> </td>
-                <td> <label>مكان الميلاد </label></td>
-                <div class="error" *ngIf="placeOfBirth.errors?.required">
-                    Required field.
-                </div>
-            </tr>
-            <tr>
-                <td><label>Baptism Date</label> </td>
-                <td class="middle">
+          <input
+            matInput
+            type="date"
+            name="birthDate"
+            [(ngModel)]="personData.birthDate"
+            matInput
+            required
+            #birthDate="ngModel"
+          />
+        </mat-form-field>
+        <div class="error" *ngIf="birthDate.errors?.required">
+          Required field.
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-form-field>
+          <mat-label>Place Of Birth - مكان الميلاد </mat-label>
 
-                    <input type="date" name="baptismDate" [(ngModel)]="personData.baptismDate" matInput
-                        required #baptismDate="ngModel">
+          <input
+            matInput
+            name="placeOfBirth"
+            type="text"
+            class="label"
+            [(ngModel)]="personData.placeOfBirth"
+            required
+            #placeOfBirth="ngModel"
+          />
+        </mat-form-field>
+        <div class="error" *ngIf="placeOfBirth.errors?.required">
+          Required field.
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-form-field>
+          <mat-label>Baptism Date - تاريخ العماد</mat-label>
 
-                </td>
-                <td><label>تاريخ العماد</label> </td>
-                <div class="error" *ngIf="baptismDate.errors?.required">
-                    Required field.
-                </div>
-            </tr>
-            <tr>
-                <td> <label>place Of Baptism </label> </td>
-                <td class="middle">
-                    <input name="placeOfBaptism" type="text" class="label" [(ngModel)]='personData.placeOfBaptism'
-                        required #placeOfBaptism="ngModel">
-                </td>
-                <td> <label>مكان العماد</label></td>
-                <div class="error" *ngIf="placeOfBaptism.errors?.required">
-                    Required field.
-                </div>
-            </tr>
-            <tr>
-                <td><label>education Qualification </label></td>
-                <td class="middle"> <input name="edQualification" type="text" class="label"
-                        [(ngModel)]='personData.edQualification' required #edQualification="ngModel"> </td>
-                <td><label> المؤهل </label></td>
-                <div class="error" *ngIf="edQualification.errors?.required">
-                    Required field.
-                </div>
-            </tr>
-            <tr>
-                <td><label>Graduation Date </label></td>
-                <td class="middle">
-                    <input type="date" name="graduateDate" [(ngModel)]="personData.graduateDate" matInput
-                       required #graduateDate="ngModel">
-                </td>
-                <td><label> تاريخ التخرج </label></td>
-                <div class="error" *ngIf="graduateDate.errors?.required">
-                    Required field.
-                </div>
-            </tr>
-            <tr>
-                <td><label>Attache Picture</label> </td>
-                <td><input type="file" (change)="onFileChanged($event)"></td>
-                <!-- <button mat-button type="button" (click)="onUpload()">Upload</button> -->
-            </tr>
-            <tr>
-                <td><button mat-button type="submit"  [disabled]="!f.valid" >Next</button></td>
-            </tr>
-        </table>
-    </form>
-</div>
+          <input
+            matInput
+            type="date"
+            name="baptismDate"
+            [(ngModel)]="personData.baptismDate"
+            matInput
+            required
+            #baptismDate="ngModel"
+          />
+        </mat-form-field>
+        <div class="error" *ngIf="baptismDate.errors?.required">
+          Required field.
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-form-field>
+          <mat-label>place Of Baptism - مكان العماد</mat-label>
+
+          <input
+            matInput
+            name="placeOfBaptism"
+            type="text"
+            class="label"
+            [(ngModel)]="personData.placeOfBaptism"
+            required
+            #placeOfBaptism="ngModel"
+          />
+        </mat-form-field>
+        <div class="error" *ngIf="placeOfBaptism.errors?.required">
+          Required field.
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-form-field>
+          <mat-label>education Qualification -المؤهل</mat-label>
+
+          <input
+            matInput
+            name="edQualification"
+            type="text"
+            class="label"
+            [(ngModel)]="personData.edQualification"
+            required
+            #edQualification="ngModel"
+          />
+        </mat-form-field>
+        <div class="error" *ngIf="edQualification.errors?.required">
+          Required field.
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-form-field>
+          <mat-label>Graduation Date تاريخ التخرج</mat-label>
+
+          <input
+            matInput
+            type="date"
+            name="graduateDate"
+            [(ngModel)]="personData.graduateDate"
+            matInput
+            required
+            #graduateDate="ngModel"
+          />
+        </mat-form-field>
+        <div class="error" *ngIf="graduateDate.errors?.required">
+          Required field.
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-label>Attache Picture</mat-label>
+        <input type="file" (change)="onFileChanged($event)" />
+        <!-- <button mat-button type="button" (click)="onUpload()">Upload</button> -->
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button type="submit" [disabled]="!f.valid">Next</button>
+      </mat-list-item>
+    </mat-list>
+  </form>
+</mat-card>

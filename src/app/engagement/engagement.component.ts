@@ -36,9 +36,13 @@ export class EngagementComponent implements OnInit {
       contacts: this.fb.array([this.createContact()])
     });
 
-    this.personData = history.state.data;
-    console.log("fatherOfConfession " + this.personData.fatherOfConfession);
+    //this.personData = history.state.data;
+    //console.log("fatherOfConfession " + this.personData.fatherOfConfession);
 
+      // for testing
+  this.personData = new personData();
+  this.personData.emirateId = "555";
+  
     this.personData.engagedBefore = 'n';
     this.showSaveBtn[0] = false;
     this.showAddRowBtn[0] = true;

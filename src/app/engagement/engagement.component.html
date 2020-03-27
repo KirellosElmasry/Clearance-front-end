@@ -1,70 +1,123 @@
-<h3>Engagement Data </h3>
-<div class="container p-3">
-    <div class="row">
-        <div class="col-12">
-            <form [formGroup]="form" (submit)="submit()">
-                <div class="card">
-                    <label for=""> Engaged Before : </label>
-                    <mat-radio-group [(ngModel)]='personData.engagedBefore' [ngModelOptions]="{standalone: true}">
-                        <mat-radio-button class="example-margin" *ngFor="let op of statusOptions" [checked]="op.checked"
-                            [value]="op.value" (change)="radioChange($event)">{{ op.name}}</mat-radio-button>
-                    </mat-radio-group>
-                    <div *ngIf="personData.engagedBefore == 'y'">
-                        
-                        <div class="card-body" formArrayName="contacts">
-                            <div class="row">
-                                <div class="col-6" *ngFor="let contact of contactFormGroup.controls; let i = index;">
-                                    <div [formGroupName]="i" class="row">
-                                        <div class="form-group col-6">
-                                            <label>Engage Date</label>
+<h3>Engagement Data</h3>
 
-                                            <input type="date" formControlName="engageDate" matInput required>
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label>Engage Place</label>
-                                            <input class="form-control" formControlName="engagePlace" type="text"
-                                                required>
+<form [formGroup]="form" (submit)="submit()">
+  <mat-card>
+    <mat-list>
+      <mat-list-item>
+        <mat-label> Engaged Before : </mat-label>
+        <mat-radio-group
+          [(ngModel)]="personData.engagedBefore"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <mat-radio-button
+            class="example-margin"
+            *ngFor="let op of statusOptions"
+            [checked]="op.checked"
+            [value]="op.value"
+            (change)="radioChange($event)"
+            >{{ op.name }}</mat-radio-button
+          >
+        </mat-radio-group>
+      </mat-list-item>
+      <div *ngIf="personData.engagedBefore == 'y'">
+        <div class="card-body" formArrayName="contacts">
+          <div class="row">
+            <div
+              class="col-6"
+              *ngFor="let contact of contactFormGroup.controls; let i = index"
+            >
+              <div [formGroupName]="i" class="row">
+                <mat-list-item>
+                  <mat-form-field>
+                    <mat-label>Engage Date</mat-label>
 
-                                        </div>
-                                        <br>
-                                        <div class="form-group col-12">
-                                            <label>Priest Name</label>
-                                            <input class="form-control" formControlName="PriestName" type="text"
-                                                required>
-                                        </div><br>
-                                        <div class="form-group col-6">
-                                            <label>Attach engagement 1</label>
-                                            <input type="file" (change)="onFileChanged1($event)"
-                                                formControlName="engAttach" required>
-                                        </div>
-                                        <br>
-                                        <div class="form-group col-6">
-                                            <label>Attach engagement 2</label>
-                                            <input type="file" (change)="onFileChanged2($event)"
-                                                formControlName="anulAttach" required>
-                                        </div>
-                                        <div class="form-group col-12 text-right">
-                                            <!-- <button mat-button type="button" (click)="removeRow(i)"> Remove</button> -->
-                                            <button mat-button type="button" (click)="addRow(i)"
-                                                [disabled]="!showSaveBtn[i] || !showAddRowBtn[i]"> Add Row</button>
-                                            <button mat-button type="button" (click)="save(i)"
-                                                [disabled]="!form.valid || showSaveBtn[i]">Save</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="col-12">
-                            <button mat-button type="button" (click)="back()">Back</button>
-                            <button mat-button class="btn btn-success m-1"
-                                [disabled]="personData.engagedBefore == 'y' && !form.valid" type="submit">Next
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                    <input
+                      matInput
+                      type="date"
+                      formControlName="engageDate"
+                      matInput
+                      required
+                    />
+                  </mat-form-field>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-form-field>
+                    <mat-label>Engage Place</mat-label>
+                    <input
+                      matInput
+                      class="form-control"
+                      formControlName="engagePlace"
+                      type="text"
+                      required
+                    />
+                  </mat-form-field>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-form-field>
+                    <mat-label>Priest Name</mat-label>
+                    <input
+                      matInput
+                      class="form-control"
+                      formControlName="PriestName"
+                      type="text"
+                      required
+                    />
+                  </mat-form-field>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-label>Attach 1</mat-label>
+                  <input
+                    type="file"
+                    (change)="onFileChanged1($event)"
+                    formControlName="engAttach"
+                    required
+                  />
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-label>Attach 2</mat-label>
+                  <input
+                    type="file"
+                    (change)="onFileChanged2($event)"
+                    formControlName="anulAttach"
+                    required
+                  />
+                </mat-list-item>
+
+                <mat-list-item>
+                  <!-- <button mat-button type="button" (click)="removeRow(i)"> Remove</button> -->
+                  <button
+                    mat-button
+                    type="button"
+                    (click)="addRow(i)"
+                    [disabled]="!showSaveBtn[i] || !showAddRowBtn[i]"
+                  >
+                    Add Row
+                  </button>
+                  <button
+                    mat-button
+                    type="button"
+                    (click)="save(i)"
+                    [disabled]="!form.valid || showSaveBtn[i]"
+                  >
+                    Save
+                  </button>
+                </mat-list-item>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
+      <mat-list-item>
+        <button mat-button type="button" (click)="back()">Back</button>
+        <button
+          mat-button
+          class="btn btn-success m-1"
+          [disabled]="personData.engagedBefore == 'y' && !form.valid"
+          type="submit"
+        >
+          Next
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</form>

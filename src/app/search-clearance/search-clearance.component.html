@@ -1,20 +1,54 @@
-<div class="body">
-    <form (ngSubmit)="searchPerson()" #f="ngForm">
-        <p>Search for Clearance</p>
-        <div>
-            <label for="emirateId">Emirate ID</label>
-            <input type="text" [(ngModel)]='personalData.emirateId' name="emirateId" required #eid="ngModel">
-        </div>
-        <div class="error" *ngIf="eid.errors?.required">
-            Emirate ID is required.
-        </div>
-        <button mat-button class="btn" type="submit" [disabled]="!f.valid">Search</button>
-    </form>
-    <div>
-        <mat-label>{{result.message}}</mat-label><br>
-        <button mat-button class="btn" *ngIf="showcreateOtherClearance" (click)="createOtherClearance()">Create Other Clearance</button><br>
-        <button mat-button class="btn" *ngIf="showViewClearance" (click)="viewClearance()">View Clearance</button><br>
-        <button mat-button class="btn" *ngIf="showNewClearance" (click)="newClearance()">New Clearance</button>
-    </div>
-
+<form (ngSubmit)="searchPerson()" #f="ngForm">
+  <p>Search for Clearance</p>
+  <mat-list>
+    <mat-list-item>
+      <mat-form-field>
+        <mat-label for="emirateId">Emirate ID</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="personalData.emirateId"
+          name="emirateId"
+          required
+          #eid="ngModel"
+        />
+      </mat-form-field>
+      <div class="error" *ngIf="eid.errors?.required">
+        Emirate ID is required.
+      </div>
+    </mat-list-item>
+    <mat-list-item>
+      <button mat-button class="btn" type="submit" [disabled]="!f.valid">
+        Search
+      </button>
+    </mat-list-item>
+  </mat-list>
+</form>
+<div>
+  <mat-label>{{ result.message }}</mat-label
+  ><br />
+  <button
+    mat-button
+    class="btn"
+    *ngIf="showcreateOtherClearance"
+    (click)="createOtherClearance()"
+  >
+    Create Other Clearance</button
+  ><br />
+  <button
+    mat-button
+    class="btn"
+    *ngIf="showViewClearance"
+    (click)="viewClearance()"
+  >
+    View Clearance</button
+  ><br />
+  <button
+    mat-button
+    class="btn"
+    *ngIf="showNewClearance"
+    (click)="newClearance()"
+  >
+    New Clearance
+  </button>
 </div>

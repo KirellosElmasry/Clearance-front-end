@@ -1,73 +1,132 @@
-<h3>Mariage Data </h3>
-<div class="container p-3">
-    <div class="row">
-        <div class="col-12">
-            <form [formGroup]="form" (submit)="submit()">
-                <div class="card">
-                    <label for=""> Maried Before : </label>
-                    <mat-radio-group [(ngModel)]='personData.marriedBefore' [ngModelOptions]="{standalone: true}">
-                        <mat-radio-button class="example-margin" *ngFor="let op of statusOptions" [checked]="op.checked"
-                            [value]="op.value" (change)="radioChange($event)">{{ op.name}}</mat-radio-button>
-                    </mat-radio-group>
-                    <div *ngIf="personData.marriedBefore == 'y'">
-                       
-                        <div class="card-body" formArrayName="contacts">
-                            <div class="row">
-                                <div class="col-6" *ngFor="let contact of contactFormGroup.controls; let i = index;">
-                                    <div [formGroupName]="i" class="row">
-                                        <div class="form-group col-6">
-                                            <label>Mariage Date</label>
+<h3>Mariage Data</h3>
 
-                                            <input type="date" formControlName="marriageDate" matInput required>
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label>Mariage Place</label>
-                                            <input class="form-control" formControlName="marriagePlace" type="text"
-                                                required>
+<form [formGroup]="form" (submit)="submit()">
+  <mat-card>
+    <mat-list>
+      <mat-list-item>
+        <mat-label> Maried Before : </mat-label>
+        <mat-radio-group
+          [(ngModel)]="personData.marriedBefore"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <mat-radio-button
+            class="example-margin"
+            *ngFor="let op of statusOptions"
+            [checked]="op.checked"
+            [value]="op.value"
+            (change)="radioChange($event)"
+            >{{ op.name }}</mat-radio-button
+          >
+        </mat-radio-group>
+      </mat-list-item>
+      <div *ngIf="personData.marriedBefore == 'y'">
+        <div class="card-body" formArrayName="contacts">
+          <div
+            class="col-6"
+            *ngFor="let contact of contactFormGroup.controls; let i = index"
+          >
+            <div [formGroupName]="i" class="row">
+              <mat-list-item>
+                <mat-form-field>
+                  <mat-label>Mariage Date</mat-label>
+                  <input
+                    matInput
+                    type="date"
+                    formControlName="marriageDate"
+                    required
+                  />
+                </mat-form-field>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-form-field>
+                  <mat-label>Mariage Place</mat-label>
+                  <input
+                    matInput
+                    matInputclass="form-control"
+                    formControlName="marriagePlace"
+                    type="text"
+                    required
+                  />
+                </mat-form-field>
+              </mat-list-item>
 
-                                        </div>
-                                        <br>
-                                        <div class="form-group col-12">
-                                            <label>Priest Name</label>
-                                            <input class="form-control" formControlName="priestFather" type="text"
-                                                required>
-                                        </div><br>
-                                        <div class="form-group col-12">
-                                            <label>Status</label>
-                                            <mat-select name="mariageStatus" style="width: 230px;"  formControlName="status" [(ngModel)]='personData.mariageStatus'>
-                                                <mat-option *ngFor="let status of mariageStatus" [value]="status.value">
-                                                    {{status.name}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </div>
-                                        <br>
-                                        <div class="form-group col-12">
-                                            <label>Kind Of Marriage</label>
-                                            <input class="form-control" formControlName="kindOfMarriage" type="text"
-                                                required>
-                                        </div><br>
-                                        <div class="form-group col-12 text-right">
-                                            <!-- <button mat-button type="button" (click)="removeRow(i)"> Remove</button> -->
-                                            <button mat-button type="button" (click)="addRow(i)"
-                                                [disabled]="!showSaveBtn[i] || !showAddRowBtn[i]"> Add Row</button>
-                                            <button mat-button type="button" (click)="save(i)"
-                                                [disabled]="!form.valid || showSaveBtn[i]">Save</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="col-12">
-                            <button mat-button type="button" (click)="back()">Back</button>
-                            <button mat-button class="btn btn-success m-1"
-                                [disabled]="personData.engagedBefore == 'y' && !form.valid" type="submit">Next
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+              <mat-list-item>
+                <mat-form-field>
+                  <mat-label>Priest Name</mat-label>
+                  <input
+                    matInput
+                    matInputclass="form-control"
+                    formControlName="priestFather"
+                    type="text"
+                    required
+                  />
+                </mat-form-field>
+              </mat-list-item>
+              <mat-list-item>
+                <mat-form-field>
+                  <mat-label>Status</mat-label>
+                  <mat-select
+                    name="mariageStatus"
+                    formControlName="status"
+                    [(ngModel)]="personData.mariageStatus"
+                  >
+                    <mat-option
+                      *ngFor="let status of mariageStatus"
+                      [value]="status.value"
+                    >
+                      {{ status.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-list-item>
+
+              <mat-list-item>
+                <mat-form-field>
+                  <mat-label>Kind Of Marriage</mat-label>
+                  <input
+                    matInput
+                    matInputclass="form-control"
+                    formControlName="kindOfMarriage"
+                    type="text"
+                    required
+                  />
+                </mat-form-field>
+              </mat-list-item>
+
+              <mat-list-item>
+                <!-- <button mat-button type="button" (click)="removeRow(i)"> Remove</button> -->
+                <button
+                  mat-button
+                  type="button"
+                  (click)="addRow(i)"
+                  [disabled]="!showSaveBtn[i] || !showAddRowBtn[i]"
+                >
+                  Add Row
+                </button>
+                <button
+                  mat-button
+                  type="button"
+                  (click)="save(i)"
+                  [disabled]="!form.valid || showSaveBtn[i]"
+                >
+                  Save
+                </button>
+              </mat-list-item>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
+      <mat-list-item>
+        <button mat-button type="button" (click)="back()">Back</button>
+        <button
+          mat-button
+          class="btn btn-success m-1"
+          [disabled]="personData.engagedBefore == 'y' && !form.valid"
+          type="submit"
+        >
+          Next
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</form>

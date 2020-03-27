@@ -1,3 +1,5 @@
+import {MatListModule} from '@angular/material/list';
+import {MatCardModule} from '@angular/material/card';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -19,10 +21,11 @@ import { ChildrensComponent } from './childrens/childrens.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
-import { MatToolbarModule,MatIconModule,MatCardModule,MatButtonModule,MatProgressBarModule } from '@angular/material';
+import { MatToolbarModule,MatIconModule,MatButtonModule,MatProgressBarModule } from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { TestComponent } from './test/test.component';
 import { SocialStatusComponent } from './social-status/social-status.component';
+import {MatInputModule} from '@angular/material/input';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -71,8 +74,8 @@ const appRoutes: Routes = [
     MatToolbarModule,  
     MatIconModule,  
     MatButtonModule,  
-    MatCardModule,  
-    MatProgressBarModule, MatFormFieldModule
+    MatCardModule,  MatListModule,
+    MatProgressBarModule, MatFormFieldModule,MatInputModule
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent]

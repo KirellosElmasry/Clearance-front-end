@@ -59,6 +59,9 @@ export class ChangeablePersonalDataComponent implements OnInit {
 
     this.personData = history.state.data;
     console.log("placeOfBaptism " + this.personData.placeOfBaptism);
+      // for testing
+  // this.personData = new personData();
+  // this.personData.emirateId = "555";
   }
 
   next(){

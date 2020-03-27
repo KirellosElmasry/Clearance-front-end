@@ -15,9 +15,12 @@ export class FixedPersonalDataComponent implements OnInit {
   constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
-    this.personData = history.state.data;
-    console.log("eid " + this.personData.emirateId);
-  }
+  this.personData = history.state.data;
+  console.log("eid " + this.personData.emirateId);
+  // for testing
+  //this.personData = new personData();
+  //this.personData.emirateId = "555";
+}
 
   onFileChanged(event) {
     this.selectedFile = event.target.files[0];

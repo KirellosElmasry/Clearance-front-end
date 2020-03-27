@@ -1,30 +1,59 @@
-<div class="body">
-    <h2>Login</h2>
-    <form (ngSubmit)="onLogin()" #f="ngForm">
-        <div class="container">
-            <div class="row">
-                <mat-label for="uname">User Name </mat-label>
-                <input matInput type="text" [(ngModel)]='userName' placeholder="Enter Username" name="uname" required
-                    #uname="ngModel">
+<h2>Login</h2>
+<form (ngSubmit)="onLogin()" #f="ngForm">
+  <mat-card class="login-card">
+    <mat-list role="list">
+      <mat-card-content>
+        <mat-list-item>
+          <mat-form-field class="example-full-width">
+            <mat-label for="uname">User Name </mat-label>
+            <input
+              matInput
+              type="text"
+              [(ngModel)]="userName"
+              placeholder="Enter Username"
+              name="uname"
+              required
+              #uname="ngModel"
+            />
+          </mat-form-field>
+          <div class="error" *ngIf="uname.errors?.required">
+            User Name is required.
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-form-field class="example-full-width">
+            <mat-label for="psw">Password </mat-label>
+            <input
+              matInput
+              type="password"
+              [(ngModel)]="password"
+              placeholder="Enter Password"
+              name="psw"
+              required
+              #psw="ngModel"
+            />
+          </mat-form-field>
 
-                <div class="error" *ngIf="uname.errors?.required">
-                    User Name is required.
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <mat-label for="psw">Password </mat-label>
-                <input matInput type="password" [(ngModel)]='password' placeholder="Enter Password" name="psw" required
-                    #psw="ngModel">
-                <div class="error" *ngIf="psw.errors?.required">
-                    password is required.
-                </div>
-            </div>
-            <br>
-            <button mat-button class="btn-login" type="submit" [disabled]="!f.valid">Login</button>
-        </div>
-    </form>
-    <div *ngIf="showSpinner">
-        <mat-spinner></mat-spinner>
-    </div>
+          <div class="error" *ngIf="psw.errors?.required">
+            password is required.
+          </div>
+        </mat-list-item>
+      </mat-card-content>
+      <mat-list-item>
+        <mat-card-actions>
+          <button
+            mat-button
+            class="btn-login"
+            type="submit"
+            [disabled]="!f.valid"
+          >
+            Login
+          </button>
+        </mat-card-actions>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</form>
+<div *ngIf="showSpinner">
+  <mat-spinner></mat-spinner>
 </div>
