@@ -1,6 +1,17 @@
 export class dto{
     eid: string;
     code: number;
+    emirateId: string;
+    job: string;
+    militaryService: string;
+    recognitionRegularityRate: string;
+    intakeRate: string;
+    fatherOfConfession: string;
+    gender: string;
+    churchId: string;
+    fromChurch: string;
+    jobAddress: string;
+    address: string;
     message:string;
     userId: string;   
     isPreviousEngagement:string;

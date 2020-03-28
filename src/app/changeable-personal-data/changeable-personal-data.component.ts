@@ -3,6 +3,7 @@ import { personData } from '../utility/personalData';
 import { Router } from '@angular/router';
 import { Church } from '../utility/church';
 import { UserService } from '../services/user.service';
+import { dto } from '../utility/dto';
 
 export interface Status {
   value: string;
@@ -65,8 +66,38 @@ export class ChangeablePersonalDataComponent implements OnInit {
   }
 
   next(){
+    //call addNewClearance
 
-    this.router.navigate(['engagement'], { state: { data: this.personData } });
+    let jsonObj = new dto();
+
+    jsonObj.emirateId = this.personData.emirateId;
+    jsonObj.address = this.personData.address;
+    jsonObj.job = this.personData.jobTitle;
+    jsonObj.jobAddress = this.personData.jobAddress;
+    jsonObj.militaryService = this.personData.militaryStatus;
+    jsonObj.fromChurch = this.personData.relatedChurch;
+    jsonObj.recognitionRegularityRate = this.personData.recognitionRegularityRate;
+    jsonObj.intakeRate = this.personData.intakeRate;
+    jsonObj.fatherOfConfession = this.personData.fatherOfConfession;
+    jsonObj.gender = this.personData.gender;
+    jsonObj.churchId = this.personData.churchId.toString();
+    jsonObj.userId = sessionStorage.getItem("userId");
+    
+    this.userService.addNewClearance(jsonObj).subscribe(
+      data => {
+        if (data.code == "200") {
+          console.log(" success " );
+          this.router.navigate(['engagement'], { state: { data: this.personData } });
+          
+        } else {
+          alert("Error Happened " + data.message);
+        }
+      },
+      err => {
+        console.log("error " + err.message);
+      }
+    );
+
 
   }
 

@@ -18,9 +18,9 @@
           />
         </mat-form-field>
 
-        <div class="error" *ngIf="eid.errors?.required">
+        <!-- <div class="error" *ngIf="eid.errors?.required">
           EID is required.
-        </div>
+        </div> -->
       </mat-list-item>
 
       <mat-list-item>
@@ -38,9 +38,9 @@
           />
         </mat-form-field>
 
-        <div class="error" *ngIf="name.errors?.required">
+        <!-- <div class="error" *ngIf="name.errors?.required">
           Required field.
-        </div>
+        </div> -->
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
@@ -56,9 +56,9 @@
             #birthDate="ngModel"
           />
         </mat-form-field>
-        <div class="error" *ngIf="birthDate.errors?.required">
+        <!-- <div class="error" *ngIf="birthDate.errors?.required">
           Required field.
-        </div>
+        </div> -->
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
@@ -74,9 +74,9 @@
             #placeOfBirth="ngModel"
           />
         </mat-form-field>
-        <div class="error" *ngIf="placeOfBirth.errors?.required">
+        <!-- <div class="error" *ngIf="placeOfBirth.errors?.required">
           Required field.
-        </div>
+        </div> -->
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
@@ -92,9 +92,9 @@
             #baptismDate="ngModel"
           />
         </mat-form-field>
-        <div class="error" *ngIf="baptismDate.errors?.required">
+        <!-- <div class="error" *ngIf="baptismDate.errors?.required">
           Required field.
-        </div>
+        </div> -->
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
@@ -110,9 +110,9 @@
             #placeOfBaptism="ngModel"
           />
         </mat-form-field>
-        <div class="error" *ngIf="placeOfBaptism.errors?.required">
+        <!-- <div class="error" *ngIf="placeOfBaptism.errors?.required">
           Required field.
-        </div>
+        </div> -->
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
@@ -128,9 +128,9 @@
             #edQualification="ngModel"
           />
         </mat-form-field>
-        <div class="error" *ngIf="edQualification.errors?.required">
+        <!-- <div class="error" *ngIf="edQualification.errors?.required">
           Required field.
-        </div>
+        </div> -->
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
@@ -146,13 +146,13 @@
             #graduateDate="ngModel"
           />
         </mat-form-field>
-        <div class="error" *ngIf="graduateDate.errors?.required">
+        <!-- <div class="error" *ngIf="graduateDate.errors?.required">
           Required field.
-        </div>
+        </div> -->
       </mat-list-item>
       <mat-list-item>
-        <mat-label>Attache Picture</mat-label>
-        <input type="file" (change)="onFileChanged($event)" />
+        <mat-label>Attache Picture </mat-label>
+        <input type="file" (change)="onFileChanged($event)" required/>
         <!-- <button mat-button type="button" (click)="onUpload()">Upload</button> -->
       </mat-list-item>
       <mat-list-item>
@@ -160,4 +160,4 @@
       </mat-list-item>
     </mat-list>
   </form>
-</mat-card>
+  <label class="required-field" *ngIf="!f.valid">* Indicates required field.</label></mat-card>

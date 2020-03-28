@@ -19,6 +19,7 @@ export class MarriageComponent implements OnInit {
 
   showSaveBtn: boolean[] = [];
   showAddRowBtn: boolean[] = [];
+  activateNextBtn = false;
 
   statusOptions = [
     { value: 'y', name: 'Yes', checked: false },
@@ -112,6 +113,8 @@ export class MarriageComponent implements OnInit {
             alert(" success ");
             this.showSaveBtn[i] = true;
             this.showAddRowBtn[i] = true;
+            this.activateNextBtn = true;
+            
           } else {
             alert("Error Happened " + data.message);
           }

@@ -20,6 +20,7 @@ export class EngagementComponent implements OnInit {
   selectedFile2: File;
   showSaveBtn: boolean[] = [];
   showAddRowBtn: boolean[] = [];
+  activateNextBtn = false;
 
   statusOptions = [
     { value: 'y', name: 'Yes', checked: false },
@@ -36,14 +37,16 @@ export class EngagementComponent implements OnInit {
       contacts: this.fb.array([this.createContact()])
     });
 
-    //this.personData = history.state.data;
-    //console.log("fatherOfConfession " + this.personData.fatherOfConfession);
+    this.personData = history.state.data;
+    console.log("fatherOfConfession " + this.personData.fatherOfConfession);
 
-      // for testing
-  this.personData = new personData();
-  this.personData.emirateId = "555";
+  // for testing
+  //this.personData = new personData();
+  //this.personData.emirateId = "555";
   
+  if(!this.personData.engagedBefore){
     this.personData.engagedBefore = 'n';
+  }
     this.showSaveBtn[0] = false;
     this.showAddRowBtn[0] = true;
 
@@ -114,6 +117,7 @@ export class EngagementComponent implements OnInit {
             alert(" success ");
             this.showSaveBtn[i] = true;
             this.showAddRowBtn[i] = true;
+            this.activateNextBtn = true;
           } else {
             alert("Error Happened " + data.message);
           }

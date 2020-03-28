@@ -35,3 +35,28 @@ label{
 .error {
   color: red;
 }
+
+.mat-button {
+  background-color: #2991ab;
+  color: white;
+  padding: 14px 20px;
+  margin: 10px 10px !important; 
+  border: none;
+  cursor: pointer;
+}
+
+.mat-button[disabled]{
+  background-color: rgb(233, 233, 233);
+}
+
+mat-card{
+   max-width: 400px;
+ }
+
+ mat-form-field{
+  min-width: 260px;
+ }
+
+ .required-field{
+   color: red;
+ }

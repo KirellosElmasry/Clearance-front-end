@@ -1,58 +1,104 @@
-<h3>Children Data </h3>
+<h3>Children Data</h3>
 <mat-card>
-            <form [formGroup]="form" (submit)="submit()">
-                <mat-list-item>
-                    <mat-label> Has Children : </mat-label>
-                    <mat-radio-group [(ngModel)]='personData.hasChildren' [ngModelOptions]="{standalone: true}">
-                        <mat-radio-button class="example-margin" *ngFor="let op of statusOptions" [checked]="op.checked"
-                            [value]="op.value" (change)="radioChange($event)">{{ op.name}}</mat-radio-button>
-                    </mat-radio-group>
-                </mat-list-item>
-                    <div *ngIf="personData.hasChildren == 'y'">                       
-                        <div class="card-body" formArrayName="contacts">
-                            
-                                <div class="col-6" *ngFor="let contact of contactFormGroup.controls; let i = index;">
-                                    <div [formGroupName]="i" class="row">
-                                        <mat-list-item><mat-form-field>
-                                            <mat-label>Child Name</mat-label>
-                                            <input matInput class="form-control" formControlName="childName" type="text"
-                                                required>
+  <form [formGroup]="form" (submit)="submit()" #f="ngForm">
+    <mat-list>
+      <mat-list-item>
+        <mat-label> Has Children : </mat-label>
+        <mat-radio-group
+          [(ngModel)]="personData.hasChildren"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <mat-radio-button
+            class="example-margin"
+            *ngFor="let op of statusOptions"
+            [checked]="op.checked"
+            [value]="op.value"
+            (change)="radioChange($event)"
+            >{{ op.name }}</mat-radio-button
+          >
+        </mat-radio-group>
+      </mat-list-item>
+      <div *ngIf="personData.hasChildren == 'y'">
+        <div class="card-body" formArrayName="contacts">
+          <div
+            class="col-6"
+            *ngFor="let contact of contactFormGroup.controls; let i = index"
+          >
+            <div [formGroupName]="i" class="row">
+              <mat-list-item
+                ><mat-form-field>
+                  <mat-label>Child Name</mat-label>
+                  <input
+                    matInput
+                    class="form-control"
+                    formControlName="childName"
+                    type="text"
+                    required
+                  />
+                </mat-form-field>
+              </mat-list-item>
+              <mat-list-item
+                ><mat-form-field>
+                  <mat-label>Child Age</mat-label>
 
-                                            </mat-form-field>
-                                        </mat-list-item>
-                                        <mat-list-item><mat-form-field>
-                                            <mat-label>Child Age</mat-label>
+                  <input
+                    matInput
+                    class="form-control"
+                    formControlName="childAge"
+                    type="number"
+                    required
+                  />
+                </mat-form-field>
+              </mat-list-item>
 
-                                            <input matInput class="form-control" formControlName="childAge" type="number"
-                                            required>
+              <mat-list-item>
+                <mat-form-field>
+                  <mat-label>Paptism</mat-label>
+                  <input
+                    matInput
+                    class="form-control"
+                    formControlName="paptism"
+                    type="text"
+                    required
+                  />
+                </mat-form-field>
+              </mat-list-item>
+              <mat-list-item>
+                <!-- <button mat-button type="button" (click)="removeRow(i)"> Remove</button> -->
+                <button
+                  mat-button
+                  type="button"
+                  (click)="addRow(i)"
+                  [disabled]="!showSaveBtn[i] || !showAddRowBtn[i]"
+                >
+                  Add Row
+                </button>
+                <button
+                  mat-button
+                  type="button"
+                  (click)="save(i)"
+                  [disabled]="!form.valid || showSaveBtn[i]"
+                >
+                  Save
+                </button>
+              </mat-list-item>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                                        </mat-form-field>
-                                    </mat-list-item>
-                                        
-                                    <mat-list-item>
-                                        <mat-form-field>
-                                            <mat-label>Paptism</mat-label>
-                                            <input matInput class="form-control" formControlName="paptism" type="text"
-                                                required>
-                                            </mat-form-field>
-                                        </mat-list-item>                                      
-                                        <mat-list-item>
-                                            <!-- <button mat-button type="button" (click)="removeRow(i)"> Remove</button> -->
-                                            <button mat-button type="button" (click)="addRow(i)"
-                                                [disabled]="!showSaveBtn[i] || !showAddRowBtn[i]"> Add Row</button>
-                                            <button mat-button type="button" (click)="save(i)"
-                                                [disabled]="!form.valid || showSaveBtn[i]">Save</button>
-                                            </mat-list-item>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <mat-list-item>
-                            <button mat-button type="button" (click)="back()">Back</button>
-                            <button mat-button class="btn btn-success m-1"
-                                [disabled]="personData.engagedBefore == 'y' && !form.valid" type="submit">Next
-                            </button>
-                        </mat-list-item>
-            </form>
-        </mat-card>
+      <mat-list-item>
+        <button mat-button type="button" (click)="back()">Back</button>
+        <button
+          mat-button
+          class="btn btn-success m-1"
+          [disabled]="personData.hasChildren == 'y' && !activateNextBtn"
+          type="submit"
+        >
+          Next
+        </button>
+      </mat-list-item>
+      <label class="required-field" *ngIf="!f.valid && personData.hasChildren == 'y'">* Indicates required field.</label>
+    </mat-list>
+  </form>
+</mat-card>

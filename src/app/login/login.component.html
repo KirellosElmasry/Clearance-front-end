@@ -16,9 +16,6 @@
               #uname="ngModel"
             />
           </mat-form-field>
-          <div class="error" *ngIf="uname.errors?.required">
-            User Name is required.
-          </div>
         </mat-list-item>
         <mat-list-item>
           <mat-form-field class="example-full-width">
@@ -33,10 +30,6 @@
               #psw="ngModel"
             />
           </mat-form-field>
-
-          <div class="error" *ngIf="psw.errors?.required">
-            password is required.
-          </div>
         </mat-list-item>
       </mat-card-content>
       <mat-list-item>
@@ -51,7 +44,9 @@
           </button>
         </mat-card-actions>
       </mat-list-item>
+      <label class="required-field" *ngIf="!f.valid" >* Indicates required field.</label>
     </mat-list>
+
   </mat-card>
 </form>
 <div *ngIf="showSpinner">

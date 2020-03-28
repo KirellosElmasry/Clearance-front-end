@@ -1,6 +1,6 @@
 <h3>Social Status</h3>
 <mat-card>
-  <form action="">
+  <form #f="ngForm">
     <mat-list>
       <mat-list-item>
         <mat-form-field>
@@ -8,7 +8,7 @@
           <mat-select
             margin
             name="intake"
-            [(ngModel)]="personData.socialStatus"
+            [(ngModel)]="personData.socialStatus" required
           >
             <mat-option
               *ngFor="let status of socialStatus"
@@ -51,8 +51,9 @@
       </mat-list-item>
       <mat-list-item>
         <button mat-button type="button" (click)="back()">Back</button>
-        <button mat-button (click)="updateClearanceFinal()">Finish</button>
+        <button mat-button (click)="updateClearanceFinal()" [disabled]="!f.valid">Finish</button>
       </mat-list-item>
+      <label class="required-field" *ngIf="!f.valid">* Indicates required field.</label>
     </mat-list>
   </form>
 </mat-card>

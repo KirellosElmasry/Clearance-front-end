@@ -14,9 +14,9 @@
             #address="ngModel"
           />
         </mat-form-field>
-              <div class="error" *ngIf="address.errors?.required">
+              <!-- <div class="error" *ngIf="address.errors?.required">
                 Required field.
-              </div>
+              </div> -->
       </mat-list-item>
 
       <mat-list-item>
@@ -32,9 +32,9 @@
             #jobTitle="ngModel"
           />
         </mat-form-field>
-              <div class="error" *ngIf="jobTitle.errors?.required">
+              <!-- <div class="error" *ngIf="jobTitle.errors?.required">
                 Required field.
-              </div>
+              </div> -->
       </mat-list-item>
 
       <mat-list-item>
@@ -50,21 +50,24 @@
             #jobAddress="ngModel"
             />
         </mat-form-field>
-                <div class="error" *ngIf="jobAddress.errors?.required">
+                <!-- <div class="error" *ngIf="jobAddress.errors?.required">
                 Required field.
-              </div>
+              </div> -->
       </mat-list-item>
 
       <mat-list-item>
         <mat-form-field>
           <mat-label>Gender - الجنس</mat-label>
 
-          <mat-select name="gender" [(ngModel)]="personData.gender">
+          <mat-select name="gender" [(ngModel)]="personData.gender" required>
             <mat-option *ngFor="let status of genders" [value]="status.value">
               {{ status.viewValueEN }} - {{ status.viewValueAR }}
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <!-- <div class="error" *ngIf="personData.gender.errors?.required">
+          Required field.
+        </div> -->
       </mat-list-item>
 
       <mat-list-item *ngIf="personData.gender == 'male'">
@@ -72,7 +75,7 @@
           <mat-label>Military Status - الموقف من التجنيد </mat-label>
 
           <mat-select
-            name="militaryStatus"
+            name="militaryStatus" required
             [(ngModel)]="personData.militaryStatus"
           >
             <mat-option
@@ -98,9 +101,9 @@
             #relatedChurch="ngModel"
           />
         </mat-form-field>
-              <div class="error" *ngIf="relatedChurch.errors?.required">
+              <!-- <div class="error" *ngIf="relatedChurch.errors?.required">
                 Required field.
-              </div>
+              </div> -->
       </mat-list-item>
 
       <mat-list-item>
@@ -108,7 +111,7 @@
           <mat-label>confession Rate - معدل الاعتراف </mat-label>
 
           <mat-select
-            name="confessionRate"
+            name="confessionRate" required
             [(ngModel)]="personData.recognitionRegularityRate"
           >
             <mat-option
@@ -125,7 +128,7 @@
         <mat-form-field>
           <mat-label>Intake Rate - معدل التناول</mat-label>
 
-          <mat-select name="intake" [(ngModel)]="personData.intakeRate">
+          <mat-select name="intake" required [(ngModel)]="personData.intakeRate">
             <mat-option
               *ngFor="let state of confessionRate"
               [value]="state.value"
@@ -151,13 +154,16 @@
             #fatherOfConfession="ngModel"
           />
         </mat-form-field>
+        <!-- <div class="error" *ngIf="fatherOfConfession.errors?.required">
+          Required field.
+        </div> -->
       </mat-list-item>
 
       <mat-list-item>
         <mat-form-field>
           <mat-label>Church - الكنيسه</mat-label>
 
-          <mat-select name="church" [(ngModel)]="personData.churchId">
+          <mat-select name="church" required [(ngModel)]="personData.churchId">
             <mat-option
               *ngFor="let church of churchList"
               [value]="church.churchId"
@@ -180,4 +186,5 @@
       </mat-list-item>
     </mat-list>
   </form>
+  <label class="required-field" *ngIf="!f.valid">* Indicates required field.</label>
 </mat-card>

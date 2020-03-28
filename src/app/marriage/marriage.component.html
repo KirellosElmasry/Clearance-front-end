@@ -1,6 +1,6 @@
 <h3>Mariage Data</h3>
 
-<form [formGroup]="form" (submit)="submit()">
+<form [formGroup]="form" (submit)="submit()" #f="ngForm">
   <mat-card>
     <mat-list>
       <mat-list-item>
@@ -121,12 +121,13 @@
         <button
           mat-button
           class="btn btn-success m-1"
-          [disabled]="personData.engagedBefore == 'y' && !form.valid"
+          [disabled]="personData.marriedBefore== 'y' && !activateNextBtn"
           type="submit"
         >
           Next
         </button>
       </mat-list-item>
+      <label class="required-field" *ngIf="!f.valid && personData.marriedBefore == 'y'">* Indicates required field.</label>
     </mat-list>
   </mat-card>
 </form>
