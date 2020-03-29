@@ -36,7 +36,14 @@ export class EngagementComponent implements OnInit {
     this.form = this.fb.group({
       contacts: this.fb.array([this.createContact()])
     });
-
+    
+    // this.form.value.contacts = [{
+    //   engageDate: "2020-03-04",
+    //   engagePlace: "tanta",
+    //   PriestName: "polos",
+    //   anulAttach: "C:\fakepath\WhatsApp Image 2020-03-05 at 9.56.36 PM.jpeg",
+    //   engAttach: "C:\fakepath\WhatsApp Image 2020-03-05 at 9.56.36 PM.jpeg"}];
+    
     this.personData = history.state.data;
     console.log("fatherOfConfession " + this.personData.fatherOfConfession);
 
@@ -90,12 +97,6 @@ export class EngagementComponent implements OnInit {
   }
 
   save(i) {
-    console.log(this.getContactsFormGroup(i).controls['engageDate'].value);
-    console.log(this.getContactsFormGroup(i).controls['engagePlace'].value);
-    console.log(this.getContactsFormGroup(i).controls['PriestName'].value);
-
-    console.log(this.getContactsFormGroup(i).controls['engAttach'].value);
-    console.log(this.getContactsFormGroup(i).controls['anulAttach'].value);
 
     const formData = new FormData();
 
@@ -131,7 +132,7 @@ export class EngagementComponent implements OnInit {
     this.selectedFile1 = event.target.files[0];
 
     if (this.selectedFile1) {
-      console.log("File name : " + this.selectedFile1.name);
+      console.log("File name 1: " + this.selectedFile1.name);
     }
   }
 
@@ -139,7 +140,7 @@ export class EngagementComponent implements OnInit {
     this.selectedFile2 = event.target.files[0];
 
     if (this.selectedFile2) {
-      console.log("File name : " + this.selectedFile2.name);
+      console.log("File name 2: " + this.selectedFile2.name);
     }
   }
 

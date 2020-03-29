@@ -49,6 +49,10 @@ label{
   background-color: rgb(233, 233, 233);
 }
 
+mat-list-item{
+  margin: 10px;
+}
+
 mat-card{
    max-width: 400px;
  }
