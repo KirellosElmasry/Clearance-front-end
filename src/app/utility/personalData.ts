@@ -1,3 +1,5 @@
+import { Engagement } from './engagement';
+
 export class personData
 {
     referenceNumber: string;
@@ -63,4 +65,5 @@ export class personData
     socialStatus:string;
     sourceOfPermitMarriage:string;   
     dateOfPermitMarriage:Date;
+    engagementData: Engagement[]=[];
 }

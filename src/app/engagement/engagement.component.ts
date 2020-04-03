@@ -1,21 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from "@angular/core";
+import { Router } from "@angular/router";
 import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
-import { personData } from '../utility/personalData';
-import { UserService } from '../services/user.service';
-import { dto } from '../utility/dto';
+import { personData } from "../utility/personalData";
+import { UserService } from "../services/user.service";
+import { dto } from "../utility/dto";
+import { Engagement } from "../utility/engagement";
 
 @Component({
-  selector: 'app-engagement',
-  templateUrl: './engagement.component.html',
-  styleUrls: ['./engagement.component.css']
+  selector: "app-engagement",
+  templateUrl: "./engagement.component.html",
+  styleUrls: ["./engagement.component.css"]
 })
 export class EngagementComponent implements OnInit {
-
-  personData = new personData();
+  personData: personData;
 
   public form: FormGroup;
-  public contactList: FormArray;
+  public engageFormArray: FormArray;
   selectedFile1: File;
   selectedFile2: File;
   showSaveBtn: boolean[] = [];
@@ -23,51 +23,70 @@ export class EngagementComponent implements OnInit {
   activateNextBtn = false;
 
   statusOptions = [
-    { value: 'y', name: 'Yes', checked: false },
-    { value: 'n', name: 'No', checked: true }
+    { value: "y", name: "Yes", checked: false },
+    { value: "n", name: "No", checked: true }
   ];
 
-  constructor(private router: Router, private fb: FormBuilder, private userService: UserService) {
-
-  }
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
-
     this.form = this.fb.group({
-      contacts: this.fb.array([this.createContact()])
+      contacts: this.fb.array([])
     });
-    
-    // this.form.value.contacts = [{
-    //   engageDate: "2020-03-04",
-    //   engagePlace: "tanta",
-    //   PriestName: "polos",
-    //   anulAttach: "C:\fakepath\WhatsApp Image 2020-03-05 at 9.56.36 PM.jpeg",
-    //   engAttach: "C:\fakepath\WhatsApp Image 2020-03-05 at 9.56.36 PM.jpeg"}];
-    
-    this.personData = history.state.data;
-    console.log("fatherOfConfession " + this.personData.fatherOfConfession);
 
-  // for testing
-  //this.personData = new personData();
-  //this.personData.emirateId = "555";
-  
-  if(!this.personData.engagedBefore){
-    this.personData.engagedBefore = 'n';
-  }
+    if (history.state.data) {
+      this.personData = history.state.data;
+    }
+    // for testing
+    //   else{
+    //   console.log(this.personData);
+    //   if(!this.personData){
+    //     this.personData = new personData();
+    //     this.personData.emirateId = "555";
+    //   }
+    // }
+
+    if (!this.personData.engagedBefore) {
+      this.personData.engagedBefore = "n";
+    }
     this.showSaveBtn[0] = false;
     this.showAddRowBtn[0] = true;
 
-    // set contactlist to this field
-    this.contactList = this.form.get('contacts') as FormArray;
+    // set engageFormArray to this field
+    this.engageFormArray = this.form.get("contacts") as FormArray;
+
+    // in back case, fill engagement form with entered data before
+    if (history.state.data && this.personData.engagementData.length > 0) {
+      for (let i = 0; i < this.personData.engagementData.length; i++) {
+        const engageObj = this.personData.engagementData[i];
+        this.addRow(i);
+        this.getContactsFormGroup(i).controls["engageDate"].setValue(
+          engageObj.engageDate
+        );
+        this.getContactsFormGroup(i).controls["engagePlace"].setValue(
+          engageObj.engagePlace
+        );
+        this.getContactsFormGroup(i).controls["PriestName"].setValue(
+          engageObj.priestName
+        );
+        //this.getContactsFormGroup(i).controls['engAttach'].setValue(engageObj.engAttach);
+        //this.getContactsFormGroup(i).controls['anulAttach'].setValue(engageObj.anulAttach);
+      }
+      this.personData.engagementData = [];
+    }
   }
 
   // returns all form groups under contacts
   get contactFormGroup() {
-    return this.form.get('contacts') as FormArray;
+    return this.form.get("contacts") as FormArray;
   }
 
   // contact formgroup
-  createContact(): FormGroup {
+  createEngageFormGroup(): FormGroup {
     return this.fb.group({
       engageDate: [null, Validators.compose([Validators.required])],
       engagePlace: [null, Validators.compose([Validators.required])],
@@ -79,53 +98,68 @@ export class EngagementComponent implements OnInit {
 
   // add a contact form group
   addRow(i) {
-    this.contactList.push(this.createContact());
+    this.engageFormArray.push(this.createEngageFormGroup());
     this.showAddRowBtn[i] = false;
   }
 
-  // remove contact from group
-  // removeRow(index) {
-  //   // this.contactList = this.form.get('contacts') as FormArray;
-  //   this.contactList.removeAt(index);
-  // }
-
   // get the formgroup under contacts form array
   getContactsFormGroup(index): FormGroup {
-    // this.contactList = this.form.get('contacts') as FormArray;
-    const formGroup = this.contactList.controls[index] as FormGroup;
+    const formGroup = this.engageFormArray.controls[index] as FormGroup;
     return formGroup;
   }
 
   save(i) {
+    const engagementObj = new Engagement();
+    engagementObj.engageDate = this.getContactsFormGroup(i).controls[
+      "engageDate"
+    ].value;
+    engagementObj.engagePlace = this.getContactsFormGroup(i).controls[
+      "engagePlace"
+    ].value;
+    engagementObj.priestName = this.getContactsFormGroup(i).controls[
+      "PriestName"
+    ].value;
+    engagementObj.engAttach = this.getContactsFormGroup(i).controls[
+      "engAttach"
+    ].value;
+    engagementObj.anulAttach = this.getContactsFormGroup(i).controls[
+      "anulAttach"
+    ].value;
 
     const formData = new FormData();
 
-    formData.append('engagmentDate', this.getContactsFormGroup(i).controls['engageDate'].value);
-    formData.append('engagmentPlace', this.getContactsFormGroup(i).controls['engagePlace'].value);
+    formData.append("engagmentDate", engagementObj.engageDate.toLocaleString());
+    formData.append("engagmentPlace", engagementObj.engagePlace);
 
-    formData.append('priestFather', this.getContactsFormGroup(i).controls['PriestName'].value);
-    formData.append('status', "disengagement");
-    formData.append('userId', sessionStorage.getItem("userId"));
+    formData.append("priestFather", engagementObj.priestName);
+    formData.append("status", "disengagement");
+    formData.append("userId", sessionStorage.getItem("userId"));
 
-    formData.append('engAttach', this.getContactsFormGroup(i).controls['engAttach'].value);
-    formData.append('anulAttach', this.getContactsFormGroup(i).controls['anulAttach'].value);
-    formData.append('refNo', this.personData.referenceNumber);
+    formData.append("engAttach", engagementObj.engAttach);
+    formData.append("anulAttach", engagementObj.anulAttach);
+    formData.append("refNo", this.personData.referenceNumber);
 
-    this.userService.addPreviousEngagment(formData)
-      .subscribe(
-        data => {
-          if (data.code == "200") {
-            alert(" success ");
-            this.showSaveBtn[i] = true;
-            this.showAddRowBtn[i] = true;
-            this.activateNextBtn = true;
-          } else {
-            alert("Error Happened " + data.message);
-          }
-        }, (err) => {
-          console.log("error " + err.message);
-          alert(" Error " + err.message);
-        });
+    this.userService.addPreviousEngagment(formData).subscribe(
+      data => {
+        if (data.code == "200") {
+          alert(" success ");
+
+          //add engageData to personData
+          console.log(this.personData.engagementData);
+          this.personData.engagementData.push(engagementObj);
+
+          this.showSaveBtn[i] = true;
+          this.showAddRowBtn[i] = true;
+          this.activateNextBtn = true;
+        } else {
+          alert("Error Happened " + data.message);
+        }
+      },
+      err => {
+        console.log("error " + err.message);
+        alert(" Error " + err.message);
+      }
+    );
   }
 
   onFileChanged1(event) {
@@ -152,28 +186,30 @@ export class EngagementComponent implements OnInit {
     jsonObj.refNo = this.personData.referenceNumber;
     jsonObj.isPreviousEngagement = event.value;
 
-    this.userService.updateEngagmentClearance(jsonObj)
-      .subscribe(
-        data => {
-          if (data.code == "200") {
-            // alert(" success " );   
-
-          } else {
-            alert("Error Happened " + data.message);
+    this.userService.updateEngagmentClearance(jsonObj).subscribe(
+      data => {
+        if (data.code == "200") {
+          // alert(" success " );
+          if (event.value === "y" && this.engageFormArray.length === 0) {
+            this.engageFormArray.push(this.createEngageFormGroup());
           }
-        }, (err) => {
-          console.log("error " + err.message);
-        });
+        } else {
+          alert("Error Happened " + data.message);
+        }
+      },
+      err => {
+        console.log("error " + err.message);
+      }
+    );
   }
 
   submit() {
-
-    this.router.navigate(['marriage'], { state: { data: this.personData } });
-
+    this.router.navigate(["marriage"], { state: { data: this.personData } });
   }
 
   back() {
-    this.router.navigate(['changeablePersonalData'], { state: { data: this.personData } });
+    this.router.navigate(["changeablePersonalData"], {
+      state: { data: this.personData }
+    });
   }
-
 }

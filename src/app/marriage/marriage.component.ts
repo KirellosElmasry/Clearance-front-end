@@ -12,7 +12,7 @@ import { dto } from '../utility/dto';
 })
 export class MarriageComponent implements OnInit {
 
-  personData = new personData();
+  personData : personData;
 
   public form: FormGroup;
   public contactList: FormArray;

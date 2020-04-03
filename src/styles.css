@@ -61,6 +61,13 @@ mat-card{
   min-width: 260px;
  }
 
+ .main-sec{
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
  .required-field{
    color: red;
  }
