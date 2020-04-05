@@ -1,4 +1,5 @@
 import { Engagement } from './engagement';
+import { Marriage } from './marriage';
 
 export class personData
 {
@@ -66,4 +67,5 @@ export class personData
     sourceOfPermitMarriage:string;   
     dateOfPermitMarriage:Date;
     engagementData: Engagement[]=[];
+    marriageData: Marriage[]=[];
 }

@@ -59,6 +59,10 @@ export class EngagementComponent implements OnInit {
     // set engageFormArray to this field
     this.engageFormArray = this.form.get("contacts") as FormArray;
 
+    this.fillFormAfterBackBtn();
+  }
+
+  fillFormAfterBackBtn() {
     // in back case, fill engagement form with entered data before
     if (history.state.data && this.personData.engagementData.length > 0) {
       for (let i = 0; i < this.personData.engagementData.length; i++) {
