@@ -64,7 +64,7 @@ export class EngagementComponent implements OnInit {
 
   fillFormAfterBackBtn() {
     // in back case, fill engagement form with entered data before
-    if (history.state.data && this.personData.engagementData.length > 0) {
+    if (this.personData.engagementData.length > 0) {
       for (let i = 0; i < this.personData.engagementData.length; i++) {
         const engageObj = this.personData.engagementData[i];
         this.addRow(i);
@@ -146,7 +146,7 @@ export class EngagementComponent implements OnInit {
     this.userService.addPreviousEngagment(formData).subscribe(
       data => {
         if (data.code == "200") {
-          alert(" success ");
+          console.log(" success ");
 
           //add engageData to personData
           console.log(this.personData.engagementData);

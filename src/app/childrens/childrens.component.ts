@@ -1,3 +1,4 @@
+import { Children } from './../utility/children';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
@@ -11,12 +12,10 @@ import { dto } from '../utility/dto';
   styleUrls: ['./childrens.component.css']
 })
 export class ChildrensComponent implements OnInit {
-
-
-  personData = new personData();
+  personData : personData;
 
   public form: FormGroup;
-  public contactList: FormArray;
+  public childFormArray: FormArray;
 
   showSaveBtn: boolean[] = [];
   showAddRowBtn: boolean[] = [];
@@ -34,16 +33,52 @@ export class ChildrensComponent implements OnInit {
   ngOnInit() {
 
     this.form = this.fb.group({
-      contacts: this.fb.array([this.createContact()])
+      contacts: this.fb.array([])
     });
 
-    this.personData = history.state.data;
-    // console.log("fatherOfConfession " + this.personData.fatherOfConfession);
-    this.personData.hasChildren = 'n';
+    if (history.state.data) {
+      this.personData = history.state.data;
+    }
+    // for testing
+    // else {
+    //   console.log(this.personData);
+    //   if (!this.personData) {
+    //     this.personData = new personData();
+    //     this.personData.emirateId = "555";
+    //   }
+    // }
+    
+    if (!this.personData.hasChildren) {
+      this.personData.hasChildren = 'n';
+    }
     this.showSaveBtn[0] = false;
     this.showAddRowBtn[0] = true;
-    // set contactlist to this field
-    this.contactList = this.form.get('contacts') as FormArray;
+    // set childFormArray to this field
+    this.childFormArray = this.form.get('contacts') as FormArray;
+  
+      // in back case, fill child form with entered data before
+      this.fillFormAfterBackBtn();
+  }
+
+  fillFormAfterBackBtn() {
+    if (this.personData.childrenData.length > 0) {
+      for (let i = 0; i < this.personData.childrenData.length; i++) {
+        const childObj = this.personData.childrenData[i];
+
+        this.addRow(i);
+        this.getContactsFormGroup(i).controls["childName"].setValue(
+          childObj.childName
+        );
+        this.getContactsFormGroup(i).controls["childAge"].setValue(
+          childObj.childAge
+        );
+        this.getContactsFormGroup(i).controls["baptism"].setValue(
+          childObj.baptism
+        );
+
+      }
+      this.personData.childrenData = [];
+    }
   }
 
   // returns all form groups under contacts
@@ -51,53 +86,49 @@ export class ChildrensComponent implements OnInit {
     return this.form.get('contacts') as FormArray;
   }
 
-  // contact formgroup
-  createContact(): FormGroup {
+  // createChildFormGroup
+  createChildFormGroup(): FormGroup {
     return this.fb.group({
       childAge: [null, Validators.compose([Validators.required])],
       childName: [null, Validators.compose([Validators.required])],
-      paptism: [null, Validators.compose([Validators.required])]
+      baptism: [null, Validators.compose([Validators.required])]
      
     });
   }
 
   // add a contact form group
   addRow(i) {
-    this.contactList.push(this.createContact());
+    this.childFormArray.push(this.createChildFormGroup());
     this.showAddRowBtn[i] = false;
   }
 
   // remove contact from group
   // removeRow(index) {
-  //   // this.contactList = this.form.get('contacts') as FormArray;
-  //   this.contactList.removeAt(index);
+  //   // this.childFormArray = this.form.get('contacts') as FormArray;
+  //   this.childFormArray.removeAt(index);
   // }
 
   // get the formgroup under contacts form array
   getContactsFormGroup(index): FormGroup {
-    // this.contactList = this.form.get('contacts') as FormArray;
-    const formGroup = this.contactList.controls[index] as FormGroup;
+    const formGroup = this.childFormArray.controls[index] as FormGroup;
     return formGroup;
   }
 
   save(i) {
-    console.log(this.getContactsFormGroup(i).controls['childName'].value);
-    console.log(this.getContactsFormGroup(i).controls['childAge'].value);
-    console.log(this.getContactsFormGroup(i).controls['paptism'].value);
+    const childObj = new Children();
 
-    const json = new dto();
+    childObj.refNo = this.personData.referenceNumber;
+    childObj.userId = sessionStorage.getItem("userId");
+    childObj.childName = this.getContactsFormGroup(i).controls['childName'].value;
+    childObj.childAge = this.getContactsFormGroup(i).controls['childAge'].value;
+    childObj.baptism = this.getContactsFormGroup(i).controls['baptism'].value;
 
-    json.refNo = this.personData.referenceNumber;
-    json.userId = sessionStorage.getItem("userId");
-    json.childName = this.getContactsFormGroup(i).controls['childName'].value;
-    json.childAge = this.getContactsFormGroup(i).controls['childAge'].value;
-    json.baptism = this.getContactsFormGroup(i).controls['paptism'].value;
-
-    this.userService.addPreviousChild(json)
+    this.userService.addPreviousChild(childObj)
       .subscribe(
         data => {
           if (data.code == "200") {
-            alert(" success ");
+            console.log("save success");
+            this.personData.childrenData.push(childObj);
             this.showSaveBtn[i] = true;
             this.showAddRowBtn[i] = true;
             this.activateNextBtn = true;
@@ -124,6 +155,9 @@ export class ChildrensComponent implements OnInit {
         data => {
           if (data.code == "200") {
             console.log("status " + data.status);
+            if (event.value === "y" && this.childFormArray.length === 0) {
+              this.childFormArray.push(this.createChildFormGroup());
+            }
 
           } else {
             alert("Error Happened " + data.message);

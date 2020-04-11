@@ -21,7 +21,7 @@ export class SocialStatusComponent implements OnInit {
     { viewValueEN: "Widower", viewValueAR: "أرمل" }
   ];
 
-  personData = new personData();
+  personData: personData;
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -45,7 +45,7 @@ export class SocialStatusComponent implements OnInit {
       data => {
         if (data.code == "200") {
           console.log(" success " );
-          
+          this.router.navigate(['homePage'], { state: { data: this.personData } });
         } else {
           alert("Error Happened " + data.message);
         }

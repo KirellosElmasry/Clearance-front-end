@@ -2,8 +2,9 @@ export class Marriage{
 
     marriageDate: Date;
     marriagePlace: string;
-    priestName: string;
+    priestFather: string;
     status: string;
     kindOfMarriage: string;
-
+    userId:string;
+    refNo:string;
 }

@@ -1,3 +1,4 @@
+import { Children } from './children';
 import { Engagement } from './engagement';
 import { Marriage } from './marriage';
 
@@ -68,4 +69,5 @@ export class personData
     dateOfPermitMarriage:Date;
     engagementData: Engagement[]=[];
     marriageData: Marriage[]=[];
+    childrenData: Children[]=[];
 }

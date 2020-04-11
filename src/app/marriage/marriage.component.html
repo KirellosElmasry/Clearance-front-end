@@ -1,4 +1,4 @@
-<h3>Mariage Data</h3>
+<h3>Marriage Data</h3>
 
 <form [formGroup]="form" (submit)="submit()" #f="ngForm">
   <mat-card>
@@ -28,7 +28,7 @@
             <div [formGroupName]="i" class="row">
               <mat-list-item>
                 <mat-form-field>
-                  <mat-label>Mariage Date</mat-label>
+                  <mat-label>Marriage Date</mat-label>
                   <input
                     matInput
                     type="date"
@@ -68,7 +68,7 @@
                   <mat-select
                     name="mariageStatus"
                     formControlName="status"
-                    [(ngModel)]="personData.mariageStatus"
+                   
                   >
                     <mat-option
                       *ngFor="let status of mariageStatus"

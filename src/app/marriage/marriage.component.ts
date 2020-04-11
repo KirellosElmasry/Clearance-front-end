@@ -1,3 +1,4 @@
+import { Marriage } from './../utility/marriage';
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
@@ -45,13 +46,13 @@ export class MarriageComponent implements OnInit {
       this.personData = history.state.data;
     }
     // for testing
-    else {
-      console.log(this.personData);
-      if (!this.personData) {
-        this.personData = new personData();
-        this.personData.emirateId = "555";
-      }
-    }
+    // else {
+    //   console.log(this.personData);
+    //   if (!this.personData) {
+    //     this.personData = new personData();
+    //     this.personData.emirateId = "555";
+    //   }
+    // }
 
     if (!this.personData.marriedBefore) {
       this.personData.marriedBefore = "n";
@@ -62,12 +63,12 @@ export class MarriageComponent implements OnInit {
     // set marriageFormArray to this field
     this.marriageFormArray = this.form.get("contacts") as FormArray;
 
-    // in back case, fill engagement form with entered data before
+    // in back case, fill marriage form with entered data before
     this.fillFormAfterBackBtn();
   }
 
   fillFormAfterBackBtn() {
-    if (history.state.data && this.personData.marriageData.length > 0) {
+    if (this.personData.marriageData.length > 0) {
       for (let i = 0; i < this.personData.marriageData.length; i++) {
         const marriageObj = this.personData.marriageData[i];
 
@@ -79,7 +80,7 @@ export class MarriageComponent implements OnInit {
           marriageObj.marriagePlace
         );
         this.getContactsFormGroup(i).controls["priestFather"].setValue(
-          marriageObj.priestName
+          marriageObj.priestFather
         );
         this.getContactsFormGroup(i).controls["status"].setValue(
           marriageObj.status
@@ -91,12 +92,13 @@ export class MarriageComponent implements OnInit {
       this.personData.marriageData = [];
     }
   }
+
   // returns all form groups under contacts
   get contactFormGroup() {
     return this.form.get("contacts") as FormArray;
   }
 
-  // contact formgroup
+  // createMarriageFormGroup
   createMarriageFormGroup(): FormGroup {
     return this.fb.group({
       marriageDate: [null, Validators.compose([Validators.required])],
@@ -126,32 +128,32 @@ export class MarriageComponent implements OnInit {
   }
 
   save(i) {
-    const json = new dto();
+    const marriageObj = new Marriage();
 
-    json.marriageDate = this.getContactsFormGroup(i).controls[
+    marriageObj.marriageDate = this.getContactsFormGroup(i).controls[
       "marriageDate"
     ].value;
-    json.marriagePlace = this.getContactsFormGroup(i).controls[
+    marriageObj.marriagePlace = this.getContactsFormGroup(i).controls[
       "marriagePlace"
     ].value;
 
-    json.priestFather = this.getContactsFormGroup(i).controls[
+    marriageObj.priestFather = this.getContactsFormGroup(i).controls[
       "priestFather"
     ].value;
-    json.status = this.getContactsFormGroup(i).controls["status"].value;
-    json.userId = sessionStorage.getItem("userId");
+    marriageObj.status = this.getContactsFormGroup(i).controls["status"].value;
+    marriageObj.userId = sessionStorage.getItem("userId");
 
-    json.kindOfMarriage = this.getContactsFormGroup(i).controls[
+    marriageObj.kindOfMarriage = this.getContactsFormGroup(i).controls[
       "kindOfMarriage"
     ].value;
-    json.refNo = this.personData.referenceNumber;
+    marriageObj.refNo = this.personData.referenceNumber;
 
-    this.userService.addPreviousMarrage(json).subscribe(
+    this.userService.addPreviousMarrage(marriageObj).subscribe(
       data => {
         if (data.code == "200") {
           // alert(" success ");
-          this.marriageFormArray.push(this.createMarriageFormGroup());
-
+          this.personData.marriageData.push(marriageObj);
+          console.log("saved successfully.")
           this.showSaveBtn[i] = true;
           this.showAddRowBtn[i] = true;
           this.activateNextBtn = true;
@@ -178,6 +180,9 @@ export class MarriageComponent implements OnInit {
       data => {
         if (data.code == "200") {
           // alert(" success " );
+          if (event.value === "y" && this.marriageFormArray.length === 0) {
+            this.marriageFormArray.push(this.createMarriageFormGroup());
+          }
         } else {
           alert("Error Happened " + data.message);
         }
