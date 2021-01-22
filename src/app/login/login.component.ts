@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
           //{ path: 'socialStatus', component: SocialStatusComponent }
           
           this.router.navigate(['homePage']);
-          // this.router.navigate(['childrens']);
+          // this.router.navigate(['previewPage']);
 
         }else{
           alert("wrong username or password!");

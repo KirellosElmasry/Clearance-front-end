@@ -12,10 +12,13 @@
           name="emirateId"
           required
           #eid="ngModel"
+          minlength="15"
+          maxlength="15"
         />
       </mat-form-field>
-      <div class="error" *ngIf="eid.errors?.required">
-       Required Feild.
+      <p></p>
+      <div class="error" *ngIf="eid.errors?.required || eid.errors?.minlength || eid.errors?.maxlength">
+       15 digit 
       </div>
     </mat-list-item>
     <mat-list-item>

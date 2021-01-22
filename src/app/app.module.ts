@@ -26,6 +26,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { TestComponent } from './test/test.component';
 import { SocialStatusComponent } from './social-status/social-status.component';
 import {MatInputModule} from '@angular/material/input';
+import { PreviewPageComponent } from './preview-page/preview-page.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -37,7 +38,8 @@ const appRoutes: Routes = [
   { path: 'engagement', component: EngagementComponent },
   { path: 'test', component: TestComponent },
   { path: 'searchClearance', component: SearchClearanceComponent },
-  { path: 'socialStatus', component: SocialStatusComponent }
+  { path: 'socialStatus', component: SocialStatusComponent },
+  { path: 'previewPage', component: PreviewPageComponent },
 ];
 
 @NgModule({
@@ -52,7 +54,8 @@ const appRoutes: Routes = [
     MarriageComponent,
     ChildrensComponent,
     TestComponent,
-    SocialStatusComponent
+    SocialStatusComponent,
+    PreviewPageComponent
   ],
   imports: [
     BrowserModule,
