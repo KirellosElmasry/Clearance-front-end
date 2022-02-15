@@ -26,6 +26,8 @@ export class LoginComponent implements OnInit {
   onLogin(){
     console.log(this.userName + " "+this.password);
     //call login service then redirect to home page
+    this.loginUser.userName = this.userName;
+    this.loginUser.password = this.password;
     
     this.loginService.doLogin(this.loginUser)
     .subscribe(

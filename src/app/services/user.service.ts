@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -8,12 +8,21 @@ import { Observable } from "rxjs";
 export class UserService {
   endpoint: string = "http://localhost:8082/api/v1/";
 
-  constructor(private httpClient: HttpClient) {}
+
+  constructor(private httpClient: HttpClient) { }
 
   public getUserByEid(eid: string): Observable<any> {
-    return this.httpClient.get(this.endpoint + "getSearchByEid?eid=" + eid, {
-      responseType: "json"
-    });
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+        'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+        'responseType': "json"
+      })
+    };
+
+    return this.httpClient.post(this.endpoint + "getSearchByEid?eid="+eid, httpOptions);
   }
 
   public addFixedPersonalData(formData): Observable<any> {
