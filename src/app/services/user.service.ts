@@ -26,6 +26,7 @@ export class UserService {
   }
 
   public addFixedPersonalData(formData): Observable<any> {
+    debugger
     return this.httpClient.post(this.endpoint + "addPersonalData", formData, {
       responseType: "json"
     });
@@ -81,7 +82,7 @@ export class UserService {
     });
   }
   public getAllChurch(): Observable<any> {
-    return this.httpClient.get(this.endpoint + "getAllChurch", {
+    return this.httpClient.post(this.endpoint + "getAllChurch", null, {
       responseType: "json"
     });
   }
@@ -91,4 +92,11 @@ export class UserService {
       responseType: "json"
     });
   }
+
+  public getClearanceByEid(eid: string): Observable<any> {
+    return this.httpClient.post(this.endpoint + "getClearanceByEid?eid="+eid, {
+      responseType: "json"
+    });
+  }
+
 }

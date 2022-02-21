@@ -13,6 +13,8 @@ export class dto{
     jobAddress: string;
     address: string;
     message:string;
+    msg:string;
+    clearances:object;
     userId: string;   
     isPreviousEngagement:string;
     isPreviousMarrage:string;

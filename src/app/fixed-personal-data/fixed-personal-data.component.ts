@@ -20,7 +20,7 @@ export class FixedPersonalDataComponent implements OnInit {
   // for testing
   //this.personData = new personData();
   //this.personData.emirateId = "555";
-}
+  }
 
   onFileChanged(event) {
     this.selectedFile = event.target.files[0];
@@ -31,9 +31,11 @@ export class FixedPersonalDataComponent implements OnInit {
   }
 
   next() {
+    debugger
     const formData = new FormData();
     formData.append('file', this.selectedFile);
     formData.append('emirateId', this.personData.emirateId);
+    formData.append('name', this.personData.name);
     formData.append('birthDate', this.personData.birthDate.toString());
 
     formData.append('birthLocation', this.personData.placeOfBirth);
@@ -51,10 +53,10 @@ export class FixedPersonalDataComponent implements OnInit {
           this.personData.referenceNumber = data.refNo;
           this.router.navigate(['changeablePersonalData'], { state: { data: this.personData } });
         }else{
-          console.log("error "+ data.message );
+          console.log("error "+ data.msg );
         }
       }, (err) => {
-        console.log("error " + err.message);
+        console.log("error " + err.msg);
 
       });
 

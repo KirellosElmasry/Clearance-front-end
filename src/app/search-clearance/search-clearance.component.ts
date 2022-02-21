@@ -34,9 +34,10 @@ export class SearchClearanceComponent implements OnInit {
           if (this.result.code == 200) {
             console.log("code 200 ");
             this.showNewClearance = true;
+            this.showViewClearance = false;
           } else if (this.result.code == 201) {
             this.showViewClearance = true;
-
+            this.showNewClearance = false;
             console.log("code 201 ");
           }
           else if (this.result.code == 202) {
@@ -45,11 +46,15 @@ export class SearchClearanceComponent implements OnInit {
             this.showcreateOtherClearance = true;
           }
           else {
-            console.log("error " + this.result.message);
+            console.log("error " + this.result.msg);
+            this.showViewClearance = false;
+            this.showNewClearance = false;
           }
         }, (err) => {
-          console.log("error " + err.message);
-          this.result.message = err.message;
+          console.log("error " + err.msg);
+          this.result.message = err.msg;
+          this.showViewClearance = false;
+          this.showNewClearance = false;
         });
   }
 
@@ -58,9 +63,28 @@ export class SearchClearanceComponent implements OnInit {
     
     this.router.navigate(['fixedPersonalData'], { state: { data: this.personalData } });
   }
+
   viewClearance() {
     console.log("viewClearance");
+    
+    this.userService.getClearanceByEid(this.personalData.emirateId)
+      .subscribe(
+        data => {
+          this.result = data;
+
+          //show buttons acording to return code
+          if (this.result.code == 200) {
+            this.router.navigate(['viewClearance'], { state: { data: this.result.clearances } });
+          }
+          else {
+            console.log("error " + this.result.msg);
+          }
+        }, (err) => {
+          console.log("error " + err.msg);
+          this.result.message = err.msg;
+        });
   }
+
   createOtherClearance() {
     console.log("createOtherClearance");
     this.router.navigate(['fixedPersonalData']);

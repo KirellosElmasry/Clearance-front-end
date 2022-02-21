@@ -27,6 +27,7 @@ import { TestComponent } from './test/test.component';
 import { SocialStatusComponent } from './social-status/social-status.component';
 import {MatInputModule} from '@angular/material/input';
 import { PreviewPageComponent } from './preview-page/preview-page.component';
+import { ViewClearanceComponent } from './view-clearance/view-clearance.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -40,6 +41,7 @@ const appRoutes: Routes = [
   { path: 'searchClearance', component: SearchClearanceComponent },
   { path: 'socialStatus', component: SocialStatusComponent },
   { path: 'previewPage', component: PreviewPageComponent },
+  { path: 'viewClearance', component: ViewClearanceComponent },
 ];
 
 @NgModule({
@@ -55,7 +57,8 @@ const appRoutes: Routes = [
     ChildrensComponent,
     TestComponent,
     SocialStatusComponent,
-    PreviewPageComponent
+    PreviewPageComponent,
+    ViewClearanceComponent
   ],
   imports: [
     BrowserModule,
