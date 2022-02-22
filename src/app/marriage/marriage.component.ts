@@ -172,7 +172,7 @@ export class MarriageComponent implements OnInit {
     //call update mariage api
     let jsonObj = new dto();
 
-    jsonObj.userId = sessionStorage.getItem("userId");
+    jsonObj.userId = Number(sessionStorage.getItem("userId"));
     jsonObj.refNo = this.personData.referenceNumber;
     jsonObj.isPreviousMarrage = event.value;
 

@@ -186,7 +186,7 @@ export class EngagementComponent implements OnInit {
     //call update engagement api
     let jsonObj = new dto();
 
-    jsonObj.userId = sessionStorage.getItem("userId");
+    jsonObj.userId = Number(sessionStorage.getItem("userId"));
     jsonObj.refNo = this.personData.referenceNumber;
     jsonObj.isPreviousEngagement = event.value;
 

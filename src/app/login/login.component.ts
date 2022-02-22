@@ -34,10 +34,10 @@ export class LoginComponent implements OnInit {
       data=>
       {
         this.showSpinner = false;
-        this.result = data;  
+        this.result = data.user;  
      
-        if(this.result.code == "200"){
-          
+        if(data.code == "200"){
+          console.log(this.result);
           sessionStorage.setItem('userId', this.result.userId);
 
           // { path: 'login', component: LoginComponent },

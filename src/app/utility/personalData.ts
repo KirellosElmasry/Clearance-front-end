@@ -14,7 +14,7 @@ export class personData
     birthDate: Date;
     placeOfBirth: string;
     baptismDate: Date;
-    placeOfBaptism: string;
+    baptismPlace: string;
     edQualification: string;
     educationDate: Date;
     address: string;

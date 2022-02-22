@@ -35,26 +35,38 @@ export class SearchClearanceComponent implements OnInit {
             console.log("code 200 ");
             this.showNewClearance = true;
             this.showViewClearance = false;
+            this.showcreateOtherClearance = false;
           } else if (this.result.code == 201) {
             this.showViewClearance = true;
             this.showNewClearance = false;
+            this.showcreateOtherClearance = false;
             console.log("code 201 ");
           }
           else if (this.result.code == 202) {
             console.log("code 202 ");
-            this.showViewClearance = true;
+            this.showViewClearance = false;
+            this.showNewClearance = false;
             this.showcreateOtherClearance = true;
+          }
+          else if (this.result.code == 203) {
+            console.log("code 203 continue to clearance you already inserted personal data ");
+            this.showViewClearance = false;
+            this.showNewClearance = false;
+            console.log(this.result);
+            this.router.navigate(['changeablePersonalData'], { state: { data: this.result.personalData } });
           }
           else {
             console.log("error " + this.result.msg);
             this.showViewClearance = false;
             this.showNewClearance = false;
+            this.showcreateOtherClearance = false;
           }
         }, (err) => {
           console.log("error " + err.msg);
           this.result.message = err.msg;
           this.showViewClearance = false;
           this.showNewClearance = false;
+          this.showcreateOtherClearance = false;
         });
   }
 

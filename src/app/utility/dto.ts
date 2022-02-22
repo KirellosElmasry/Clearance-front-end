@@ -1,3 +1,5 @@
+import { personData } from "./personalData";
+
 export class dto{
     eid: string;
     code: number;
@@ -15,7 +17,7 @@ export class dto{
     message:string;
     msg:string;
     clearances:object;
-    userId: string;   
+    userId: number;   
     isPreviousEngagement:string;
     isPreviousMarrage:string;
     isPreviousChild:string;
@@ -31,4 +33,5 @@ export class dto{
     socialStatus:string;
     sourceOfPermitMarriage:string;
     dateOfPermitMarriage:string;
+    personalData:personData;
 }

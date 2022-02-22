@@ -39,7 +39,7 @@ export class FixedPersonalDataComponent implements OnInit {
     formData.append('birthDate', this.personData.birthDate.toString());
 
     formData.append('birthLocation', this.personData.placeOfBirth);
-    formData.append('baptismPlace', this.personData.placeOfBaptism);
+    formData.append('baptismPlace', this.personData.baptismPlace);
     formData.append('baptism', this.personData.baptismDate.toString());
 
     formData.append('education', this.personData.edQualification);

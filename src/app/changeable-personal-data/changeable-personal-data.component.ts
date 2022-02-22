@@ -59,7 +59,7 @@ export class ChangeablePersonalDataComponent implements OnInit {
       });
 
     this.personData = history.state.data;
-    console.log("placeOfBaptism " + this.personData.placeOfBaptism);
+    console.log("placeOfBaptism " + this.personData.baptismPlace);
       // for testing
   // this.personData = new personData();
   // this.personData.emirateId = "555";
@@ -81,8 +81,8 @@ export class ChangeablePersonalDataComponent implements OnInit {
     jsonObj.fatherOfConfession = this.personData.fatherOfConfession;
     jsonObj.gender = this.personData.gender;
     jsonObj.churchId = this.personData.churchId.toString();
-    jsonObj.userId = sessionStorage.getItem("userId");
-    
+    jsonObj.userId = Number(sessionStorage.getItem("userId"));
+    debugger;
     this.userService.addNewClearance(jsonObj).subscribe(
       data => {
         if (data.code == "200") {
@@ -90,11 +90,11 @@ export class ChangeablePersonalDataComponent implements OnInit {
           this.router.navigate(['engagement'], { state: { data: this.personData } });
           
         } else {
-          alert("Error Happened " + data.message);
+          alert(data.result.res);
         }
       },
       err => {
-        console.log("error " + err.message);
+        console.log("error " + err.msg);
       }
     );
 
