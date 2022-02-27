@@ -37,13 +37,14 @@ export class FixedPersonalDataComponent implements OnInit {
     formData.append('emirateId', this.personData.emirateId);
     formData.append('name', this.personData.name);
     formData.append('birthDate', this.personData.birthDate.toString());
+    console.log(this.personData.birthDate.toString());
 
-    formData.append('birthLocation', this.personData.placeOfBirth);
+    formData.append('birthLocation', this.personData.birthLocation);
     formData.append('baptismPlace', this.personData.baptismPlace);
-    formData.append('baptism', this.personData.baptismDate.toString());
+    formData.append('baptism', this.personData.baptism.toString());
 
-    formData.append('education', this.personData.edQualification);
-    formData.append('educationDate', this.personData.graduateDate.toString());
+    formData.append('education', this.personData.education);
+    formData.append('educationDate', this.personData.educationDate.toString());
 
     this.userService.addFixedPersonalData(formData).subscribe(
       data => {
@@ -56,7 +57,7 @@ export class FixedPersonalDataComponent implements OnInit {
           console.log("error "+ data.msg );
         }
       }, (err) => {
-        console.log("error " + err.msg);
+        console.log("error " + err.message);
 
       });
 

@@ -12,10 +12,10 @@ export class personData
     lastModified: Date;
     emirateId: string;
     birthDate: Date;
-    placeOfBirth: string;
-    baptismDate: Date;
+    birthLocation: string;
+    baptism: Date;
     baptismPlace: string;
-    edQualification: string;
+    education: string;
     educationDate: Date;
     address: string;
     jobTitle: string;

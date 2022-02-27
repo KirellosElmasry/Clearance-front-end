@@ -69,7 +69,7 @@
             name="placeOfBirth"
             type="text"
             class="label"
-            [(ngModel)]="personData.placeOfBirth"
+            [(ngModel)]="personData.birthLocation"
             required
             #placeOfBirth="ngModel"
           />
@@ -85,8 +85,8 @@
           <input
             matInput
             type="date"
-            name="baptismDate"
-            [(ngModel)]="personData.baptismDate"
+            name="baptism"
+            [(ngModel)]="personData.baptism"
             matInput
             required
             #baptismDate="ngModel"
@@ -105,7 +105,7 @@
             name="placeOfBaptism"
             type="text"
             class="label"
-            [(ngModel)]="personData.placeOfBaptism"
+            [(ngModel)]="personData.baptismPlace"
             required
             #placeOfBaptism="ngModel"
           />
@@ -123,7 +123,7 @@
             name="edQualification"
             type="text"
             class="label"
-            [(ngModel)]="personData.edQualification"
+            [(ngModel)]="personData.education"
             required
             #edQualification="ngModel"
           />
@@ -140,7 +140,7 @@
             matInput
             type="date"
             name="graduateDate"
-            [(ngModel)]="personData.graduateDate"
+            [(ngModel)]="personData.educationDate"
             matInput
             required
             #graduateDate="ngModel"
@@ -152,7 +152,7 @@
       </mat-list-item>
       <mat-list-item>
         <mat-label>Attach Picture </mat-label>
-        <input type="file" (change)="onFileChanged($event)" required/>
+        <input type="file" (change)="onFileChanged($event)"  required/>
         <!-- <button mat-button type="button" (click)="onUpload()">Upload</button> -->
       </mat-list-item>
       <mat-list-item>

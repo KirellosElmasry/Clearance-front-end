@@ -53,7 +53,7 @@ export class SearchClearanceComponent implements OnInit {
             this.showViewClearance = false;
             this.showNewClearance = false;
             console.log(this.result);
-            this.router.navigate(['changeablePersonalData'], { state: { data: this.result.personalData } });
+            this.router.navigate(['fixedPersonalData'], { state: { data: this.result.personalData } });
           }
           else {
             console.log("error " + this.result.msg);
