@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Church } from '../utility/church';
 import { UserService } from '../services/user.service';
 import { dto } from '../utility/dto';
+import { clearanceData } from '../utility/clearanceData';
 
 export interface Status {
   value: string;
@@ -19,6 +20,7 @@ export interface Status {
 export class ChangeablePersonalDataComponent implements OnInit {
 
   personData = new personData();
+  clearances : clearanceData;
 
   genders: Status[] = [
     { value: 'male', viewValueEN: 'Male', viewValueAR: 'ذكر' },
@@ -58,7 +60,9 @@ export class ChangeablePersonalDataComponent implements OnInit {
         alert(" Error " + err.message);
       });
 
-    this.personData = history.state.data;
+      this.clearances = history.state.data;
+      this.personData = this.clearances.personalData;
+
     console.log("placeOfBaptism " + this.personData.baptismPlace);
       // for testing
   // this.personData = new personData();
@@ -66,28 +70,29 @@ export class ChangeablePersonalDataComponent implements OnInit {
   }
 
   next(){
+    debugger;
     //call addNewClearance
 
     let jsonObj = new dto();
 
-    jsonObj.emirateId = this.personData.emirateId;
-    jsonObj.address = this.personData.address;
-    jsonObj.job = this.personData.jobTitle;
-    jsonObj.jobAddress = this.personData.jobAddress;
-    jsonObj.militaryService = this.personData.militaryStatus;
-    jsonObj.fromChurch = this.personData.relatedChurch;
-    jsonObj.recognitionRegularityRate = this.personData.recognitionRegularityRate;
-    jsonObj.intakeRate = this.personData.intakeRate;
-    jsonObj.fatherOfConfession = this.personData.fatherOfConfession;
-    jsonObj.gender = this.personData.gender;
-    jsonObj.churchId = this.personData.churchId.toString();
+    jsonObj.emirateId = this.clearances.personalData.emirateId;
+    jsonObj.address = this.clearances.address;
+    jsonObj.job = this.clearances.job;
+    jsonObj.jobAddress = this.clearances.jobAddress;
+    jsonObj.militaryService = this.clearances.militaryService;
+    jsonObj.fromChurch = this.clearances.fromChurch;
+    jsonObj.recognitionRegularityRate = this.clearances.recognitionRegularityRate;
+    jsonObj.intakeRate = this.clearances.intakeRate;
+    jsonObj.fatherOfConfession = this.clearances.fatherOfConfession;
+    jsonObj.gender = this.clearances.gender;
+    jsonObj.churchId = this.clearances.church.churchId.toString();
     jsonObj.userId = Number(sessionStorage.getItem("userId"));
     debugger;
     this.userService.addNewClearance(jsonObj).subscribe(
       data => {
         if (data.code == "200") {
           console.log(" success " );
-          this.router.navigate(['engagement'], { state: { data: this.personData } });
+          this.router.navigate(['engagement'], { state: { data: this.clearances } });
           
         } else {
           alert(data.result.res);

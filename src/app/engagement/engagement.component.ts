@@ -5,6 +5,8 @@ import { personData } from "../utility/personalData";
 import { UserService } from "../services/user.service";
 import { dto } from "../utility/dto";
 import { Engagement } from "../utility/engagement";
+import { clearanceData } from "../utility/clearanceData";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-engagement",
@@ -13,6 +15,7 @@ import { Engagement } from "../utility/engagement";
 })
 export class EngagementComponent implements OnInit {
   personData: personData;
+  clearances : clearanceData;
 
   public form: FormGroup;
   public engageFormArray: FormArray;
@@ -30,8 +33,8 @@ export class EngagementComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private http: HttpClient    ) {}
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -39,7 +42,9 @@ export class EngagementComponent implements OnInit {
     });
 
     if (history.state.data) {
-      this.personData = history.state.data;
+      this.clearances = history.state.data;
+      this.personData = this.clearances.personalData;
+      this.personData.engagementData = [];
     }
     // for testing
     //   else{
@@ -50,7 +55,7 @@ export class EngagementComponent implements OnInit {
     //   }
     // }
 
-    if (!this.personData.engagedBefore) {
+    if (!this.clearances.isPreviousEngagement) {
       this.personData.engagedBefore = "n";
     }
     this.showSaveBtn[0] = false;
@@ -63,8 +68,9 @@ export class EngagementComponent implements OnInit {
   }
 
   fillFormAfterBackBtn() {
+    debugger;
     // in back case, fill engagement form with entered data before
-    if (this.personData.engagementData.length > 0) {
+    if ( this.personData.engagementData && this.personData.engagementData.length > 0) {
       for (let i = 0; i < this.personData.engagementData.length; i++) {
         const engageObj = this.personData.engagementData[i];
         this.addRow(i);
@@ -113,6 +119,7 @@ export class EngagementComponent implements OnInit {
   }
 
   save(i) {
+    debugger;
     const engagementObj = new Engagement();
     engagementObj.engageDate = this.getContactsFormGroup(i).controls[
       "engageDate"
@@ -123,13 +130,12 @@ export class EngagementComponent implements OnInit {
     engagementObj.priestName = this.getContactsFormGroup(i).controls[
       "PriestName"
     ].value;
-    engagementObj.engAttach = this.getContactsFormGroup(i).controls[
-      "engAttach"
-    ].value;
-    engagementObj.anulAttach = this.getContactsFormGroup(i).controls[
-      "anulAttach"
-    ].value;
 
+    engagementObj.engAttach = this.selectedFile1;
+    engagementObj.anulAttach = this.selectedFile2;
+
+  //  this.http.get(engpath).subscribe(data => engagementObj.engAttach =  data);
+    
     const formData = new FormData();
 
     formData.append("engagmentDate", engagementObj.engageDate.toLocaleString());
@@ -139,9 +145,9 @@ export class EngagementComponent implements OnInit {
     formData.append("status", "disengagement");
     formData.append("userId", sessionStorage.getItem("userId"));
 
-    formData.append("engAttach", engagementObj.engAttach);
-    formData.append("anulAttach", engagementObj.anulAttach);
-    formData.append("refNo", this.personData.referenceNumber);
+    formData.append("engAttach",  this.selectedFile1);
+    formData.append("anulAttach",  this.selectedFile2);
+    formData.append("refNo", this.clearances.refNo);
 
     this.userService.addPreviousEngagment(formData).subscribe(
       data => {
@@ -149,18 +155,18 @@ export class EngagementComponent implements OnInit {
           console.log(" success ");
 
           //add engageData to personData
-          console.log(this.personData.engagementData);
+          console.log(this.personData.engagedBefore);
           this.personData.engagementData.push(engagementObj);
 
           this.showSaveBtn[i] = true;
           this.showAddRowBtn[i] = true;
           this.activateNextBtn = true;
         } else {
-          alert("Error Happened " + data.message);
+          alert("Error Happened " + data.result.res.toString());
         }
       },
       err => {
-        console.log("error " + err.message);
+        console.log("error " + err.error.message);
         alert(" Error " + err.message);
       }
     );
@@ -188,7 +194,7 @@ export class EngagementComponent implements OnInit {
     let jsonObj = new dto();
 
     jsonObj.userId = Number(sessionStorage.getItem("userId"));
-    jsonObj.refNo = this.personData.referenceNumber;
+    jsonObj.refNo = this.clearances.refNo;
     jsonObj.isPreviousEngagement = event.value;
 
     this.userService.updateEngagmentClearance(jsonObj).subscribe(
@@ -199,7 +205,7 @@ export class EngagementComponent implements OnInit {
             this.engageFormArray.push(this.createEngageFormGroup());
           }
         } else {
-          alert("Error Happened " + data.message);
+          alert("Error Happened " + data.result.res);
         }
       },
       err => {

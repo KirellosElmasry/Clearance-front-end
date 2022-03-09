@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { personData } from '../utility/personalData';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { clearanceData } from '../utility/clearanceData';
 
 @Component({
   selector: 'app-fixed-personal-data',
@@ -11,15 +12,18 @@ import { UserService } from '../services/user.service';
 export class FixedPersonalDataComponent implements OnInit {
 
   personData: personData;
+  clearances: clearanceData;
   selectedFile: File;
   constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
-  this.personData = history.state.data;
-  console.log("eid " + this.personData.emirateId);
-  // for testing
-  //this.personData = new personData();
-  //this.personData.emirateId = "555";
+    this.clearances = history.state.data;
+    this.personData = this.clearances.personalData;
+
+    console.log(this.clearances);
+    // for testing
+    //this.personData = new personData();
+    //this.personData.emirateId = "555";
   }
 
   onFileChanged(event) {
@@ -51,13 +55,13 @@ export class FixedPersonalDataComponent implements OnInit {
 
         console.log("result " + data.code);
         if (data.code == "200") {
-          this.personData.referenceNumber = data.refNo;
-          this.router.navigate(['changeablePersonalData'], { state: { data: this.personData } });
-        }else{
-          console.log("error "+ data.msg );
+          //this.personData.referenceNumber = data.refNo;
+          this.router.navigate(['changeablePersonalData'], { state: { data: this.clearances } });
+        } else {
+          console.log("error " + data.msg);
         }
       }, (err) => {
-        console.log("error " + err.message);
+        console.log("error " + err.error.message);
 
       });
 

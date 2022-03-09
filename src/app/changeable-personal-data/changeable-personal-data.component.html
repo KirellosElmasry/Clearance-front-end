@@ -9,7 +9,7 @@
             matInput
             name="address"
             type="text"
-            [(ngModel)]="personData.address"
+            [(ngModel)]="clearances.address"
             required
             #address="ngModel"
           />
@@ -27,7 +27,7 @@
             name="jobTitle"
             type="text"
             class="label"
-            [(ngModel)]="personData.jobTitle"
+            [(ngModel)]="clearances.job"
             required
             #jobTitle="ngModel"
           />
@@ -45,7 +45,7 @@
             name="jobAddress"
             type="text"
             class="label"
-            [(ngModel)]="personData.jobAddress"
+            [(ngModel)]="clearances.jobAddress"
             required
             #jobAddress="ngModel"
             />
@@ -59,7 +59,7 @@
         <mat-form-field>
           <mat-label>Gender - الجنس</mat-label>
 
-          <mat-select name="gender" [(ngModel)]="personData.gender" required>
+          <mat-select name="gender" [(ngModel)]="clearances.gender" required>
             <mat-option *ngFor="let status of genders" [value]="status.value">
               {{ status.viewValueEN }} - {{ status.viewValueAR }}
             </mat-option>
@@ -76,7 +76,7 @@
 
           <mat-select
             name="militaryStatus" required
-            [(ngModel)]="personData.militaryStatus"
+            [(ngModel)]="clearances.militaryStatus"
           >
             <mat-option
               *ngFor="let status of militaryStatus"
@@ -96,7 +96,7 @@
             name="relatedChurch"
             type="text"
             class="label"
-            [(ngModel)]="personData.relatedChurch"
+            [(ngModel)]="clearances.fromChurch"
             required
             #relatedChurch="ngModel"
           />
@@ -112,7 +112,7 @@
 
           <mat-select
             name="confessionRate" required
-            [(ngModel)]="personData.recognitionRegularityRate"
+            [(ngModel)]="clearances.recognitionRegularityRate"
           >
             <mat-option
               *ngFor="let status of confessionRate"
@@ -128,7 +128,7 @@
         <mat-form-field>
           <mat-label>Intake Rate - معدل التناول</mat-label>
 
-          <mat-select name="intake" required [(ngModel)]="personData.intakeRate">
+          <mat-select name="intake" required [(ngModel)]="clearances.intakeRate">
             <mat-option
               *ngFor="let state of confessionRate"
               [value]="state.value"
@@ -149,7 +149,7 @@
             name="fatherOfConfession"
             type="text"
             class="label"
-            [(ngModel)]="personData.fatherOfConfession"
+            [(ngModel)]="clearances.fatherOfConfession"
             required
             #fatherOfConfession="ngModel"
           />
@@ -163,7 +163,7 @@
         <mat-form-field>
           <mat-label>Church - الكنيسه</mat-label>
 
-          <mat-select name="church" required [(ngModel)]="personData.churchId">
+          <mat-select name="church" required [(ngModel)]="clearances.church.churchId">
             <mat-option
               *ngFor="let church of churchList"
               [value]="church.churchId"
