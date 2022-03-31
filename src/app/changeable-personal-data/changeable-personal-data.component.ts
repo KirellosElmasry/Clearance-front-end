@@ -20,13 +20,13 @@ export interface Status {
 export class ChangeablePersonalDataComponent implements OnInit {
 
   personData = new personData();
-  clearances : clearanceData;
+  clearances: clearanceData;
 
   genders: Status[] = [
     { value: 'male', viewValueEN: 'Male', viewValueAR: 'ذكر' },
     { value: 'female', viewValueEN: 'Female', viewValueAR: 'انثي' }
   ];
-  
+
   confessionRate: Status[] = [
     { value: 'rarely', viewValueEN: 'Rarely', viewValueAR: 'نادرا' },
     { value: 'average', viewValueEN: 'Average', viewValueAR: 'متوسط' },
@@ -42,16 +42,16 @@ export class ChangeablePersonalDataComponent implements OnInit {
 
   churchList: Church[];
 
-  constructor(private router:Router, private userService: UserService) { 
-    
+  constructor(private router: Router, private userService: UserService) {
+
   }
 
   ngOnInit() {
     this.userService.getAllChurch().subscribe(
       data => {
         if (data.code == "200") {
-       this.churchList = data.allChurch;
-          
+          this.churchList = data.allChurch;
+
         } else {
           alert("Error Happened " + data.message);
         }
@@ -60,16 +60,12 @@ export class ChangeablePersonalDataComponent implements OnInit {
         alert(" Error " + err.message);
       });
 
-      this.clearances = history.state.data;
+    this.clearances = history.state.data;
+    if (typeof this.clearances.personalData != "undefined")
       this.personData = this.clearances.personalData;
-
-    console.log("placeOfBaptism " + this.personData.baptismPlace);
-      // for testing
-  // this.personData = new personData();
-  // this.personData.emirateId = "555";
   }
 
-  next(){
+  next() {
     debugger;
     //call addNewClearance
 
@@ -87,26 +83,28 @@ export class ChangeablePersonalDataComponent implements OnInit {
     jsonObj.gender = this.clearances.gender;
     jsonObj.churchId = this.clearances.church.churchId.toString();
     jsonObj.userId = Number(sessionStorage.getItem("userId"));
+
     debugger;
     this.userService.addNewClearance(jsonObj).subscribe(
       data => {
         if (data.code == "200") {
-          console.log(" success " );
-          this.router.navigate(['engagement'], { state: { data: this.clearances } });
-          
+          console.log("return data from changeable person");
+          console.log(data);
+          this.router.navigate(['engagement'], { state: { data: data.result.res.Clearance } });
+
         } else {
-          alert(data.result.res);
+          console.log(data);
+          alert(data.result.res.toString())
         }
       },
       err => {
-        console.log("error " + err.msg);
+        console.log("error");
+        console.log(err);
       }
     );
-
-
   }
 
-  back(){
-    this.router.navigate(['fixedPersonalData'], { state: { data: this.personData } });
+  back() {
+    this.router.navigate(['fixedPersonalData'], { state: { data: this.clearances } });
   }
 }

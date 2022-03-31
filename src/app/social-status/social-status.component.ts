@@ -3,6 +3,7 @@ import { personData } from "../utility/personalData";
 import { UserService } from "../services/user.service";
 import { dto } from "../utility/dto";
 import { Router } from "@angular/router";
+import { clearanceData } from "../utility/clearanceData";
 
 export interface Status {
   viewValueEN: string;
@@ -22,11 +23,13 @@ export class SocialStatusComponent implements OnInit {
   ];
 
   personData: personData;
+  clearances : clearanceData;
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
-    this.personData = history.state.data;
+    this.clearances = history.state.data;
+    this.personData = this.clearances.personalData;
   }
 
   updateClearanceFinal() {
@@ -35,7 +38,7 @@ export class SocialStatusComponent implements OnInit {
     let jsonObj = new dto();
 
     jsonObj.userId = Number(sessionStorage.getItem("userId"));
-    jsonObj.refNo = this.personData.referenceNumber;
+    jsonObj.refNo = this.clearances.refNo;
     jsonObj.socialStatus = this.personData.socialStatus;
     jsonObj.sourceOfPermitMarriage = this.personData.sourceOfPermitMarriage;
     jsonObj.dateOfPermitMarriage = this.personData.dateOfPermitMarriage
@@ -45,8 +48,9 @@ export class SocialStatusComponent implements OnInit {
       data => {
         if (data.code == "200") {
           console.log(" success " );
-          this.router.navigate(['previewPage'], { state: { data: this.personData } });
+          this.router.navigate(['previewPage'], { state: { data: this.clearances } });
         } else {
+          console.log(data);
           alert("Error Happened " + data.message);
         }
       },
@@ -57,6 +61,6 @@ export class SocialStatusComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(["childrens"], { state: { data: this.personData } });
+    this.router.navigate(["childrens"], { state: { data: this.clearances } });
   }
 }

@@ -8,7 +8,7 @@ export class clearanceData{
     intakeRate:  string;
     isHaveChildern:  string;
     is_previous_engagement:  string;
-    is_previous_marriage:  string;
+    isPreviousMarriage:  string;
     is_previous_travel_board:  string;
     job:  string;
     jobAddress:  string;
@@ -29,4 +29,5 @@ export class clearanceData{
     church:Church;
     militaryService: string;
     isPreviousEngagement: string;
+    emirateId: string;
 }

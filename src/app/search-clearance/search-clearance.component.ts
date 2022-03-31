@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { Church } from '../utility/church';
+import { clearanceData } from '../utility/clearanceData';
 import { dto } from '../utility/dto';
 import { personData } from '../utility/personalData';
 
@@ -28,6 +30,7 @@ export class SearchClearanceComponent implements OnInit {
     this.userService.getUserByEid(this.personalData.emirateId)
       .subscribe(
         data => {
+          debugger;
           this.result = data;
 
           //show buttons acording to return code
@@ -49,11 +52,24 @@ export class SearchClearanceComponent implements OnInit {
             this.showcreateOtherClearance = true;
           }
           else if (this.result.code == 203) {
+            debugger;
             console.log("code 203 continue to clearance you already inserted personal data ");
             this.showViewClearance = false;
             this.showNewClearance = false;
             console.log(this.result);
-            this.router.navigate(['fixedPersonalData'], { state: {data:this.result.clearances } });
+            if(this.result.clearances){
+
+              this.result.clearances.emirateId = this.personalData.emirateId;
+              this.router.navigate(['fixedPersonalData'], { state: {data:this.result.clearances } });
+            }            
+            else{
+              let clearance: clearanceData = new clearanceData();
+              clearance.personalData = this.result.personalData;
+              clearance.emirateId = this.personalData.emirateId;
+              clearance.church = new Church();
+              this.router.navigate(['fixedPersonalData'], { state: {data: clearance} });
+            }
+             
           }
           else {
             console.log("error " + this.result.msg);

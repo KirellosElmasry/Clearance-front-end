@@ -6,7 +6,7 @@
       <mat-list-item>
         <mat-label> Maried Before : </mat-label>
         <mat-radio-group
-          [(ngModel)]="personData.marriedBefore"
+          [(ngModel)]="clearances.isPreviousMarriage"
           [ngModelOptions]="{ standalone: true }"
         >
           <mat-radio-button
@@ -19,7 +19,7 @@
           >
         </mat-radio-group>
       </mat-list-item>
-      <div *ngIf="personData.marriedBefore == 'y'">
+      <div *ngIf="clearances.isPreviousMarriage == 'Y'">
         <div class="card-body" formArrayName="contacts">
           <div
             class="col-6"
@@ -121,13 +121,13 @@
         <button
           mat-button
           class="btn btn-success m-1"
-          [disabled]="personData.marriedBefore== 'y' && !activateNextBtn"
+          [disabled]="clearances.isPreviousMarriage== 'Y' && !activateNextBtn"
           type="submit"
         >
           Next
         </button>
       </mat-list-item>
-      <label class="required-field" *ngIf="!f.valid && personData.marriedBefore == 'y'">* Indicates required field.</label>
+      <label class="required-field" *ngIf="!f.valid && clearances.isPreviousMarriage == 'Y'">* Indicates required field.</label>
     </mat-list>
   </mat-card>
 </form>

@@ -18,7 +18,7 @@
           >
         </mat-radio-group>
       </mat-list-item>
-      <div *ngIf="personData.hasChildren == 'y'">
+      <div *ngIf="personData.hasChildren == 'Y'">
         <div class="card-body" formArrayName="contacts">
           <div
             class="col-6"
@@ -92,13 +92,13 @@
         <button
           mat-button
           class="btn btn-success m-1"
-          [disabled]="personData.hasChildren == 'y' && !activateNextBtn"
+          [disabled]="personData.hasChildren == 'Y' && !activateNextBtn"
           type="submit"
         >
           Next
         </button>
       </mat-list-item>
-      <label class="required-field" *ngIf="!f.valid && personData.hasChildren == 'y'">* Indicates required field.</label>
+      <label class="required-field" *ngIf="!f.valid && personData.hasChildren == 'Y'">* Indicates required field.</label>
     </mat-list>
   </form>
 </mat-card>

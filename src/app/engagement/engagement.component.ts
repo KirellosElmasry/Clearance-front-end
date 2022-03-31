@@ -26,8 +26,8 @@ export class EngagementComponent implements OnInit {
   activateNextBtn = false;
 
   statusOptions = [
-    { value: "y", name: "Yes", checked: false },
-    { value: "n", name: "No", checked: true }
+    { value: "Y", name: "Yes", checked: false },
+    { value: "N", name: "No", checked: true }
   ];
 
   constructor(
@@ -37,27 +37,22 @@ export class EngagementComponent implements OnInit {
     private http: HttpClient    ) {}
 
   ngOnInit() {
+    debugger;
     this.form = this.fb.group({
       contacts: this.fb.array([])
     });
 
     if (history.state.data) {
       this.clearances = history.state.data;
-      this.personData = this.clearances.personalData;
+      if (typeof this.clearances.personalData != "undefined")
+        this.personData = this.clearances.personalData;
+
+      if(!this.clearances.isPreviousEngagement)
+        this.clearances.isPreviousEngagement ="N";
+
       this.personData.engagementData = [];
     }
-    // for testing
-    //   else{
-    //   console.log(this.personData);
-    //   if(!this.personData){
-    //     this.personData = new personData();
-    //     this.personData.emirateId = "555";
-    //   }
-    // }
 
-    if (!this.clearances.isPreviousEngagement) {
-      this.personData.engagedBefore = "n";
-    }
     this.showSaveBtn[0] = false;
     this.showAddRowBtn[0] = true;
 
@@ -155,7 +150,7 @@ export class EngagementComponent implements OnInit {
           console.log(" success ");
 
           //add engageData to personData
-          console.log(this.personData.engagedBefore);
+          console.log(this.clearances.isPreviousEngagement);
           this.personData.engagementData.push(engagementObj);
 
           this.showSaveBtn[i] = true;
@@ -166,7 +161,7 @@ export class EngagementComponent implements OnInit {
         }
       },
       err => {
-        console.log("error " + err.error.message);
+        console.log( err.error.message);
         alert(" Error " + err.message);
       }
     );
@@ -201,26 +196,29 @@ export class EngagementComponent implements OnInit {
       data => {
         if (data.code == "200") {
           // alert(" success " );
-          if (event.value === "y" && this.engageFormArray.length === 0) {
+          if (event.value === "Y" && this.engageFormArray.length === 0) {
             this.engageFormArray.push(this.createEngageFormGroup());
           }
+          this.clearances = data.result.res.updateEngagment;          
         } else {
-          alert("Error Happened " + data.result.res);
+          console.log(data.result.res.toString());
+          alert("Error Happened " + data.result.res.toString());
+          
         }
       },
       err => {
-        console.log("error " + err.message);
+        console.log(err);
       }
     );
   }
 
   submit() {
-    this.router.navigate(["marriage"], { state: { data: this.personData } });
+    this.router.navigate(["marriage"], { state: { data: this.clearances } });
   }
 
   back() {
     this.router.navigate(["changeablePersonalData"], {
-      state: { data: this.personData }
+      state: { data: this.clearances }
     });
   }
 }

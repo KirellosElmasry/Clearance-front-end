@@ -70,13 +70,13 @@
         </div> -->
       </mat-list-item>
 
-      <mat-list-item *ngIf="personData.gender == 'male'">
+      <mat-list-item *ngIf="clearances.gender == 'male'">
         <mat-form-field>
           <mat-label>Military Status - الموقف من التجنيد </mat-label>
 
           <mat-select
             name="militaryStatus" required
-            [(ngModel)]="clearances.militaryStatus"
+            [(ngModel)]="clearances.militaryService"
           >
             <mat-option
               *ngFor="let status of militaryStatus"

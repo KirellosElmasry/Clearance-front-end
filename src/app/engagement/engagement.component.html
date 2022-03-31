@@ -6,7 +6,7 @@
       <mat-list-item>
         <mat-label> Engaged Before : </mat-label>
         <mat-radio-group
-          [(ngModel)]="personData.engagedBefore"
+          [(ngModel)]="clearances.isPreviousEngagement"
           [ngModelOptions]="{ standalone: true }"
         >
           <mat-radio-button
@@ -19,7 +19,7 @@
           >
         </mat-radio-group>
       </mat-list-item>
-      <div *ngIf="personData.engagedBefore == 'y'">
+      <div *ngIf="clearances.isPreviousEngagement == 'Y'">
         <div class="card-body" formArrayName="contacts">
           <div class="row">
             <div
@@ -112,13 +112,13 @@
         <button
           mat-button
           class="btn btn-success m-1"
-          [disabled]="personData.engagedBefore == 'y' && !activateNextBtn"
+          [disabled]="clearances.isPreviousEngagement == 'Y' && !activateNextBtn"
           type="submit"
         >
           Next
         </button>
       </mat-list-item>
-      <label class="required-field" *ngIf="!f.valid && personData.engagedBefore == 'y'">* Indicates required field.</label>
+      <label class="required-field" *ngIf="!f.valid && clearances.isPreviousEngagement == 'Y'">* Indicates required field.</label>
     </mat-list>
   </mat-card>
 </form>

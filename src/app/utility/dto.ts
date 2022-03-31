@@ -1,3 +1,4 @@
+import { clearanceData } from "./clearanceData";
 import { personData } from "./personalData";
 
 export class dto{
@@ -16,7 +17,7 @@ export class dto{
     address: string;
     message:string;
     msg:string;
-    clearances:object;
+    clearances:clearanceData;
     userId: number;   
     isPreviousEngagement:string;
     isPreviousMarrage:string;

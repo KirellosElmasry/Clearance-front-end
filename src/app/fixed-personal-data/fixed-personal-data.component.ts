@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { personData } from '../utility/personalData';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
@@ -11,16 +11,23 @@ import { clearanceData } from '../utility/clearanceData';
 })
 export class FixedPersonalDataComponent implements OnInit {
 
-  personData: personData;
+  @Input() clearancefromPrev: clearanceData;
+  
+  personData = new personData();
   clearances: clearanceData;
   selectedFile: File;
   constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
+    debugger;
     this.clearances = history.state.data;
-    this.personData = this.clearances.personalData;
+    if(typeof this.clearances != "undefined" && typeof this.clearances.personalData != "undefined" )
+      this.personData = this.clearances.personalData;
 
     console.log(this.clearances);
+
+    console.log("clearancefromPrev");
+    console.log(this.clearancefromPrev);
     // for testing
     //this.personData = new personData();
     //this.personData.emirateId = "555";
@@ -38,7 +45,7 @@ export class FixedPersonalDataComponent implements OnInit {
     debugger
     const formData = new FormData();
     formData.append('file', this.selectedFile);
-    formData.append('emirateId', this.personData.emirateId);
+    formData.append('emirateId', this.clearances.emirateId);
     formData.append('name', this.personData.name);
     formData.append('birthDate', this.personData.birthDate.toString());
     console.log(this.personData.birthDate.toString());
@@ -53,15 +60,16 @@ export class FixedPersonalDataComponent implements OnInit {
     this.userService.addFixedPersonalData(formData).subscribe(
       data => {
 
-        console.log("result " + data.code);
+        console.log("fixed personal data next response " );
+        console.log(data);
         if (data.code == "200") {
           //this.personData.referenceNumber = data.refNo;
           this.router.navigate(['changeablePersonalData'], { state: { data: this.clearances } });
         } else {
-          console.log("error " + data.msg);
+          alert("error " + data.msg);
         }
       }, (err) => {
-        console.log("error " + err.error.message);
+        alert("error " + err.error.message);
 
       });
 

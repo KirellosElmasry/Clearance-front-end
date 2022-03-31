@@ -5,6 +5,7 @@ import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
 import { personData } from "../utility/personalData";
 import { UserService } from "../services/user.service";
 import { dto } from "../utility/dto";
+import { clearanceData } from '../utility/clearanceData';
 
 @Component({
   selector: "app-marriage",
@@ -13,6 +14,7 @@ import { dto } from "../utility/dto";
 })
 export class MarriageComponent implements OnInit {
   personData: personData;
+  clearances : clearanceData;
 
   public form: FormGroup;
   public marriageFormArray: FormArray;
@@ -22,8 +24,8 @@ export class MarriageComponent implements OnInit {
   activateNextBtn = false;
 
   statusOptions = [
-    { value: "y", name: "Yes", checked: false },
-    { value: "n", name: "No", checked: true }
+    { value: "Y", name: "Yes", checked: false },
+    { value: "N", name: "No", checked: true }
   ];
 
   mariageStatus = [
@@ -43,20 +45,15 @@ export class MarriageComponent implements OnInit {
     });
 
     if (history.state.data) {
-      this.personData = history.state.data;
+      this.clearances = history.state.data;
+      this.personData = this.clearances.personalData;
     }
-    // for testing
-    // else {
-    //   console.log(this.personData);
-    //   if (!this.personData) {
-    //     this.personData = new personData();
-    //     this.personData.emirateId = "555";
-    //   }
-    // }
-
-    if (!this.personData.marriedBefore) {
-      this.personData.marriedBefore = "n";
+    this.personData.marriageData = [];
+    
+    if (!this.clearances.isPreviousMarriage) {
+      this.clearances.isPreviousMarriage = "N";
     }
+ 
     this.showSaveBtn[0] = false;
     this.showAddRowBtn[0] = true;
 
@@ -68,7 +65,7 @@ export class MarriageComponent implements OnInit {
   }
 
   fillFormAfterBackBtn() {
-    if (this.personData.marriageData.length > 0) {
+    if ( this.personData.marriageData && this.personData.marriageData.length > 0) {
       for (let i = 0; i < this.personData.marriageData.length; i++) {
         const marriageObj = this.personData.marriageData[i];
 
@@ -115,12 +112,6 @@ export class MarriageComponent implements OnInit {
     this.showAddRowBtn[i] = false;
   }
 
-  // remove contact from group
-  // removeRow(index) {
-  //   // this.marriageFormArray = this.form.get('contacts') as FormArray;
-  //   this.marriageFormArray.removeAt(index);
-  // }
-
   // get the formgroup under contacts form array
   getContactsFormGroup(index): FormGroup {
     const formGroup = this.marriageFormArray.controls[index] as FormGroup;
@@ -146,7 +137,7 @@ export class MarriageComponent implements OnInit {
     marriageObj.kindOfMarriage = this.getContactsFormGroup(i).controls[
       "kindOfMarriage"
     ].value;
-    marriageObj.refNo = this.personData.referenceNumber;
+    marriageObj.refNo = this.clearances.refNo;
 
     this.userService.addPreviousMarrage(marriageObj).subscribe(
       data => {
@@ -158,6 +149,7 @@ export class MarriageComponent implements OnInit {
           this.showAddRowBtn[i] = true;
           this.activateNextBtn = true;
         } else {
+          console.log(data);
           alert("Error Happened " + data.message);
         }
       },
@@ -170,20 +162,24 @@ export class MarriageComponent implements OnInit {
 
   radioChange(event) {
     //call update mariage api
+    debugger;
     let jsonObj = new dto();
 
     jsonObj.userId = Number(sessionStorage.getItem("userId"));
-    jsonObj.refNo = this.personData.referenceNumber;
+    jsonObj.refNo = this.clearances.refNo;
     jsonObj.isPreviousMarrage = event.value;
 
     this.userService.updateMarrageClearance(jsonObj).subscribe(
       data => {
+        debugger;
         if (data.code == "200") {
           // alert(" success " );
-          if (event.value === "y" && this.marriageFormArray.length === 0) {
+          if (event.value === "Y" && this.marriageFormArray.length === 0) {
             this.marriageFormArray.push(this.createMarriageFormGroup());
           }
+          this.clearances = data.result.res.updateMarrage;      
         } else {
+          console.log(data);
           alert("Error Happened " + data.message);
         }
       },
@@ -194,10 +190,10 @@ export class MarriageComponent implements OnInit {
   }
 
   submit() {
-    this.router.navigate(["childrens"], { state: { data: this.personData } });
+    this.router.navigate(["childrens"], { state: { data: this.clearances } });
   }
 
   back() {
-    this.router.navigate(["engagement"], { state: { data: this.personData } });
+    this.router.navigate(["engagement"], { state: { data: this.clearances } });
   }
 }

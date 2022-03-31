@@ -5,6 +5,7 @@ import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
 import { personData } from '../utility/personalData';
 import { UserService } from '../services/user.service';
 import { dto } from '../utility/dto';
+import { clearanceData } from '../utility/clearanceData';
 
 @Component({
   selector: 'app-childrens',
@@ -13,6 +14,7 @@ import { dto } from '../utility/dto';
 })
 export class ChildrensComponent implements OnInit {
   personData : personData;
+  clearances : clearanceData;
 
   public form: FormGroup;
   public childFormArray: FormArray;
@@ -22,8 +24,8 @@ export class ChildrensComponent implements OnInit {
   activateNextBtn = false;
 
   statusOptions = [
-    { value: 'y', name: 'Yes', checked: false },
-    { value: 'n', name: 'No', checked: true }
+    { value: 'Y', name: 'Yes', checked: false },
+    { value: 'N', name: 'No', checked: true }
   ];
 
   constructor(private router: Router, private fb: FormBuilder, private userService: UserService) {
@@ -37,8 +39,12 @@ export class ChildrensComponent implements OnInit {
     });
 
     if (history.state.data) {
-      this.personData = history.state.data;
+      this.clearances = history.state.data;
+      this.personData = this.clearances.personalData;
     }
+
+    this.personData.childrenData = [];
+     
     // for testing
     // else {
     //   console.log(this.personData);
@@ -48,9 +54,13 @@ export class ChildrensComponent implements OnInit {
     //   }
     // }
     
-    if (!this.personData.hasChildren) {
-      this.personData.hasChildren = 'n';
+    if (!this.clearances.isHaveChildern) {
+      this.personData.hasChildren = 'N';
     }
+    else{
+      this.personData.hasChildren = this.clearances.isHaveChildern;
+    }
+
     this.showSaveBtn[0] = false;
     this.showAddRowBtn[0] = true;
     // set childFormArray to this field
@@ -61,7 +71,7 @@ export class ChildrensComponent implements OnInit {
   }
 
   fillFormAfterBackBtn() {
-    if (this.personData.childrenData.length > 0) {
+    if (this.personData.childrenData && this.personData.childrenData.length > 0) {
       for (let i = 0; i < this.personData.childrenData.length; i++) {
         const childObj = this.personData.childrenData[i];
 
@@ -117,7 +127,7 @@ export class ChildrensComponent implements OnInit {
   save(i) {
     const childObj = new Children();
 
-    childObj.refNo = this.personData.referenceNumber;
+    childObj.refNo = this.clearances.refNo;
     childObj.userId = sessionStorage.getItem("userId");
     childObj.childName = this.getContactsFormGroup(i).controls['childName'].value;
     childObj.childAge = this.getContactsFormGroup(i).controls['childAge'].value;
@@ -134,6 +144,7 @@ export class ChildrensComponent implements OnInit {
             this.activateNextBtn = true;
             
           } else {
+            console.log(data);
             alert("Error Happened " + data.message);
           }
         }, (err) => {
@@ -147,7 +158,7 @@ export class ChildrensComponent implements OnInit {
     let jsonObj = new dto();
 
     jsonObj.userId = Number(sessionStorage.getItem("userId"));
-    jsonObj.refNo = this.personData.referenceNumber;
+    jsonObj.refNo = this.clearances.refNo;
     jsonObj.isPreviousChild = event.value;
 
     this.userService.updateChildClearance(jsonObj)
@@ -155,11 +166,12 @@ export class ChildrensComponent implements OnInit {
         data => {
           if (data.code == "200") {
             console.log("status " + data.status);
-            if (event.value === "y" && this.childFormArray.length === 0) {
+            if (event.value === "Y" && this.childFormArray.length === 0) {
               this.childFormArray.push(this.createChildFormGroup());
             }
 
           } else {
+            console.log(data);
             alert("Error Happened " + data.message);
           }
         }, (err) => {
@@ -169,11 +181,11 @@ export class ChildrensComponent implements OnInit {
 
   submit(){
     
-    this.router.navigate(['socialStatus'], { state: { data: this.personData } });
+    this.router.navigate(['socialStatus'], { state: { data: this.clearances } });
 
   }
 
   back(){    
-    this.router.navigate(['marriage'], { state: { data: this.personData } });
+    this.router.navigate(['marriage'], { state: { data: this.clearances } });
   }
 }
