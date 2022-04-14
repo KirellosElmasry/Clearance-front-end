@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { personData } from '../utility/personalData';
 import { Router } from '@angular/router';
 import { Church } from '../utility/church';
@@ -19,8 +19,11 @@ export interface Status {
 })
 export class ChangeablePersonalDataComponent implements OnInit {
 
+  @Input() clearancefromPrev: clearanceData;
+
   personData = new personData();
   clearances: clearanceData;
+  churchId:number;
 
   genders: Status[] = [
     { value: 'male', viewValueEN: 'Male', viewValueAR: 'ذكر' },
@@ -51,7 +54,7 @@ export class ChangeablePersonalDataComponent implements OnInit {
       data => {
         if (data.code == "200") {
           this.churchList = data.allChurch;
-
+          console.log(this.churchList);
         } else {
           alert("Error Happened " + data.message);
         }
@@ -60,9 +63,20 @@ export class ChangeablePersonalDataComponent implements OnInit {
         alert(" Error " + err.message);
       });
 
-    this.clearances = history.state.data;
-    if (typeof this.clearances.personalData != "undefined")
-      this.personData = this.clearances.personalData;
+    debugger;
+    if( history.state.data)
+      this.clearances = history.state.data;
+    else
+      this.clearances = this.clearancefromPrev;
+      
+      if(this.clearances.church.churchId)
+        this.churchId = this.clearances.church.churchId;
+        
+    if (this.clearances.personalData 
+      && typeof this.clearances.personalData != "undefined"){
+        this.personData = this.clearances.personalData;
+      }
+      
   }
 
   next() {
@@ -71,7 +85,7 @@ export class ChangeablePersonalDataComponent implements OnInit {
 
     let jsonObj = new dto();
 
-    jsonObj.emirateId = this.clearances.personalData.emirateId;
+    jsonObj.emirateId = this.clearances.emirateId;
     jsonObj.address = this.clearances.address;
     jsonObj.job = this.clearances.job;
     jsonObj.jobAddress = this.clearances.jobAddress;
@@ -81,7 +95,7 @@ export class ChangeablePersonalDataComponent implements OnInit {
     jsonObj.intakeRate = this.clearances.intakeRate;
     jsonObj.fatherOfConfession = this.clearances.fatherOfConfession;
     jsonObj.gender = this.clearances.gender;
-    jsonObj.churchId = this.clearances.church.churchId.toString();
+    jsonObj.churchId = this.churchId;
     jsonObj.userId = Number(sessionStorage.getItem("userId"));
 
     debugger;

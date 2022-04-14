@@ -14,7 +14,8 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./engagement.component.css"]
 })
 export class EngagementComponent implements OnInit {
-  personData: personData;
+  @Input() clearancefromPrev: clearanceData;
+
   clearances : clearanceData;
 
   public form: FormGroup;
@@ -42,16 +43,20 @@ export class EngagementComponent implements OnInit {
       contacts: this.fb.array([])
     });
 
-    if (history.state.data) {
+    if (history.state.data) { 
       this.clearances = history.state.data;
-      if (typeof this.clearances.personalData != "undefined")
-        this.personData = this.clearances.personalData;
+      if (typeof this.clearances.personalData != "undefined"){
+
+        if(!this.clearances.personalData.engagementData)
+          this.clearances.personalData.engagementData = [];
+      }
 
       if(!this.clearances.isPreviousEngagement)
         this.clearances.isPreviousEngagement ="N";
-
-      this.personData.engagementData = [];
-    }
+      
+    } 
+    else
+      this.clearances = this.clearancefromPrev;
 
     this.showSaveBtn[0] = false;
     this.showAddRowBtn[0] = true;
@@ -65,9 +70,9 @@ export class EngagementComponent implements OnInit {
   fillFormAfterBackBtn() {
     debugger;
     // in back case, fill engagement form with entered data before
-    if ( this.personData.engagementData && this.personData.engagementData.length > 0) {
-      for (let i = 0; i < this.personData.engagementData.length; i++) {
-        const engageObj = this.personData.engagementData[i];
+    if ( this.clearances.personalData.engagementData && this.clearances.personalData.engagementData.length > 0) {
+      for (let i = 0; i < this.clearances.personalData.engagementData.length; i++) {
+        const engageObj = this.clearances.personalData.engagementData[i];
         this.addRow(i);
         this.getContactsFormGroup(i).controls["engageDate"].setValue(
           engageObj.engageDate
@@ -81,7 +86,7 @@ export class EngagementComponent implements OnInit {
         //this.getContactsFormGroup(i).controls['engAttach'].setValue(engageObj.engAttach);
         //this.getContactsFormGroup(i).controls['anulAttach'].setValue(engageObj.anulAttach);
       }
-      this.personData.engagementData = [];
+      this.clearances.personalData.engagementData = [];
     }
   }
 
@@ -151,17 +156,21 @@ export class EngagementComponent implements OnInit {
 
           //add engageData to personData
           console.log(this.clearances.isPreviousEngagement);
-          this.personData.engagementData.push(engagementObj);
+          if(!this.clearances.personalData.engagementData)
+            this.clearances.personalData.engagementData =[];
+
+          this.clearances.personalData.engagementData.push(engagementObj);
 
           this.showSaveBtn[i] = true;
           this.showAddRowBtn[i] = true;
           this.activateNextBtn = true;
         } else {
+          console.log(data);
           alert("Error Happened " + data.result.res.toString());
         }
       },
       err => {
-        console.log( err.error.message);
+        console.log( err);
         alert(" Error " + err.message);
       }
     );
@@ -199,7 +208,7 @@ export class EngagementComponent implements OnInit {
           if (event.value === "Y" && this.engageFormArray.length === 0) {
             this.engageFormArray.push(this.createEngageFormGroup());
           }
-          this.clearances = data.result.res.updateEngagment;          
+          this.clearances.isPreviousEngagement = event.value;          
         } else {
           console.log(data.result.res.toString());
           alert("Error Happened " + data.result.res.toString());

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { clearanceData } from '../utility/clearanceData';
-import { personData } from '../utility/personalData';
 
 @Component({
   selector: 'app-preview-page',
@@ -10,15 +10,21 @@ import { personData } from '../utility/personalData';
 export class PreviewPageComponent implements OnInit {
 
   clearances : clearanceData;
-  personData: personData;
   
-  constructor() {
-
+  constructor( private router: Router) {
    }
 
   ngOnInit() {
+    debugger;
     this.clearances = history.state.data;
-    this.personData = this.clearances.personalData;
   }
 
+  back() {
+    this.router.navigate(['socialStatus'], { state: { data: this.clearances } });
+  }
+
+  print(){
+    console.log("print clearance");
+    
+  }
 }

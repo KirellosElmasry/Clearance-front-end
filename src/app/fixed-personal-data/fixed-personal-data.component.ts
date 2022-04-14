@@ -20,7 +20,11 @@ export class FixedPersonalDataComponent implements OnInit {
 
   ngOnInit() {
     debugger;
-    this.clearances = history.state.data;
+    if( history.state.data)
+      this.clearances = history.state.data;
+    else
+      this.clearances = this.clearancefromPrev;
+      
     if(typeof this.clearances != "undefined" && typeof this.clearances.personalData != "undefined" )
       this.personData = this.clearances.personalData;
 

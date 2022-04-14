@@ -1,5 +1,5 @@
 import { Marriage } from './../utility/marriage';
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormBuilder, FormArray, FormGroup, Validators } from "@angular/forms";
 import { personData } from "../utility/personalData";
@@ -13,7 +13,8 @@ import { clearanceData } from '../utility/clearanceData';
   styleUrls: ["./marriage.component.css"]
 })
 export class MarriageComponent implements OnInit {
-  personData: personData;
+  @Input() clearancefromPrev: clearanceData;
+
   clearances : clearanceData;
 
   public form: FormGroup;
@@ -44,11 +45,15 @@ export class MarriageComponent implements OnInit {
       contacts: this.fb.array([])
     });
 
+    debugger;
     if (history.state.data) {
       this.clearances = history.state.data;
-      this.personData = this.clearances.personalData;
+
+      if(!this.clearances.personalData.marriageData)
+          this.clearances.personalData.marriageData = [];
     }
-    this.personData.marriageData = [];
+    else
+      this.clearances = this.clearancefromPrev;
     
     if (!this.clearances.isPreviousMarriage) {
       this.clearances.isPreviousMarriage = "N";
@@ -65,9 +70,10 @@ export class MarriageComponent implements OnInit {
   }
 
   fillFormAfterBackBtn() {
-    if ( this.personData.marriageData && this.personData.marriageData.length > 0) {
-      for (let i = 0; i < this.personData.marriageData.length; i++) {
-        const marriageObj = this.personData.marriageData[i];
+    debugger;
+    if ( this.clearances.personalData.marriageData && this.clearances.personalData.marriageData.length > 0) {
+      for (let i = 0; i < this.clearances.personalData.marriageData.length; i++) {
+        const marriageObj = this.clearances.personalData.marriageData[i];
 
         this.addRow(i);
         this.getContactsFormGroup(i).controls["marriageDate"].setValue(
@@ -86,7 +92,7 @@ export class MarriageComponent implements OnInit {
           marriageObj.kindOfMarriage
         );
       }
-      this.personData.marriageData = [];
+      this.clearances.personalData.marriageData = [];
     }
   }
 
@@ -143,7 +149,10 @@ export class MarriageComponent implements OnInit {
       data => {
         if (data.code == "200") {
           // alert(" success ");
-          this.personData.marriageData.push(marriageObj);
+          if(!this.clearances.personalData.marriageData)
+            this.clearances.personalData.marriageData =[];
+
+          this.clearances.personalData.marriageData.push(marriageObj);
           console.log("saved successfully.")
           this.showSaveBtn[i] = true;
           this.showAddRowBtn[i] = true;
@@ -177,7 +186,7 @@ export class MarriageComponent implements OnInit {
           if (event.value === "Y" && this.marriageFormArray.length === 0) {
             this.marriageFormArray.push(this.createMarriageFormGroup());
           }
-          this.clearances = data.result.res.updateMarrage;      
+          this.clearances.isPreviousMarriage =  event.value;      
         } else {
           console.log(data);
           alert("Error Happened " + data.message);

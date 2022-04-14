@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { personData } from "../utility/personalData";
 import { UserService } from "../services/user.service";
 import { dto } from "../utility/dto";
@@ -16,6 +16,9 @@ export interface Status {
   styleUrls: ["./social-status.component.css"]
 })
 export class SocialStatusComponent implements OnInit {
+  
+  @Input() clearancefromPrev: clearanceData;
+
   socialStatus: Status[] = [
     { viewValueEN: "Single", viewValueAR: "أعزب" },
     { viewValueEN: "Divorced", viewValueAR: "مطلق" },
@@ -28,7 +31,12 @@ export class SocialStatusComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
-    this.clearances = history.state.data;
+    debugger;
+    if(history.state.data)
+      this.clearances = history.state.data;
+    else
+      this.clearances = this.clearancefromPrev;
+
     this.personData = this.clearances.personalData;
   }
 
@@ -48,6 +56,7 @@ export class SocialStatusComponent implements OnInit {
       data => {
         if (data.code == "200") {
           console.log(" success " );
+          this.clearances.emirateId = this.clearances.personalData.emirateId;
           this.router.navigate(['previewPage'], { state: { data: this.clearances } });
         } else {
           console.log(data);

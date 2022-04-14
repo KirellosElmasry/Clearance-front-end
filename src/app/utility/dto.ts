@@ -11,7 +11,7 @@ export class dto{
     intakeRate: string;
     fatherOfConfession: string;
     gender: string;
-    churchId: string;
+    churchId: number;
     fromChurch: string;
     jobAddress: string;
     address: string;

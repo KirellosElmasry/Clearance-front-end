@@ -116,7 +116,7 @@
           </div>
         </div>
       </div>
-      <mat-list-item>
+      <mat-list-item  *ngIf="!clearancefromPrev">
         <button mat-button type="button" (click)="back()">Back</button>
         <button
           mat-button
@@ -127,7 +127,7 @@
           Next
         </button>
       </mat-list-item>
-      <label class="required-field" *ngIf="!f.valid && clearances.isPreviousMarriage == 'Y'">* Indicates required field.</label>
+      <label class="required-field" *ngIf="!f.valid && clearances.isPreviousMarriage == 'Y' && !clearancefromPrev">* Indicates required field.</label>
     </mat-list>
   </mat-card>
 </form>

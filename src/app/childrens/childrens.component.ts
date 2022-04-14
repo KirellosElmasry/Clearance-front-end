@@ -13,6 +13,8 @@ import { clearanceData } from '../utility/clearanceData';
   styleUrls: ['./childrens.component.css']
 })
 export class ChildrensComponent implements OnInit {
+  @Input() clearancefromPrev: clearanceData;
+
   personData : personData;
   clearances : clearanceData;
 
@@ -37,22 +39,16 @@ export class ChildrensComponent implements OnInit {
     this.form = this.fb.group({
       contacts: this.fb.array([])
     });
-
+    debugger;
     if (history.state.data) {
       this.clearances = history.state.data;
       this.personData = this.clearances.personalData;
-    }
 
-    this.personData.childrenData = [];
-     
-    // for testing
-    // else {
-    //   console.log(this.personData);
-    //   if (!this.personData) {
-    //     this.personData = new personData();
-    //     this.personData.emirateId = "555";
-    //   }
-    // }
+      if(!this.clearances.personalData.childrenData)
+        this.clearances.personalData.childrenData = [];
+
+    }else
+      this.clearances = this.clearancefromPrev;
     
     if (!this.clearances.isHaveChildern) {
       this.personData.hasChildren = 'N';
@@ -71,9 +67,9 @@ export class ChildrensComponent implements OnInit {
   }
 
   fillFormAfterBackBtn() {
-    if (this.personData.childrenData && this.personData.childrenData.length > 0) {
-      for (let i = 0; i < this.personData.childrenData.length; i++) {
-        const childObj = this.personData.childrenData[i];
+    if (this.clearances.personalData.childrenData && this.clearances.personalData.childrenData.length > 0) {
+      for (let i = 0; i < this.clearances.personalData.childrenData.length; i++) {
+        const childObj = this.clearances.personalData.childrenData[i];
 
         this.addRow(i);
         this.getContactsFormGroup(i).controls["childName"].setValue(
@@ -87,7 +83,7 @@ export class ChildrensComponent implements OnInit {
         );
 
       }
-      this.personData.childrenData = [];
+      this.clearances.personalData.childrenData = [];
     }
   }
 
@@ -112,12 +108,6 @@ export class ChildrensComponent implements OnInit {
     this.showAddRowBtn[i] = false;
   }
 
-  // remove contact from group
-  // removeRow(index) {
-  //   // this.childFormArray = this.form.get('contacts') as FormArray;
-  //   this.childFormArray.removeAt(index);
-  // }
-
   // get the formgroup under contacts form array
   getContactsFormGroup(index): FormGroup {
     const formGroup = this.childFormArray.controls[index] as FormGroup;
@@ -138,7 +128,10 @@ export class ChildrensComponent implements OnInit {
         data => {
           if (data.code == "200") {
             console.log("save success");
-            this.personData.childrenData.push(childObj);
+            if(!this.clearances.personalData.childrenData)
+              this.clearances.personalData.childrenData = [];
+
+            this.clearances.personalData.childrenData.push(childObj);
             this.showSaveBtn[i] = true;
             this.showAddRowBtn[i] = true;
             this.activateNextBtn = true;
@@ -169,7 +162,7 @@ export class ChildrensComponent implements OnInit {
             if (event.value === "Y" && this.childFormArray.length === 0) {
               this.childFormArray.push(this.createChildFormGroup());
             }
-
+            this.clearances.isHaveChildern = event.value;
           } else {
             console.log(data);
             alert("Error Happened " + data.message);

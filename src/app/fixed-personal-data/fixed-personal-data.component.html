@@ -34,7 +34,7 @@
             required
             class="label"
             [(ngModel)]="personData.name"
-            #name="ngModel"
+            #name="ngModel"            
           />
         </mat-form-field>
 
@@ -155,9 +155,9 @@
         <input required type="file" (change)="onFileChanged($event)"  />
         <!-- <button mat-button type="button" (click)="onUpload()">Upload</button> -->
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item *ngIf="!clearancefromPrev">
         <button mat-button type="submit" [disabled]="!f.valid">Next</button>
       </mat-list-item>
     </mat-list>
   </form>
-  <label class="required-field" *ngIf="!f.valid">* Indicates required field.</label></mat-card>
+  <label class="required-field"  *ngIf="!f.valid && !clearancefromPrev">* Indicates required field.</label></mat-card>
