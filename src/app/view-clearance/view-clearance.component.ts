@@ -21,4 +21,8 @@ export class ViewClearanceComponent implements OnInit {
   back(){
     this.router.navigate(['searchClearance']);
   }
+
+  testRedirect(){
+    window.print();
+  }
 }

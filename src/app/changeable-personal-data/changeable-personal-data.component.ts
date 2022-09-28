@@ -104,7 +104,8 @@ export class ChangeablePersonalDataComponent implements OnInit {
         if (data.code == "200") {
           console.log("return data from changeable person");
           console.log(data);
-          this.router.navigate(['engagement'], { state: { data: data.result.res.Clearance } });
+          this.clearances.refNo = data.result.res.Clearance.refNo;
+          this.router.navigate(['engagement'], { state: { data: this.clearances } });
 
         } else {
           console.log(data);

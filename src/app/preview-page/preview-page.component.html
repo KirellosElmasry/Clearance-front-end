@@ -1,19 +1,21 @@
 <p>preview page</p>
+<div >
+    <app-fixed-personal-data [clearancefromPrev]="clearances" ></app-fixed-personal-data>
 
+    <app-changeable-personal-data [clearancefromPrev]="clearances"></app-changeable-personal-data>
+    
+    <app-engagement [clearancefromPrev]="clearances"></app-engagement>
+    
+    <app-marriage [clearancefromPrev]="clearances"></app-marriage>
+    
+    <app-childrens [clearancefromPrev]="clearances"></app-childrens>
+    
+    <app-social-status [clearancefromPrev]="clearances"></app-social-status>
+    
+    <mat-list-item  *ngIf="!clearancefromPrev">
+        <!-- <button mat-button type="button" (click)="back()">Back</button> -->
+        <button mat-button type="button" (click)="print()">Print</button>
+    </mat-list-item>
+    
+</div>
 
-<app-fixed-personal-data [clearancefromPrev]="clearances" ></app-fixed-personal-data>
-
-<app-changeable-personal-data [clearancefromPrev]="clearances"></app-changeable-personal-data>
-
-<app-engagement [clearancefromPrev]="clearances"></app-engagement>
-
-<app-marriage [clearancefromPrev]="clearances"></app-marriage>
-
-<app-childrens [clearancefromPrev]="clearances"></app-childrens>
-
-<app-social-status [clearancefromPrev]="clearances"></app-social-status>
-
-<mat-list-item  *ngIf="!clearancefromPrev">
-    <button mat-button type="button" (click)="back()">Back</button>
-    <button mat-button type="button" (click)="print()">Print</button>
-</mat-list-item>

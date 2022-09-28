@@ -117,4 +117,9 @@ export class SearchClearanceComponent implements OnInit {
     console.log("createOtherClearance");
     this.router.navigate(['fixedPersonalData']);
   }
+
+  testRedirect(){
+    // this.router.navigate(['previewPage'], { state: { data: this.result.clearances } });
+    window.print();
+  }
 }

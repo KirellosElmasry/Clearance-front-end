@@ -25,6 +25,6 @@ export class PreviewPageComponent implements OnInit {
 
   print(){
     console.log("print clearance");
-    
+    window.print();
   }
 }

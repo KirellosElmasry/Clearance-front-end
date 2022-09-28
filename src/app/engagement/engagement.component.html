@@ -83,7 +83,7 @@
                   />
                 </mat-list-item>
 
-                <mat-list-item>
+                <mat-list-item  *ngIf="!clearancefromPrev">
                   <!-- <button mat-button type="button" (click)="removeRow(i)"> Remove</button> -->
                   <button
                     mat-button
@@ -117,8 +117,9 @@
         >
           Next
         </button>
+      
+        <label class="required-field" *ngIf="!f.valid && clearances.isPreviousEngagement == 'Y'">* Indicates required field.</label>
       </mat-list-item>
-      <label class="required-field" *ngIf="!f.valid && clearances.isPreviousEngagement == 'Y'">* Indicates required field.</label>
     </mat-list>
   </mat-card>
 </form>

@@ -210,7 +210,7 @@ export class EngagementComponent implements OnInit {
           }
           this.clearances.isPreviousEngagement = event.value;          
         } else {
-          console.log(data.result.res.toString());
+          console.log(data.result.res);
           alert("Error Happened " + data.result.res.toString());
           
         }
