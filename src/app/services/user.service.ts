@@ -99,4 +99,8 @@ export class UserService {
     });
   }
 
+  public generateClearanceReport(refNo: string): Observable<any> {
+    return this.httpClient.get(this.endpoint + "generateClearanceForm?refNo="+refNo, 
+    {  responseType: 'blob' as 'json'});
+  }
 }

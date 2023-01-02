@@ -49,6 +49,9 @@ export class EngagementComponent implements OnInit {
 
         if(!this.clearances.personalData.engagementData)
           this.clearances.personalData.engagementData = [];
+      }else{
+        this.clearances.personalData = new personData();
+        this.clearances.personalData.engagementData = [];
       }
 
       if(!this.clearances.isPreviousEngagement)

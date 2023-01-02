@@ -70,10 +70,12 @@ export class FixedPersonalDataComponent implements OnInit {
           //this.personData.referenceNumber = data.refNo;
           this.router.navigate(['changeablePersonalData'], { state: { data: this.clearances } });
         } else {
-          alert("error " + data.msg);
+          console.log(data);
+          alert("error " + data);
         }
       }, (err) => {
-        alert("error " + err.error.message);
+        console.log(err);
+        alert("error " + err.error.error);
 
       });
 

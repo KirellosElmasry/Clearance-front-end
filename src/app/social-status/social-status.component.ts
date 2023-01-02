@@ -57,7 +57,11 @@ export class SocialStatusComponent implements OnInit {
         if (data.code == "200") {
           console.log(" success " );
           this.clearances.emirateId = this.clearances.personalData.emirateId;
-          this.router.navigate(['previewPage'], { state: { data: this.clearances } });
+        //  this.router.navigate(['previewPage'], { state: { data: this.clearances } });
+
+        //call generate report
+        console.log("RefNo " +this.clearances.refNo);
+
         } else {
           console.log(data);
           alert("Error Happened " + data.message);

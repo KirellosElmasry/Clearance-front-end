@@ -10,6 +10,7 @@ import { clearanceData } from '../utility/clearanceData';
 export class PreviewPageComponent implements OnInit {
 
   clearances : clearanceData;
+  clearancefromPrev:any;
   
   constructor( private router: Router) {
    }
