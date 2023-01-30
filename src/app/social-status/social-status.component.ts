@@ -60,7 +60,9 @@ export class SocialStatusComponent implements OnInit {
         //  this.router.navigate(['previewPage'], { state: { data: this.clearances } });
 
         //call generate report
-        console.log("RefNo " +this.clearances.refNo);
+        console.log("generate report for RefNo " +this.clearances.refNo);
+        this.userService.generateReport(this.clearances.refNo);
+        this.router.navigate(["homePage"]);
 
         } else {
           console.log(data);
@@ -73,7 +75,7 @@ export class SocialStatusComponent implements OnInit {
     );
   }
 
-  back() {
-    this.router.navigate(["childrens"], { state: { data: this.clearances } });
+  close() {
+    this.router.navigate(["homePage"]);
   }
 }

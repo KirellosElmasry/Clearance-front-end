@@ -50,7 +50,7 @@
         </mat-form-field>
       </mat-list-item>
       <mat-list-item  *ngIf="!clearancefromPrev">
-        <button mat-button type="button" (click)="back()">Back</button>
+        <button mat-button type="button" (click)="close()">Go to Home </button>
         <button mat-button (click)="updateClearanceFinal()" [disabled]="!f.valid">Finish</button>
       </mat-list-item>
       <label class="required-field" *ngIf="!f.valid && !clearancefromPrev">* Indicates required field.</label>

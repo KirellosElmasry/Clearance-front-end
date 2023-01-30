@@ -26,22 +26,7 @@ export class ViewClearanceComponent implements OnInit {
     this.router.navigate(['searchClearance']);
   }
 
-  generateReport(){
-    // window.print();
-    console.log("generateReport "+this.clearanceData.refNo);
-    this.userService.generateClearanceReport(this.clearanceData.refNo)
-    .subscribe(
-      data => {
-        let blob = new Blob([data], {type: 'application/pdf'});
-
-        var downloadURL = window.URL.createObjectURL(data);
-        var link = document.createElement('a');
-        link.href = downloadURL;
-        link.download = this.clearanceData.refNo+".pdf";
-        link.click();
-      }, (err) => {
-        console.log("error ");
-        console.log(err);
-      });
-  }
+ generateReport(){
+  this.userService.generateReport(this.clearanceData.refNo);
+ }
 }

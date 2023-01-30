@@ -99,8 +99,27 @@ export class UserService {
     });
   }
 
-  public generateClearanceReport(refNo: string): Observable<any> {
+  generateClearanceReport(refNo: string): Observable<any> {
     return this.httpClient.get(this.endpoint + "generateClearanceForm?refNo="+refNo, 
     {  responseType: 'blob' as 'json'});
+  }
+
+  public generateReport(refNo :string){
+    // window.print();
+    console.log("generateReport "+refNo);
+    this.generateClearanceReport(refNo)
+    .subscribe(
+      data => {
+        let blob = new Blob([data], {type: 'application/pdf'});
+
+        var downloadURL = window.URL.createObjectURL(data);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = refNo+".pdf";
+        link.click();
+      }, (err) => {
+        console.log("error ");
+        console.log(err);
+      });
   }
 }
