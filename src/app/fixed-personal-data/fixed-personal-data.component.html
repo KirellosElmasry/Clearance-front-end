@@ -87,14 +87,10 @@
             type="date"
             name="baptism"
             [(ngModel)]="personData.baptism"
-            matInput
-            required
+            matInput            
             #baptismDate="ngModel"
           />
         </mat-form-field>
-        <!-- <div class="error" *ngIf="baptismDate.errors?.required">
-          Required field.
-        </div> -->
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
@@ -106,13 +102,9 @@
             type="text"
             class="label"
             [(ngModel)]="personData.baptismPlace"
-            required
             #placeOfBaptism="ngModel"
           />
         </mat-form-field>
-        <!-- <div class="error" *ngIf="placeOfBaptism.errors?.required">
-          Required field.
-        </div> -->
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
@@ -128,9 +120,6 @@
             #edQualification="ngModel"
           />
         </mat-form-field>
-        <!-- <div class="error" *ngIf="edQualification.errors?.required">
-          Required field.
-        </div> -->
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
@@ -142,18 +131,13 @@
             name="graduateDate"
             [(ngModel)]="personData.educationDate"
             matInput
-            required
             #graduateDate="ngModel"
           />
         </mat-form-field>
-        <!-- <div class="error" *ngIf="graduateDate.errors?.required">
-          Required field.
-        </div> -->
       </mat-list-item>
       <mat-list-item>
-        <mat-label>Attach Picture </mat-label>
-        <input required type="file" (change)="onFileChanged($event)"  />
-        <!-- <button mat-button type="button" (click)="onUpload()">Upload</button> -->
+        <mat-label>Upload Picture </mat-label>
+        <input required type="file" (change)="onFileChanged($event)"/>
       </mat-list-item>
       <mat-list-item *ngIf="!clearancefromPrev">
         <button mat-button type="submit" [disabled]="!f.valid">Next</button>

@@ -199,7 +199,10 @@ export class MarriageComponent implements OnInit {
   }
 
   submit() {
-    this.router.navigate(["childrens"], { state: { data: this.clearances } });
+    if(this.clearances.isPreviousMarriage == 'Y')
+      this.router.navigate(["childrens"], { state: { data: this.clearances } });
+    else
+      this.router.navigate(['socialStatus'], { state: { data: this.clearances } });
   }
 
   back() {
