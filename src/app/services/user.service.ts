@@ -104,7 +104,7 @@ export class UserService {
     {  responseType: 'blob' as 'json'});
   }
 
-  public generateReport(refNo :string){
+  public generateReport(refNo :string, showSpinner: boolean){
     // window.print();
     console.log("generateReport "+refNo);
     this.generateClearanceReport(refNo)
@@ -117,9 +117,11 @@ export class UserService {
         link.href = downloadURL;
         link.download = refNo+".pdf";
         link.click();
+        showSpinner = false;
       }, (err) => {
         console.log("error ");
         console.log(err);
+        showSpinner = false;
       });
   }
 }

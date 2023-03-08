@@ -85,6 +85,7 @@ const appRoutes: Routes = [
     MatButtonModule,  
     MatCardModule,  MatListModule,
     MatProgressBarModule, MatFormFieldModule,MatInputModule
+    
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent]

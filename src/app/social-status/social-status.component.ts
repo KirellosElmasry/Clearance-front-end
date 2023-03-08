@@ -28,6 +28,8 @@ export class SocialStatusComponent implements OnInit {
   personData: personData;
   clearances : clearanceData;
 
+  showSpinner = false;
+
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
@@ -45,6 +47,7 @@ export class SocialStatusComponent implements OnInit {
 
     let jsonObj = new dto();
 
+    this.showSpinner = true;
     jsonObj.userId = Number(sessionStorage.getItem("userId"));
     jsonObj.refNo = this.clearances.refNo;
     jsonObj.socialStatus = this.personData.socialStatus;
@@ -54,6 +57,7 @@ export class SocialStatusComponent implements OnInit {
 
     this.userService.updateClearanceFinal(jsonObj).subscribe(
       data => {
+        
         if (data.code == "200") {
           console.log(" success " );
           this.clearances.emirateId = this.clearances.personalData.emirateId;
@@ -61,7 +65,7 @@ export class SocialStatusComponent implements OnInit {
 
         //call generate report
         console.log("generate report for RefNo " +this.clearances.refNo);
-        this.userService.generateReport(this.clearances.refNo);
+        this.generateReport();
         this.router.navigate(["homePage"]);
 
         } else {
@@ -71,9 +75,32 @@ export class SocialStatusComponent implements OnInit {
       },
       err => {
         console.log("error " + err.message);
+        this.showSpinner = false;
       }
     );
   }
+
+  generateReport(){
+    this.showSpinner = true;
+  
+    console.log("generateReport "+this.clearances.refNo);
+    this.userService.generateClearanceReport(this.clearances.refNo)
+    .subscribe(
+      data => {
+        let blob = new Blob([data], {type: 'application/pdf'});
+  
+        var downloadURL = window.URL.createObjectURL(data);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = this.clearances.refNo+".pdf";
+        link.click();
+        this.showSpinner = false;
+      }, (err) => {
+        console.log("error ");
+        console.log(err);
+        this.showSpinner = false;
+      });
+   }
 
   close() {
     this.router.navigate(["homePage"]);

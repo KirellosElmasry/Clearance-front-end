@@ -25,7 +25,7 @@
             <mat-label class="labelValue"> {{this.clearanceData.personalData.education}} </mat-label>
         </mat-list-item>
         <mat-list-item>
-            <mat-label class="labelText">Address -  عنوان: </mat-label>
+            <mat-label class="labelText">Address - عنوان: </mat-label>
             <mat-label class="labelValue"> {{this.clearanceData.address}} </mat-label>
         </mat-list-item>
 
@@ -35,12 +35,12 @@
         </mat-list-item>
 
         <mat-list-item>
-            <mat-label class="labelText">fatherOfConfession -  اب الاعتراف: </mat-label>
+            <mat-label class="labelText">fatherOfConfession - اب الاعتراف: </mat-label>
             <mat-label class="labelValue"> {{this.clearanceData.fatherOfConfession}} </mat-label>
         </mat-list-item>
 
         <mat-list-item>
-            <mat-label class="labelText">job -  العمل: </mat-label>
+            <mat-label class="labelText">job - العمل: </mat-label>
             <mat-label class="labelValue"> {{this.clearanceData.job}} </mat-label>
         </mat-list-item>
         <mat-list-item>
@@ -54,28 +54,28 @@
         </mat-list-item>
 
         <mat-list-item>
-            <mat-label class="labelText">Gender - النوع  : </mat-label>
+            <mat-label class="labelText">Gender - النوع : </mat-label>
             <mat-label class="labelValue"> {{this.clearanceData.gender}} </mat-label>
         </mat-list-item>
- 
+
         <mat-list-item>
-            <mat-label class="labelText">Job -  عنوان: </mat-label>
+            <mat-label class="labelText">Job - عنوان: </mat-label>
             <mat-label class="labelValue"> {{this.clearanceData.job}} </mat-label>
         </mat-list-item>
 
         <mat-list-item>
-            <mat-label class="labelText">job Address -  عنوان: </mat-label>
+            <mat-label class="labelText">job Address - عنوان: </mat-label>
             <mat-label class="labelValue"> {{this.clearanceData.jobAddress}} </mat-label>
         </mat-list-item>
-        
+
 
         <mat-list-item>
-            <mat-label class="labelText">isPreviousEngagement -  خطوبه سابقه: </mat-label>
+            <mat-label class="labelText">isPreviousEngagement - خطوبه سابقه: </mat-label>
             <mat-label class="labelValue"> {{this.clearanceData.isPreviousEngagement}} </mat-label>
         </mat-list-item>
 
         <mat-list-item>
-            <mat-label class="labelText">isPreviousMarriage -  زواج سابق: </mat-label>
+            <mat-label class="labelText">isPreviousMarriage - زواج سابق: </mat-label>
             <mat-label class="labelValue"> {{this.clearanceData.isPreviousMarriage}} </mat-label>
         </mat-list-item>
         <mat-list-item>
@@ -87,9 +87,14 @@
             <mat-label class="labelText">num Of Childern - عدد الاطفال : </mat-label>
             <mat-label class="labelValue"> {{this.clearanceData.numOfChildern}} </mat-label>
         </mat-list-item>
-        <button mat-button type="button" (click)="back()" >Back</button>
+        <button mat-button type="button" (click)="back()">Back</button>
         <button mat-button class="btn red" (click)="generateReport()"> Download Report</button>
     </mat-list>
 
 
 </mat-card>
+
+<div class="spinner-wrapper" *ngIf="showSpinner">
+    <mat-progress-spinner class="tp-margin" color="primary" mode="indeterminate" value="50">
+    </mat-progress-spinner>
+</div>
